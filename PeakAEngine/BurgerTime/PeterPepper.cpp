@@ -3,6 +3,7 @@
 
 #include "PeakAEngine/GameObject.h"
 #include "Events.h"
+#include "Ladder.h"
 #include "3rdParty/imgui-1.87/imgui.h"
 #include "PeakAEngine/InputManager.h"
 #include "PeakAEngine/Logger.h"
@@ -16,6 +17,8 @@ PeterPepper::PeterPepper(SpriteRenderer* pSpriteRenderer, GameObject* attachedOb
 	, m_pSpriteRenderer{ pSpriteRenderer }
 	, m_Lives{ 3 }
 	, m_Score{ 0 }
+	, m_IsOnLadder{ false }
+	, m_LadderCount{0}
 {
 }
 
@@ -25,39 +28,41 @@ void PeterPepper::Update()
 {
 	bool moving{ false };
 
-	if (InputManager::GetInstance().IsDown('z'))
+	if (m_IsOnLadder)
 	{
-		m_pGameObject->Translate(0, -200 * Time::DeltaTime(), 0);
-		m_pSpriteRenderer->SetDirection(Direction::FacingAwayFromCamera);
-		moving = true;
-	}
-	else if (InputManager::GetInstance().IsDown('s'))
-	{
-		m_pGameObject->Translate(0, 200 * Time::DeltaTime(), 0);
-		moving = true;
-		m_pSpriteRenderer->SetDirection(Direction::FacingCamera);
-	}
-	if (InputManager::GetInstance().IsDown('d'))
-	{
-		m_pGameObject->Translate(200 * Time::DeltaTime(), 0, 0);
-		m_pSpriteRenderer->SetDirection(Direction::FacingRight);
-		moving = true;
-	}
-	else if (InputManager::GetInstance().IsDown('q'))
-	{
-		m_pGameObject->Translate(-200 * Time::DeltaTime(), 0, 0);
-		m_pSpriteRenderer->SetDirection(Direction::FacingLeft);
-		moving = true;
-	}
-
-	if (!moving)
-	{
-		m_pSpriteRenderer->SetActiveSprite("Idle");
+		if (InputManager::GetInstance().IsDown('z'))
+		{
+			m_pGameObject->Translate(0, -200 * Time::DeltaTime(), 0);
+			m_pSpriteRenderer->SetDirection(Direction::FacingAwayFromCamera);
+			moving = true;
+		}
+		else if (InputManager::GetInstance().IsDown('s'))
+		{
+			m_pGameObject->Translate(0, 200 * Time::DeltaTime(), 0);
+			m_pSpriteRenderer->SetDirection(Direction::FacingCamera);
+			moving = true;
+		}
 	}
 	else
 	{
-		m_pSpriteRenderer->SetActiveSprite("Walking");
+		if (InputManager::GetInstance().IsDown('d'))
+		{
+			m_pGameObject->Translate(200 * Time::DeltaTime(), 0, 0);
+			m_pSpriteRenderer->SetDirection(Direction::FacingRight);
+			moving = true;
+		}
+		else if (InputManager::GetInstance().IsDown('q'))
+		{
+			m_pGameObject->Translate(-200 * Time::DeltaTime(), 0, 0);
+			m_pSpriteRenderer->SetDirection(Direction::FacingLeft);
+			moving = true;
+		}
 	}
+
+	if (!moving)
+		m_pSpriteRenderer->SetActiveSprite("Idle");
+	else
+		m_pSpriteRenderer->SetActiveSprite("Walking");
 }
 void PeterPepper::FixedUpdate()
 {
@@ -75,21 +80,26 @@ void PeterPepper::OnGUI()
 
 void PeterPepper::OnTriggerEnter(PhysicsComponent* other)
 {
-	PeterPepper* pepper = other->GetGameObject()->GetComponent<PeterPepper>();
+	Ladder* ladder = other->GetGameObject()->GetComponent<Ladder>();
 
-	if (!pepper)
+	if (ladder)
 	{
-		Logger::LogError("Someone else Hit Me!");
-	}
-	else
-	{
-		Logger::LogSuccess("Peter Hit Me!");
+		++m_LadderCount;
+		if (m_LadderCount > 0)
+			m_IsOnLadder = true;
 	}
 }
 
-void PeterPepper::OnTriggerExit(PhysicsComponent*)
+void PeterPepper::OnTriggerExit(PhysicsComponent* other)
 {
-	Logger::LogError("Something left me!");
+	Ladder* ladder = other->GetGameObject()->GetComponent<Ladder>();
+
+	if (ladder)
+	{
+		--m_LadderCount;
+		if (m_LadderCount <= 0)
+			m_IsOnLadder = false;
+	}
 }
 
 void PeterPepper::Die()

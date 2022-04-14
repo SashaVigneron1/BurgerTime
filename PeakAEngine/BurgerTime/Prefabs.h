@@ -2,4 +2,5 @@
 
 class GameObject;
 class Scene;
-GameObject* CreatePeterPepper(Scene* pScene, const glm::vec2& position = {});
+void CreatePeterPepper(Scene* pScene, const glm::vec2& position = {});
+void CreateLadderCollection(Scene* pScene, int nrLadders, const glm::vec2& position = {});

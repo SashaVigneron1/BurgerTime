@@ -37,4 +37,7 @@ private:
 	int m_Lives;
 	int m_Score;
 	SpriteRenderer* m_pSpriteRenderer;
+
+	bool m_IsOnLadder;
+	int m_LadderCount;
 };

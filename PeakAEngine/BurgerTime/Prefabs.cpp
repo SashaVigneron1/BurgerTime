@@ -14,13 +14,16 @@
 
 #include "PeterPepper.h"
 #include "Commands.h"
+#include "Ladder.h"
+#include "PeakAEngine/Scene.h"
 
-GameObject* CreatePeterPepper(Scene* pScene, const glm::vec2& position)
+void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 {
-	auto go = new GameObject(pScene, {position.x, position.y, 0});
+	auto go = pScene->Add(new GameObject(pScene, {position.x, position.y, 0}));
 	//// PETER PEPPER
 	// Info
-	float size = 100;
+	const float size = 50;
+	const float frameSec = 0.05f;
 	// Sprite
 	SpriteRenderer* pSpriteRenderer = go->AddComponent(new SpriteRenderer(go));
 	pSpriteRenderer->AddSprite("Walking", new  Sprite("PeterPepper_Walking.png",
@@ -30,12 +33,12 @@ GameObject* CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 				SpriteRow{Direction::FacingRight, 1, true},
 				SpriteRow{Direction::FacingAwayFromCamera, 2},
 		},
-		3, 0.2f, size, go));
+		3, frameSec, size, go));
 	pSpriteRenderer->AddSprite("Idle", new  Sprite("PeterPepper_Idle.png",
 		{
 				SpriteRow{Direction::FacingCamera, 0}
 		},
-		1, 0.2f, size, go));
+		1, frameSec, size, go));
 
 	// Physics
 	PeterPepper* pPeterPepper = go->AddComponent(new PeterPepper(pSpriteRenderer, go));
@@ -52,6 +55,28 @@ GameObject* CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 	auto* pPeterPepperKillEnemyCommand = new PeterPepper_KillEnemy(pPeterPepper);
 	InputManager::GetInstance().AddCommand('z', pPeterPepperDieCommand);
 	InputManager::GetInstance().AddCommand('d', pPeterPepperKillEnemyCommand);
+}
 
-	return go;
+void CreateLadderCollection(Scene* pScene, int nrLadders, const glm::vec2& position)
+{
+	const float size = 40.0f;
+
+	for (int i{0}; i < nrLadders; ++i)
+	{
+		// GameObject
+		auto go = pScene->Add(new GameObject(pScene, { position.x, position.y - i * size , 0 }));
+		go->AddComponent(new Ladder(go));
+
+		// Physics
+		auto physics = go->AddComponent(new PhysicsComponent(go));
+		physics->AddBoxCollider(size, size, true);
+
+		// Sprite
+		SpriteRenderer* pSpriteRenderer = go->AddComponent(new SpriteRenderer(go));
+		pSpriteRenderer->AddSprite("Idle", new  Sprite("Ladder.png",
+			{
+					SpriteRow{Direction::FacingCamera, 0}
+			},
+			1, 1.f, size, go));
+	}
 }
