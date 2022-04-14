@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Engine Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Engine Files\Core">
+      <UniqueIdentifier>{eed5ef21-f131-454b-94f8-17b560e82dd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\Core\Utils">
+      <UniqueIdentifier>{b3545c43-de97-44c3-8a8a-a601f9db2684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\Core\Managers">
+      <UniqueIdentifier>{a82df2b9-d4a4-4ca3-96a8-8df0d0a564f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\Core\Managers\Scenes">
+      <UniqueIdentifier>{98521c12-564f-44cf-ad43-6294dc12cc71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\GameObjects">
+      <UniqueIdentifier>{39b30e7e-19fc-45bc-bd0f-017ff79e1610}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\GameObjects\Components">
+      <UniqueIdentifier>{a64f0d6e-75dd-47c7-b777-c71c6898f8b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\GameObjects\Components\BaseComponents">
+      <UniqueIdentifier>{8ee3d403-13cd-4b59-8e54-b9d56d473cb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\Imgui">
+      <UniqueIdentifier>{4af00df1-7e5c-445c-8aea-8bd86c5a26cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\Core\Managers\Input">
+      <UniqueIdentifier>{42bcdc54-3542-40ec-87b5-09781c56e428}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\Core\Observers">
+      <UniqueIdentifier>{f2becb58-70e7-4501-94e1-553a05308b68}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PeakAEnginePCH.h">
+      <Filter>Engine Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PeakAEngine.h">
+      <Filter>Engine Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Engine Files\Core\Managers\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Engine Files\Core\Managers\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Engine Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponent.h">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCounter.h">
+      <Filter>Engine Files\GameObjects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleInstance.h">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.87\imconfig.h">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.87\imgui.h">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.87\imgui_internal.h">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.87\imstb_rectpack.h">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.87\imstb_textedit.h">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.87\imstb_truetype.h">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.87\backends\imgui_impl_opengl2.h">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.87\backends\imgui_impl_sdl.h">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.87\imgui_plot.h">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUIManager.h">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Engine Files\Core\Managers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Engine Files\Core\Managers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseObserver.h">
+      <Filter>Engine Files\Core\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Engine Files\Core\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="structs.h">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>Engine Files\GameObjects\Components</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PeakAEngine.cpp">
+      <Filter>Engine Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PeakAEnginePCH.cpp">
+      <Filter>Engine Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Engine Files\Core\Managers\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Engine Files\Core\Managers\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Engine Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCounter.cpp">
+      <Filter>Engine Files\GameObjects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.87\imgui.cpp">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.87\imgui_demo.cpp">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.87\imgui_draw.cpp">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.87\imgui_tables.cpp">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.87\imgui_widgets.cpp">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.87\backends\imgui_impl_opengl2.cpp">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.87\backends\imgui_impl_sdl.cpp">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.87\imgui_plot.cpp">
+      <Filter>Engine Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUIManager.cpp">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Engine Files\Core\Managers\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Engine Files\Core\Managers\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseObserver.cpp">
+      <Filter>Engine Files\Core\Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Engine Files\Core\Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="structs.cpp">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>Engine Files\GameObjects\Components</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
