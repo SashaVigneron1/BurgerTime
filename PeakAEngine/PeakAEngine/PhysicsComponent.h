@@ -20,7 +20,11 @@ public:
 	void OnGUI() override {}
 	void Render() const override {}
 
+	void AddBoxCollider(float width, float height, bool isTrigger, const glm::vec2& center);
+
 private:
+	void CreatePhysxBody();
+
 	b2Body* m_pBody;
 };
 

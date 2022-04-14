@@ -2,21 +2,12 @@
 #include "PeakAEngine.h"
 #include <thread>
 
-#include "FPSCounter.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Time.h"
-#include "GameObject.h"
-#include "RenderComponent.h"
-#include "Scene.h"
-#include "Text.h"
 
-#include <cmath>
-
-
-#include "Command.h"
 #include "ImGUIManager.h"
 #include "Logger.h"
 
@@ -101,7 +92,7 @@ void PeakAEngine::Run()
 	Initialize();
 
 	// tell the resource manager where he can find the game data
-	ResourceManager::GetInstance().Init("../Data/");
+	ResourceManager::GetInstance().Init("Resources/");
 
 	LoadGame();
 	{
