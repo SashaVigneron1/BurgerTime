@@ -193,6 +193,7 @@
     <ClCompile Include="BurgerPiece.cpp" />
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="Commands.cpp" />
+    <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="LivesCounter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="pch.cpp">
@@ -202,6 +203,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PeterPepper.cpp" />
+    <ClCompile Include="Prefabs.cpp" />
     <ClCompile Include="ScoreCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -210,9 +212,11 @@
     <ClInclude Include="BurgerTime.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Events.h" />
+    <ClInclude Include="Ladder.h" />
     <ClInclude Include="LivesCounter.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PeterPepper.h" />
+    <ClInclude Include="Prefabs.h" />
     <ClInclude Include="ScoreCounter.h" />
   </ItemGroup>
   <ItemGroup>

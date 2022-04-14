@@ -21,7 +21,9 @@ public:
 	// Components
 	template<typename T> T* GetComponent() const;
 	template<typename T> void RemoveComponent();
-	void AddComponent(Component* component);
+	template<typename T>
+	std::enable_if_t<std::is_base_of_v<Component, T>, T*>
+	AddComponent(T* component);
 
 	// Updates & Drawing
 	void Update();
@@ -103,6 +105,14 @@ void GameObject::RemoveComponent()
 		}
 	}
 	return nullptr;
+}
+
+template <typename T>
+std::enable_if_t<std::is_base_of_v<Component, T>, T*>
+GameObject::AddComponent(T* component)
+{
+	m_pComponents.push_back(component);
+	return component;
 }
 
 

@@ -5,6 +5,8 @@
 #include "Events.h"
 #include "3rdParty/imgui-1.87/imgui.h"
 #include "PeakAEngine/InputManager.h"
+#include "PeakAEngine/Logger.h"
+#include "PeakAEngine/PhysicsComponent.h"
 #include "PeakAEngine/Time.h"
 
 #include "PeakAEngine/SpriteRenderer.h"
@@ -71,14 +73,23 @@ void PeterPepper::OnGUI()
 	ImGui::End();*/
 }
 
-void PeterPepper::OnTriggerEnter(PhysicsComponent*)
+void PeterPepper::OnTriggerEnter(PhysicsComponent* other)
 {
-	std::cout << "Yes!";
+	PeterPepper* pepper = other->GetGameObject()->GetComponent<PeterPepper>();
+
+	if (!pepper)
+	{
+		Logger::LogError("Someone else Hit Me!");
+	}
+	else
+	{
+		Logger::LogSuccess("Peter Hit Me!");
+	}
 }
 
 void PeterPepper::OnTriggerExit(PhysicsComponent*)
 {
-	std::cout << "No!";
+	Logger::LogError("Something left me!");
 }
 
 void PeterPepper::Die()

@@ -16,6 +16,8 @@ public:
 	virtual void FixedUpdate() = 0;
 	virtual void OnGUI() = 0;
 	virtual void Render() const = 0;
+
+	GameObject* GetGameObject() const { return m_pGameObject; }
 protected:
 	GameObject* m_pGameObject;
 private:

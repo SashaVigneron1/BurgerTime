@@ -18,6 +18,9 @@
     <Filter Include="Game Files\Input">
       <UniqueIdentifier>{f2f64d44-c4c4-4137-8221-54801da860de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Files\Prefabs">
+      <UniqueIdentifier>{9250aaa0-c16b-45bf-b2b4-ffe4efb4f355}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -47,6 +50,12 @@
     <ClCompile Include="BurgerPiece.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Ladder.cpp">
+      <Filter>Game Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Prefabs.cpp">
+      <Filter>Game Files\Prefabs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BurgerTime.h">
@@ -75,6 +84,12 @@
     </ClInclude>
     <ClInclude Include="BurgerPiece.h">
       <Filter>Game Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Ladder.h">
+      <Filter>Game Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Prefabs.h">
+      <Filter>Game Files\Prefabs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

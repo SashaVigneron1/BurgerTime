@@ -3,9 +3,11 @@ struct SDL_Window;
 class PeakAEngine
 {
 public:
-	PeakAEngine(bool useSteam = false)
+	PeakAEngine(float windowWidth, float windowHeight, bool useSteam = false)
 		: m_UseSteam{ useSteam }
 	{
+		m_WindowWidth = windowWidth;
+		m_WindowHeight = windowHeight;
 	}
 
 	void Initialize();
@@ -13,10 +15,14 @@ public:
 	void Cleanup();
 	void Run();
 
+	static float WindowWidth() { return m_WindowWidth; }
+	static float WindowHeight() { return m_WindowHeight; }
+
 protected:
+	static float m_WindowWidth;
+	static float m_WindowHeight;
 	static const int MsPerFrame = 16; //16 for 60 fps, 32 for 30 fps
 	static const int MaxUpdatesPerFrame = 60; // Maximum calls of fixedupdate in 1 frame
 	SDL_Window* m_Window{};
-
 	bool m_UseSteam{ false };
 };

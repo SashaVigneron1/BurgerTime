@@ -29,10 +29,6 @@ GameObject::~GameObject()
 	delete m_pTransform;
 }
 
-void GameObject::AddComponent(Component* component)
-{
-	m_pComponents.push_back(component);
-}
 
 void GameObject::Update()
 {

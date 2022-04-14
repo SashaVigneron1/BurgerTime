@@ -13,6 +13,9 @@
 
 #include "steam_api.h"
 
+float PeakAEngine::m_WindowHeight{ 480 };
+float PeakAEngine::m_WindowWidth{ 640 };
+
 void PrintSDLVersion()
 {
 	SDL_version compiled{};
@@ -39,8 +42,8 @@ void PeakAEngine::Initialize()
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		640,
-		480,
+		(int)m_WindowWidth,
+		(int)m_WindowHeight,
 		SDL_WINDOW_OPENGL
 	);
 	if (m_Window == nullptr) 

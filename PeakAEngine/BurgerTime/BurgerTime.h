@@ -4,11 +4,11 @@
 class BurgerTime final : public PeakAEngine
 {
 public:
-	BurgerTime()
-		: BurgerTime(false)
+	BurgerTime(float windowWidth, float windowHeight)
+		: BurgerTime(windowWidth, windowHeight, false)
 	{}
-	BurgerTime(bool useSteam)
-		: PeakAEngine{useSteam}
+	BurgerTime(float windowWidth, float windowHeight, bool useSteam)
+		: PeakAEngine{windowWidth, windowHeight, useSteam}
 	{}
 
 protected:

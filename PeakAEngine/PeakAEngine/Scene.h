@@ -7,7 +7,7 @@ class Scene
 {
 	friend Scene& SceneManager::CreateScene(const std::string& name);
 public:
-	void Add(GameObject* object);
+	GameObject* Add(GameObject* object);
 
 	void Update();
 	void FixedUpdate();

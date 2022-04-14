@@ -22,9 +22,10 @@ Scene::~Scene()
 	delete m_pPhysicsHandler;
 }
 
-void Scene::Add(GameObject* object)
+GameObject* Scene::Add(GameObject* object)
 {
 	m_Objects.push_back(object);
+	return object;
 }
 
 void Scene::Update()
