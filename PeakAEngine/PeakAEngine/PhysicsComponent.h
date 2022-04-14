@@ -1,7 +1,7 @@
 #pragma once
 
+#include <functional>
 #include "BaseComponent.h"
-
 
 class b2Body;
 
@@ -20,11 +20,14 @@ public:
 	void OnGUI() override {}
 	void Render() const override {}
 
-	void AddBoxCollider(float width, float height, bool isTrigger, const glm::vec2& center);
+	std::function<void(PhysicsComponent*)> OnTriggerEnter;
+	std::function<void(PhysicsComponent*)> OnTriggerExit;
 
+	void AddBoxCollider(float width, float height, bool isTrigger, const glm::vec2& center = {});
 private:
-	void CreatePhysxBody();
+	void CreatePhysicsBody();
 
 	b2Body* m_pBody;
+
 };
 

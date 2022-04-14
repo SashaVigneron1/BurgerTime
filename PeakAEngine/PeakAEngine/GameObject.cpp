@@ -7,8 +7,9 @@
 
 #include "Transform.h"
 
-GameObject::GameObject(const glm::vec3& position)
-	: m_pParentObj{ nullptr }
+GameObject::GameObject(Scene* pScene, const glm::vec3& position)
+	: m_pScene{ pScene }
+	, m_pParentObj{ nullptr }
 	, m_pTransform{ new Transform(position, this) }
 	, m_IsActive{ true }
 	, m_PositionIsDirty{ false }

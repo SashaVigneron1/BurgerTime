@@ -2,6 +2,7 @@
 #include "PeakAEngine/BaseComponent.h"
 #include "PeakAEngine/Subject.h"
 
+class PhysicsComponent;
 class SpriteRenderer;
 
 class PeterPepper final : public Component, public Subject
@@ -21,6 +22,9 @@ public:
 	void FixedUpdate() override;
 	void OnGUI() override;
 	void Render() const override {}
+
+	void OnTriggerEnter(PhysicsComponent* pOther);
+	void OnTriggerExit(PhysicsComponent* pOther);
 
 private:
 	// Functions & friends

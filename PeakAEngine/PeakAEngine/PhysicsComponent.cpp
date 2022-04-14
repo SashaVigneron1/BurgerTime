@@ -2,7 +2,7 @@
 #include "PhysicsComponent.h"
 
 #include <b2_body.h>
-#include <b2_world.h>
+#include "b2_world.h"
 #include <b2_fixture.h>
 #include <b2_polygon_shape.h>
 
@@ -12,7 +12,7 @@
 PhysicsComponent::PhysicsComponent(GameObject* attachedObj)
 	: Component{attachedObj}
 {
-	CreatePhysxBody();
+	CreatePhysicsBody();
 }
 
 PhysicsComponent::~PhysicsComponent()
@@ -23,17 +23,18 @@ PhysicsComponent::~PhysicsComponent()
 
 void PhysicsComponent::Update()
 {
-	auto pos = m_pGameObject->GetWorldPosition();
-	m_pBody->SetTransform(b2Vec2{pos.x, pos.y}, 0);
+	
 }
 
 void PhysicsComponent::FixedUpdate()
 {
+	auto pos = m_pGameObject->GetWorldPosition();
+	m_pBody->SetTransform(b2Vec2{ pos.x, pos.y }, 0);
 }
 
 void PhysicsComponent::AddBoxCollider(float width, float height, bool isTrigger, const glm::vec2& center)
 {
-	if (!m_pBody) CreatePhysxBody();
+	if (!m_pBody) CreatePhysicsBody();
 
 	b2PolygonShape boxShape{};
 	boxShape.SetAsBox(width/2, height/2, b2Vec2{ center.x, center.y }, 0);
@@ -46,7 +47,7 @@ void PhysicsComponent::AddBoxCollider(float width, float height, bool isTrigger,
 	m_pBody->CreateFixture(&fixture);
 }
 
-void PhysicsComponent::CreatePhysxBody()
+void PhysicsComponent::CreatePhysicsBody()
 {
 	glm::vec3 pos = m_pGameObject->GetWorldPosition();
 
@@ -55,7 +56,7 @@ void PhysicsComponent::CreatePhysxBody()
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(pos.x, pos.y);
 	bodyDef.angle = 0.f;
-	bodyDef.gravityScale = 0.0f;
+	bodyDef.gravityScale = 1.0f;
 	bodyDef.allowSleep = false;
 	bodyDef.awake = true;
 	bodyDef.fixedRotation = true;

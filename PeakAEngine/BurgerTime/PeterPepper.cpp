@@ -70,6 +70,17 @@ void PeterPepper::OnGUI()
 
 	ImGui::End();*/
 }
+
+void PeterPepper::OnTriggerEnter(PhysicsComponent*)
+{
+	std::cout << "Yes!";
+}
+
+void PeterPepper::OnTriggerExit(PhysicsComponent*)
+{
+	std::cout << "No!";
+}
+
 void PeterPepper::Die()
 {
 	--m_Lives;

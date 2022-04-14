@@ -267,6 +267,7 @@ xcopy $(SolutionDir)3rdParty\steamworks\steam_appid.txt $(OutputPath) /R /Y
     <ClInclude Include="PeakAEngine.h" />
     <ClInclude Include="PeakAEnginePCH.h" />
     <ClInclude Include="PhysicsComponent.h" />
+    <ClInclude Include="PhysicsHandler.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -359,6 +360,7 @@ xcopy $(SolutionDir)3rdParty\steamworks\steam_appid.txt $(OutputPath) /R /Y
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PeakAEnginePCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="PhysicsComponent.cpp" />
+    <ClCompile Include="PhysicsHandler.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

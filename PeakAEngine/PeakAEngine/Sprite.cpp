@@ -14,18 +14,22 @@ Sprite::Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, 
 	: Sprite{ fileName,rows, nrCols, frameSec, 1.f, attachedObj }
 {
 }
-Sprite::Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, int nrCols, float frameSec, float m_Scale, GameObject* attachedObj)
+Sprite::Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, int nrCols, float frameSec, float width, GameObject* attachedObj)
 	: m_pGameObject{ attachedObj }
 	, m_pTexture{ ResourceManager::GetInstance().LoadTexture(fileName) }
 	, m_Rows{ rows }
 	, m_NrCols{ nrCols }
 	, m_FrameSec{ frameSec }
-	, m_Scale{ m_Scale }
 	, m_AccSec{ 0.f }
 	, m_ActFrame{ 0 }
 	, m_NrRows{0}
 	, m_CurrentRow{0}
 {
+	// Calculate width
+	float spriteWidth = (float)m_pTexture->GetWidth() / m_NrCols;
+	m_Scale = width / spriteWidth;
+
+	// Add Rows
 	std::vector<int> indices;
 	for(auto row : rows)
 	{
@@ -43,6 +47,7 @@ Sprite::Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, 
 	}
 
 }
+
 Sprite::~Sprite()
 {
 }

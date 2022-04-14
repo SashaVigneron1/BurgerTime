@@ -1,15 +1,16 @@
 #include "PeakAEnginePCH.h"
 #include "Scene.h"
 
-#include "b2_world.h"
+#include <b2_world.h>
 
 #include "GameObject.h"
+#include "Time.h"
 
 unsigned int Scene::m_IdCounter = 0;
 
 Scene::Scene(const std::string& name) : m_Name(name)
 {
-	m_pb2World = new b2World(b2Vec2{ 0, 0 });
+	m_pPhysicsHandler = new PhysicsHandler();
 }
 
 Scene::~Scene()
@@ -18,12 +19,11 @@ Scene::~Scene()
 	{
 		delete object;
 	}
-	delete m_pb2World;
+	delete m_pPhysicsHandler;
 }
 
 void Scene::Add(GameObject* object)
 {
-	object->SetScene(this);
 	m_Objects.push_back(object);
 }
 
@@ -36,6 +36,13 @@ void Scene::Update()
 }
 void Scene::FixedUpdate()
 {
+	if (auto physicsWorld = GetPhysicsWorld())
+	{
+		physicsWorld->Step(Time::FixedTime(), 10, 8);
+		physicsWorld->ClearForces();
+	}
+	
+
 	for (auto& object : m_Objects)
 	{
 		if (!object->GetParent()) object->FixedUpdate();

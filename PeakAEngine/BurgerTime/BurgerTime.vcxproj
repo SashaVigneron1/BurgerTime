@@ -190,6 +190,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Achievements.cpp" />
+    <ClCompile Include="BurgerPiece.cpp" />
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="LivesCounter.cpp" />
@@ -205,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Achievements.h" />
+    <ClInclude Include="BurgerPiece.h" />
     <ClInclude Include="BurgerTime.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Events.h" />

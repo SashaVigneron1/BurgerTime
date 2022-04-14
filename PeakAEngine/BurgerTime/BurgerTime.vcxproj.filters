@@ -44,6 +44,9 @@
     <ClCompile Include="ScoreCounter.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="BurgerPiece.cpp">
+      <Filter>Game Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BurgerTime.h">
@@ -68,6 +71,9 @@
       <Filter>Game Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="ScoreCounter.h">
+      <Filter>Game Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BurgerPiece.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

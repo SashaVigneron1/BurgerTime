@@ -1,7 +1,7 @@
 #pragma once
 #include "SceneManager.h"
+#include "PhysicsHandler.h"
 
-class b2World;
 class GameObject;
 class Scene
 {
@@ -20,7 +20,7 @@ public:
 	Scene& operator=(const Scene& other) = delete;
 	Scene& operator=(Scene&& other) = delete;
 
-	b2World* GetPhysicsWorld() { return m_pb2World; }
+	b2World* GetPhysicsWorld() { return m_pPhysicsHandler->GetPhysicsWorld(); }
 private:
 	explicit Scene(const std::string& name);
 
@@ -29,6 +29,6 @@ private:
 
 	static unsigned int m_IdCounter;
 
-	b2World* m_pb2World{};
+	PhysicsHandler* m_pPhysicsHandler;
 };
 

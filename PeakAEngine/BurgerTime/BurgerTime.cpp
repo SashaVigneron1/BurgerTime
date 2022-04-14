@@ -19,6 +19,7 @@
 
 #include "Commands.h"
 #include "PeakAEngine/Logger.h"
+#include "PeakAEngine/PhysicsComponent.h"
 #include "PeakAEngine/SpriteRenderer.h"
 
 void BurgerTime::LoadGame() const
@@ -28,34 +29,15 @@ void BurgerTime::LoadGame() const
 	Logger::LogInfo("Started Creating Scene Objects...");
 	auto& scene = SceneManager::GetInstance().CreateScene("BurgerTime");
 
-	auto go = new GameObject();
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	auto go = new GameObject(&scene);
 
 #pragma region Player1
-	// LivesCounter Object
-	go = new GameObject(glm::vec3(20, 200, 0));
-	auto pRenderComponent = new RenderComponent("logo.png", go);
-	go->AddComponent(pRenderComponent);
-	auto pTextComponent = new Text("Lives: 3", glm::u8vec3(255, 0, 255), font, go, pRenderComponent);
-	go->AddComponent(pTextComponent);
-	LivesCounter* pLivesCounter = new LivesCounter(go, pTextComponent);
-	go->AddComponent(pLivesCounter);
-	scene.Add(go);
-
-	// ScoreCounter Object
-	go = new GameObject(glm::vec3(20, 240, 0));
-	pRenderComponent = new RenderComponent("logo.png", go);
-	go->AddComponent(pRenderComponent);
-	pTextComponent = new Text("Score: 0", glm::u8vec3(255, 0, 255), font, go, pRenderComponent);
-	go->AddComponent(pTextComponent);
-	ScoreCounter* pScoreCounter = new ScoreCounter(go, pTextComponent);
-	go->AddComponent(pScoreCounter);
-	scene.Add(go);
-
 	// Peter Pepper Object
-	go = new GameObject(glm::vec3(80, 200, 0));
-	SpriteRenderer* pSpriteRenderer = new SpriteRenderer(go);
+	// Info
+	float size = 100;
 
+	go = new GameObject(&scene, glm::vec3(80, 200, 0));
+	SpriteRenderer* pSpriteRenderer = new SpriteRenderer(go);
 	pSpriteRenderer->AddSprite("Walking", new  Sprite("PeterPepper_Walking.png",
 		{
 				SpriteRow{Direction::FacingCamera, 0},
@@ -63,17 +45,21 @@ void BurgerTime::LoadGame() const
 				SpriteRow{Direction::FacingRight, 1, true},
 				SpriteRow{Direction::FacingAwayFromCamera, 2},
 		},
-		3, 0.2f, 10, go));
+		3, 0.2f, size, go));
 	pSpriteRenderer->AddSprite("Idle", new  Sprite("PeterPepper_Idle.png",
 		{
 				SpriteRow{Direction::FacingCamera, 0}
 		},
-		1, 0.2f, 10, go));
+		1, 0.2f, size, go));
 	go->AddComponent(pSpriteRenderer);
 
 	PeterPepper* pPeterPepper = new PeterPepper(pSpriteRenderer, go);
-	pPeterPepper->AddObserver(pLivesCounter);
-	pPeterPepper->AddObserver(pScoreCounter);
+	auto physics = new PhysicsComponent(go);
+	go->AddComponent(physics);
+	physics->AddBoxCollider(size, size, true);
+	physics->OnTriggerEnter = std::bind(&PeterPepper::OnTriggerEnter, pPeterPepper, std::placeholders::_1);
+	physics->OnTriggerExit = std::bind(&PeterPepper::OnTriggerExit, pPeterPepper, std::placeholders::_1);
+
 	pPeterPepper->AddObserver(&AchievementSystem::GetInstance());
 	go->AddComponent(pPeterPepper);
 	PeterPepper_Die* pPeterPepperDieCommand = new PeterPepper_Die(pPeterPepper);
@@ -83,19 +69,31 @@ void BurgerTime::LoadGame() const
 
 	scene.Add(go);
 
-	/*auto go2 = new GameObject(glm::vec3(0, 0, 0));
-	pSprite = new Sprite("PeterPepper_Walking.png",
+	#pragma endregion
+
+#pragma region TestObj
+	size = 50;
+
+	go = new GameObject(&scene, glm::vec3(300, 200, 0));
+	pSpriteRenderer = new SpriteRenderer(go);
+	pSpriteRenderer->AddSprite("Walking", new  Sprite("PeterPepper_Walking.png",
 		{
 				SpriteRow{Direction::FacingCamera, 0},
 				SpriteRow{Direction::FacingLeft, 1},
 				SpriteRow{Direction::FacingRight, 1, true},
 				SpriteRow{Direction::FacingAwayFromCamera, 2},
 		},
-		3, 0.2f, 5, go2);
-	go2->AddComponent(pSprite);
-	go2->AddComponent(new PeterPepperTest(go2));
-	go2->SetParent(go);*/
-
-	#pragma endregion
-
+		3, 0.2f, size, go));
+	pSpriteRenderer->AddSprite("Idle", new  Sprite("PeterPepper_Idle.png",
+		{
+				SpriteRow{Direction::FacingCamera, 0}
+		},
+		1, 0.2f, size, go));
+	go->AddComponent(pSpriteRenderer);
+	physics = new PhysicsComponent(go);
+	physics->AddBoxCollider(size, size, true);
+	
+	go->AddComponent(physics);
+	scene.Add(go);
+#pragma endregion
 }

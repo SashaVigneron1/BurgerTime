@@ -21,7 +21,7 @@ public:
 
 	void SetDirection(Direction direction) { if (m_pActiveSprite) m_pActiveSprite->SetDirection(direction); };
 
-	void AddSprite(const std::string& name, Sprite* pSprite) { m_Sprites[name] = pSprite; }
+	void AddSprite(const std::string& name, Sprite* pSprite) { m_Sprites[name] = pSprite; SetActiveSprite(name); }
 	void SetActiveSprite(const std::string& name) { m_pActiveSprite = m_Sprites[name]; }
 private:
 	Sprite* m_pActiveSprite;

@@ -11,7 +11,7 @@ class RenderComponent;
 class GameObject final
 {
 public:
-	GameObject(const glm::vec3& position = glm::vec3());
+	GameObject(Scene* pScene, const glm::vec3& position = glm::vec3());
 	~GameObject();
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;
@@ -48,7 +48,6 @@ public:
 
 	void OnGUI();
 
-	void SetScene(Scene* pScene) { m_pScene = pScene; }
 	Scene* GetScene() { return m_pScene; }
 private:
 	//// Functions
