@@ -1,5 +1,6 @@
 #pragma once
 #include "Singleton.h"
+#include <vector>
 
 class Scene;
 class SceneManager final : public Singleton<SceneManager>

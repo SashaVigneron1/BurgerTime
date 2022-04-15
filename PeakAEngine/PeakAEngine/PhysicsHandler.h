@@ -17,6 +17,8 @@ public:
 	PhysicsHandler& operator=(PhysicsHandler&& other) noexcept = delete;
 
 	b2World* GetPhysicsWorld();
+	void StopContactListener();
+
 private:
 	ContactListener* m_pContactListener;
 };

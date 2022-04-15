@@ -15,6 +15,7 @@ Scene::Scene(const std::string& name) : m_Name(name)
 
 Scene::~Scene()
 {
+	m_pPhysicsHandler->StopContactListener();
 	for (auto& object : m_Objects)
 	{
 		delete object;

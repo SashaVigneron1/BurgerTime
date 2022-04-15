@@ -1,10 +1,16 @@
 #pragma once
 #include "PeakAEngine/BaseComponent.h"
 
+enum class LadderPiece
+{
+	couplingPiece,
+	middlePiece
+};
+
 class Ladder final : public Component
 {
 public:
-	Ladder(GameObject* pGameObject);
+	Ladder(GameObject* pGameObject, LadderPiece piece);
 	virtual ~Ladder() override;
 	Ladder(const Ladder& other) = delete;
 	Ladder(Ladder&& other) noexcept = delete;
@@ -15,7 +21,9 @@ public:
 	void FixedUpdate() override {}
 	void OnGUI() override {}
 	void Render() const override {}
-private:
 
+	LadderPiece GetLadderPiece() const { return m_LadderPiece; }
+private:
+	LadderPiece m_LadderPiece;
 };
 

@@ -76,7 +76,7 @@ void PeakAEngine::Initialize()
 /**
  * Code constructing the scene world starts here
  */
-void PeakAEngine::LoadGame() const
+void PeakAEngine::LoadGame()
 {
 }
 

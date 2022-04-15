@@ -21,6 +21,9 @@
     <Filter Include="Game Files\Prefabs">
       <UniqueIdentifier>{9250aaa0-c16b-45bf-b2b4-ffe4efb4f355}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Files\Utils">
+      <UniqueIdentifier>{dd8deef6-0477-455e-bae0-c9c501993697}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -56,6 +59,15 @@
     <ClCompile Include="Prefabs.cpp">
       <Filter>Game Files\Prefabs</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Game Files\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Burger.cpp">
+      <Filter>Game Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Game Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BurgerTime.h">
@@ -90,6 +102,15 @@
     </ClInclude>
     <ClInclude Include="Prefabs.h">
       <Filter>Game Files\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Game Files\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Burger.h">
+      <Filter>Game Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Game Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

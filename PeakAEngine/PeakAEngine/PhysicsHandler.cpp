@@ -17,6 +17,8 @@ public:
 
 	b2World* GetPhysicsWorld() { return m_pb2World; }
 
+	void StopContactListener();
+	
 	void BeginContact(b2Contact* contact) override;
 	void EndContact(b2Contact* contact) override;
 	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold) override;
@@ -25,6 +27,11 @@ private:
 	b2World* m_pb2World{};
 
 };
+
+void ContactListener::StopContactListener()
+{
+	m_pb2World->SetContactListener(nullptr);
+}
 
 void ContactListener::BeginContact(b2Contact* contact)
 {
@@ -80,4 +87,9 @@ PhysicsHandler::~PhysicsHandler()
 b2World* PhysicsHandler::GetPhysicsWorld()
 {
 	return m_pContactListener->GetPhysicsWorld();
+}
+
+void PhysicsHandler::StopContactListener()
+{
+	m_pContactListener->StopContactListener();
 }

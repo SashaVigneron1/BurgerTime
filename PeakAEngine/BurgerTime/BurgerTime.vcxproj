@@ -190,10 +190,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Achievements.cpp" />
+    <ClCompile Include="Burger.cpp" />
     <ClCompile Include="BurgerPiece.cpp" />
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Ladder.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="LivesCounter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="pch.cpp">
@@ -205,19 +207,23 @@
     <ClCompile Include="PeterPepper.cpp" />
     <ClCompile Include="Prefabs.cpp" />
     <ClCompile Include="ScoreCounter.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Achievements.h" />
+    <ClInclude Include="Burger.h" />
     <ClInclude Include="BurgerPiece.h" />
     <ClInclude Include="BurgerTime.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="Ladder.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="LivesCounter.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PeterPepper.h" />
     <ClInclude Include="Prefabs.h" />
     <ClInclude Include="ScoreCounter.h" />
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeakAEngine\PeakAEngine.vcxproj">

@@ -9,9 +9,10 @@ public:
 		m_WindowWidth = windowWidth;
 		m_WindowHeight = windowHeight;
 	}
+	virtual ~PeakAEngine() = default;
 
 	void Initialize();
-	virtual void LoadGame() const;
+	virtual void LoadGame();
 	void Cleanup();
 	void Run();
 

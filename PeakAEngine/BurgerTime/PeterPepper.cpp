@@ -17,8 +17,6 @@ PeterPepper::PeterPepper(SpriteRenderer* pSpriteRenderer, GameObject* attachedOb
 	, m_pSpriteRenderer{ pSpriteRenderer }
 	, m_Lives{ 3 }
 	, m_Score{ 0 }
-	, m_IsOnLadder{ false }
-	, m_LadderCount{0}
 {
 }
 
@@ -28,8 +26,6 @@ void PeterPepper::Update()
 {
 	bool moving{ false };
 
-	if (m_IsOnLadder)
-	{
 		if (InputManager::GetInstance().IsDown('z'))
 		{
 			m_pGameObject->Translate(0, -200 * Time::DeltaTime(), 0);
@@ -42,9 +38,7 @@ void PeterPepper::Update()
 			m_pSpriteRenderer->SetDirection(Direction::FacingCamera);
 			moving = true;
 		}
-	}
-	else
-	{
+	
 		if (InputManager::GetInstance().IsDown('d'))
 		{
 			m_pGameObject->Translate(200 * Time::DeltaTime(), 0, 0);
@@ -57,7 +51,6 @@ void PeterPepper::Update()
 			m_pSpriteRenderer->SetDirection(Direction::FacingLeft);
 			moving = true;
 		}
-	}
 
 	if (!moving)
 		m_pSpriteRenderer->SetActiveSprite("Idle");
@@ -84,9 +77,15 @@ void PeterPepper::OnTriggerEnter(PhysicsComponent* other)
 
 	if (ladder)
 	{
-		++m_LadderCount;
-		if (m_LadderCount > 0)
-			m_IsOnLadder = true;
+		if (ladder->GetLadderPiece() == LadderPiece::middlePiece)
+		{
+
+		}
+		else if (ladder->GetLadderPiece() == LadderPiece::couplingPiece)
+		{
+
+		}
+		
 	}
 }
 
@@ -96,9 +95,18 @@ void PeterPepper::OnTriggerExit(PhysicsComponent* other)
 
 	if (ladder)
 	{
-		--m_LadderCount;
-		if (m_LadderCount <= 0)
-			m_IsOnLadder = false;
+		LadderPiece piece = ladder->GetLadderPiece();
+
+		if (piece == LadderPiece::middlePiece)
+		{
+			if (ladder->GetLadderPiece() == LadderPiece::middlePiece)
+			{
+			}
+			else if (ladder->GetLadderPiece() == LadderPiece::couplingPiece)
+			{
+				
+			}
+		}
 	}
 }
 
