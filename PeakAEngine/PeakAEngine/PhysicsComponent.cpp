@@ -6,6 +6,8 @@
 #include <b2_fixture.h>
 #include <b2_polygon_shape.h>
 
+#include "RaycastCallback.h"
+
 #include "GameObject.h"
 #include "Scene.h"
 
@@ -30,6 +32,16 @@ void PhysicsComponent::FixedUpdate()
 {
 	auto pos = m_pGameObject->GetWorldPosition();
 	m_pBody->SetTransform(b2Vec2{ pos.x, pos.y }, 0);
+}
+
+void PhysicsComponent::Raycast(Vector2f origin, Vector2f direction, float range, RaycastCallback* outHit)
+{
+	Vector2f targetP = origin + (direction * range);
+
+	b2Vec2 bPoint1{ origin.x, origin.y };
+	b2Vec2 bPoint2{ targetP.x, targetP.y };
+
+	m_pBody->GetWorld()->RayCast(outHit, bPoint1, bPoint2);
 }
 
 void PhysicsComponent::AddBoxCollider(float width, float height, bool isTrigger, const glm::vec2& center)

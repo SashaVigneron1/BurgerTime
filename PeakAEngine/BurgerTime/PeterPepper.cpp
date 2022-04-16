@@ -4,19 +4,26 @@
 #include "PeakAEngine/GameObject.h"
 #include "Events.h"
 #include "Ladder.h"
+#include "Platform.h"
+
 #include "3rdParty/imgui-1.87/imgui.h"
 #include "PeakAEngine/InputManager.h"
 #include "PeakAEngine/Logger.h"
 #include "PeakAEngine/PhysicsComponent.h"
+#include "PeakAEngine/RaycastCallback.h"
 #include "PeakAEngine/Time.h"
 
 #include "PeakAEngine/SpriteRenderer.h"
 
-PeterPepper::PeterPepper(SpriteRenderer* pSpriteRenderer, GameObject* attachedObj)
+PeterPepper::PeterPepper(SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhysics, GameObject* attachedObj)
 	: Component{ attachedObj }
 	, m_pSpriteRenderer{ pSpriteRenderer }
+	, m_pPhysics{ pPhysics }
 	, m_Lives{ 3 }
 	, m_Score{ 0 }
+	, m_LadderCount{ 0 }
+	, m_CanMoveHorizontally{ false }
+	, m_CanMoveVertically{ false }
 {
 }
 
@@ -24,8 +31,23 @@ PeterPepper::~PeterPepper() = default;
 
 void PeterPepper::Update()
 {
-	bool moving{ false };
+	//ToDo: More Efficient
 
+	RaycastCallback callback;
+	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 100, &callback);
+	if (callback.m_pOther && callback.m_pOther->GetComponent<Platform>())
+	{
+		Logger::LogInfo(std::to_string(callback.m_fraction));
+		m_CanMoveHorizontally = true;
+	}
+	else
+	{
+		m_CanMoveHorizontally = false;
+	}
+
+	bool moving{ false };
+	if (m_CanMoveVertically)
+	{
 		if (InputManager::GetInstance().IsDown('z'))
 		{
 			m_pGameObject->Translate(0, -200 * Time::DeltaTime(), 0);
@@ -38,7 +60,9 @@ void PeterPepper::Update()
 			m_pSpriteRenderer->SetDirection(Direction::FacingCamera);
 			moving = true;
 		}
-	
+	}
+	if (m_CanMoveHorizontally)
+	{
 		if (InputManager::GetInstance().IsDown('d'))
 		{
 			m_pGameObject->Translate(200 * Time::DeltaTime(), 0, 0);
@@ -51,6 +75,7 @@ void PeterPepper::Update()
 			m_pSpriteRenderer->SetDirection(Direction::FacingLeft);
 			moving = true;
 		}
+	}
 
 	if (!moving)
 		m_pSpriteRenderer->SetActiveSprite("Idle");
@@ -71,42 +96,27 @@ void PeterPepper::OnGUI()
 	ImGui::End();*/
 }
 
-void PeterPepper::OnTriggerEnter(PhysicsComponent* other)
+void PeterPepper::OnTriggerEnter(PhysicsComponent * other)
 {
 	Ladder* ladder = other->GetGameObject()->GetComponent<Ladder>();
 
 	if (ladder)
 	{
-		if (ladder->GetLadderPiece() == LadderType::middlePiece)
-		{
-
-		}
-		else if (ladder->GetLadderPiece() == LadderType::couplingPiece)
-		{
-
-		}
-		
+		++m_LadderCount;
+		if (m_LadderCount > 0)
+			m_CanMoveVertically = true;
 	}
 }
 
-void PeterPepper::OnTriggerExit(PhysicsComponent* other)
+void PeterPepper::OnTriggerExit(PhysicsComponent * other)
 {
 	Ladder* ladder = other->GetGameObject()->GetComponent<Ladder>();
 
 	if (ladder)
 	{
-		LadderType piece = ladder->GetLadderPiece();
-
-		if (piece == LadderType::middlePiece)
-		{
-			if (ladder->GetLadderPiece() == LadderType::middlePiece)
-			{
-			}
-			else if (ladder->GetLadderPiece() == LadderType::couplingPiece)
-			{
-				
-			}
-		}
+		--m_LadderCount;
+		if (m_LadderCount <= 0)
+			m_CanMoveVertically = false;
 	}
 }
 

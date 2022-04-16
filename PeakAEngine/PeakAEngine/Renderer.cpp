@@ -32,7 +32,9 @@ void Renderer::Init(SDL_Window* window)
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
-	SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_BLEND);
+
+	// Render Properties
+	SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_NONE);
 
 	SDL_GetWindowSize(window, &m_WindowWidth, &m_WindowHeight);
 }
@@ -40,16 +42,12 @@ void Renderer::Init(SDL_Window* window)
 void Renderer::Render() const
 {
 	// Clear Previous Frame
-	const auto& color = GetBackgroundColor();
-	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(m_Renderer);
 
 	// Clear Previous Frame Of RenderTargets
 	for (size_t i = 0; i < m_pLayers.size(); i++)
 	{
 		SDL_SetRenderTarget(m_Renderer, m_pLayers[i]->GetTargetTexture());
-		SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_NONE);
-		SDL_SetRenderDrawColor(m_Renderer, 0,0,0,0);
 		SDL_RenderFillRect(m_Renderer, NULL);
 	}
 

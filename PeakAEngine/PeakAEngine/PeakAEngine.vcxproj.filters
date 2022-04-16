@@ -159,6 +159,9 @@
     <ClInclude Include="RenderLayer.h">
       <Filter>Engine Files\Core\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="RaycastCallback.h">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -267,6 +270,9 @@
       <Filter>Engine Files\Core\Managers\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="RenderLayer.cpp">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="RaycastCallback.cpp">
       <Filter>Engine Files\Core\Utils</Filter>
     </ClCompile>
   </ItemGroup>

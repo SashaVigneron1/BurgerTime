@@ -44,10 +44,10 @@ void Level::Initialize(Scene* scene)
 		{
 		case TileType::Ladder:
 
-			CreateLadder(scene, LadderType::middlePiece, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
 			if (tileAbove == TileType::Platform)
 			{
-				CreateLadder(scene, LadderType::couplingPiece, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row - 1) });
+				CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row - 1) });
 			}
 			break;
 		case TileType::Platform:
@@ -66,6 +66,4 @@ void Level::Initialize(Scene* scene)
 			break;
 		}
 	}
-
-	//CreateLadderCollection(scene, 5, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2});
 }

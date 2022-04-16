@@ -8,7 +8,7 @@ class SpriteRenderer;
 class PeterPepper final : public Component, public Subject
 {
 public:
-	PeterPepper(SpriteRenderer* pSpriteRenderer, GameObject* attachedObj);
+	PeterPepper(SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhysics, GameObject* attachedObj);
 	virtual ~PeterPepper() override;
 	PeterPepper(const PeterPepper& other) = delete;
 	PeterPepper(PeterPepper&& other) = delete;
@@ -37,4 +37,9 @@ private:
 	int m_Lives;
 	int m_Score;
 	SpriteRenderer* m_pSpriteRenderer;
+	PhysicsComponent* m_pPhysics;
+
+	bool m_CanMoveHorizontally;
+	bool m_CanMoveVertically;
+	int m_LadderCount;
 };

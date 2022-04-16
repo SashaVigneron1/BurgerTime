@@ -26,7 +26,7 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 	auto go = pScene->Add(new GameObject(pScene, {position.x, position.y, 0}));
 	//// PETER PEPPER
 	// Info
-	const float size = 50;
+	const float size = 70;
 	const float frameSec = 0.05f;
 	// Sprite
 	SpriteRenderer* pSpriteRenderer = go->AddComponent(new SpriteRenderer(go));
@@ -45,8 +45,8 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 		1, frameSec, size, go, (int)Layer::Player));
 
 	// Physics
-	PeterPepper* pPeterPepper = go->AddComponent(new PeterPepper(pSpriteRenderer, go));
 	auto physics = go->AddComponent(new PhysicsComponent(go));
+	auto pPeterPepper = go->AddComponent(new PeterPepper(pSpriteRenderer, physics, go));
 	physics->AddBoxCollider(size, size, true);
 	physics->OnTriggerEnter = std::bind(&PeterPepper::OnTriggerEnter, pPeterPepper, std::placeholders::_1);
 	physics->OnTriggerExit = std::bind(&PeterPepper::OnTriggerExit, pPeterPepper, std::placeholders::_1);
@@ -60,12 +60,11 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 	InputManager::GetInstance().AddCommand('z', pPeterPepperDieCommand);
 	InputManager::GetInstance().AddCommand('d', pPeterPepperKillEnemyCommand);
 }
-
-void CreateLadder(Scene* pScene, LadderType type, float tileSize, const glm::vec2& position)
+void CreateLadder(Scene* pScene, float tileSize, const glm::vec2& position)
 {
 	// GameObject
 	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y + tileSize / 2, 0 }));
-	go->AddComponent(new Ladder(go, type));
+	go->AddComponent(new Ladder(go));
 
 	// Physics
 	auto physics = go->AddComponent(new PhysicsComponent(go));
@@ -79,11 +78,11 @@ void CreateLadder(Scene* pScene, LadderType type, float tileSize, const glm::vec
 		},
 		1, 1.f, tileSize, go, (int)Layer::Ladders));
 }
-
 void CreatePlatform(Scene* pScene, PlatformType type, float tileSize, const glm::vec2& position)
 {
 	// GameObject
 	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y + tileSize / 2, 0 }));
+	go->AddComponent(new Platform(go));
 
 	// Physics
 	auto physics = go->AddComponent(new PhysicsComponent(go));
@@ -98,70 +97,3 @@ void CreatePlatform(Scene* pScene, PlatformType type, float tileSize, const glm:
 		},
 		1, 1.f, tileSize, go, (int)Layer::Platforms));
 }
-
-//
-//void CreateLadderCollection(Scene* pScene, int nrLadders, const glm::vec2& position)
-//{
-//	const float size = 40.0f;
-//
-//	#pragma region LadderPieces
-//
-//	for (int i{0}; i < nrLadders; ++i)
-//	{
-//		// GameObject
-//		auto go = pScene->Add(new GameObject(pScene, { position.x, position.y - i * size , 0 }));
-//		go->AddComponent(new Ladder(go, LadderType::middlePiece));
-//
-//		// Physics
-//		auto physics = go->AddComponent(new PhysicsComponent(go));
-//		physics->AddBoxCollider(size, size, true);
-//
-//		// Sprite
-//		auto pSpriteRenderer = go->AddComponent(new SpriteRenderer(go));
-//		pSpriteRenderer->AddSprite("Idle", new  Sprite("Ladder.png",
-//			{
-//					SpriteRow{Direction::FacingCamera, 0}
-//			},
-//			1, 1.f, size, go));
-//	}
-//
-//	#pragma endregion
-//
-//	#pragma region LadderBegin
-//
-//	// GameObject
-//	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y + size / 2, 0 }));
-//	go->AddComponent(new Ladder(go, LadderType::couplingPiece));
-//
-//	// Physics
-//	auto physics = go->AddComponent(new PhysicsComponent(go));
-//	physics->AddBoxCollider(size, size / 4, true);
-//
-//	// Sprite
-//	auto pSpriteRenderer = go->AddComponent(new SpriteRenderer(go));
-//	pSpriteRenderer->AddSprite("Idle", new  Sprite("Ladder_Coupling.png",
-//		{
-//				SpriteRow{Direction::FacingCamera, 0}
-//		},
-//		1, 1.f, size, go));
-//
-//	#pragma endregion
-//
-//	#pragma region LadderEnd
-//	// GameObject
-//	go = pScene->Add(new GameObject(pScene, { position.x, position.y - (nrLadders * size) + size / 2, 0 }));
-//	go->AddComponent(new Ladder(go, LadderType::couplingPiece));
-//
-//	// Physics
-//	physics = go->AddComponent(new PhysicsComponent(go));
-//	physics->AddBoxCollider(size, size / 4, true);
-//
-//	// Sprite
-//	pSpriteRenderer = go->AddComponent(new SpriteRenderer(go));
-//	pSpriteRenderer->AddSprite("Idle", new  Sprite("Ladder_Coupling.png",
-//		{
-//				SpriteRow{Direction::FacingCamera, 0}
-//		},
-//		1, 1.f, size, go));
-//	#pragma endregion
-//}

@@ -1,9 +1,8 @@
 #include "pch.h"
 #include "Ladder.h"
 
-Ladder::Ladder(GameObject* pGameObject, LadderType piece)
+Ladder::Ladder(GameObject* pGameObject)
 	: Component{pGameObject}
-	, m_LadderPiece{piece}
 {
 }
 

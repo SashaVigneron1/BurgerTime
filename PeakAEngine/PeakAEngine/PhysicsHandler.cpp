@@ -25,7 +25,6 @@ public:
 	void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) override;
 private:
 	b2World* m_pb2World{};
-
 };
 
 void ContactListener::StopContactListener()

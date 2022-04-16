@@ -268,6 +268,7 @@ xcopy $(SolutionDir)3rdParty\steamworks\steam_appid.txt $(OutputPath) /R /Y
     <ClInclude Include="PeakAEnginePCH.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsHandler.h" />
+    <ClInclude Include="RaycastCallback.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderLayer.h" />
@@ -362,6 +363,7 @@ xcopy $(SolutionDir)3rdParty\steamworks\steam_appid.txt $(OutputPath) /R /Y
     </ClCompile>
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsHandler.cpp" />
+    <ClCompile Include="RaycastCallback.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RenderLayer.cpp" />

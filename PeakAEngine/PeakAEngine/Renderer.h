@@ -24,15 +24,11 @@ public:
 	SDL_Renderer* GetSDLRenderer() const { return m_Renderer; }
 	SDL_Window* GetSDLWindow() const { return m_Window; }
 
-	const SDL_Color& GetBackgroundColor() const { return m_clearColor; }
-	void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
-
 	void AddLayer();
 
 private:
 	SDL_Renderer* m_Renderer{};
 	SDL_Window* m_Window{};
-	SDL_Color m_clearColor{};
 
 	int m_WindowWidth{};
 	int m_WindowHeight{};
