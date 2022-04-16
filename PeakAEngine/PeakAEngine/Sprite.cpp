@@ -10,11 +10,11 @@
 
 
 
-Sprite::Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, int nrCols, float frameSec, GameObject* attachedObj)
-	: Sprite{ fileName,rows, nrCols, frameSec, 1.f, attachedObj }
+Sprite::Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, int nrCols, float frameSec, GameObject* attachedObj, int layerId)
+	: Sprite{ fileName,rows, nrCols, frameSec, 1.f, attachedObj, layerId }
 {
 }
-Sprite::Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, int nrCols, float frameSec, float width, GameObject* attachedObj)
+Sprite::Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, int nrCols, float frameSec, float width, GameObject* attachedObj, int layerId)
 	: m_pGameObject{ attachedObj }
 	, m_pTexture{ ResourceManager::GetInstance().LoadTexture(fileName) }
 	, m_Rows{ rows }
@@ -24,6 +24,7 @@ Sprite::Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, 
 	, m_ActFrame{ 0 }
 	, m_NrRows{0}
 	, m_CurrentRow{0}
+	, m_LayerId{layerId}
 {
 	// Calculate width
 	float spriteWidth = (float)m_pTexture->GetWidth() / m_NrCols;
@@ -75,7 +76,7 @@ void Sprite::Render() const
 	dstRect.x = m_pGameObject->GetWorldPosition().x - dstRect.width / 2;
 	dstRect.y = m_pGameObject->GetWorldPosition().y - dstRect.height / 2;
 
-	Renderer::GetInstance().RenderTexture(*m_pTexture, dstRect, srcRect, m_IsInverse);
+	RENDERER.RenderTexture(*m_pTexture, dstRect, srcRect, m_LayerId, m_IsInverse);
 }
 
 void Sprite::SetTexture(const std::string& fileName)

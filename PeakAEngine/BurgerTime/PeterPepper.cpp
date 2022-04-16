@@ -77,11 +77,11 @@ void PeterPepper::OnTriggerEnter(PhysicsComponent* other)
 
 	if (ladder)
 	{
-		if (ladder->GetLadderPiece() == LadderPiece::middlePiece)
+		if (ladder->GetLadderPiece() == LadderType::middlePiece)
 		{
 
 		}
-		else if (ladder->GetLadderPiece() == LadderPiece::couplingPiece)
+		else if (ladder->GetLadderPiece() == LadderType::couplingPiece)
 		{
 
 		}
@@ -95,14 +95,14 @@ void PeterPepper::OnTriggerExit(PhysicsComponent* other)
 
 	if (ladder)
 	{
-		LadderPiece piece = ladder->GetLadderPiece();
+		LadderType piece = ladder->GetLadderPiece();
 
-		if (piece == LadderPiece::middlePiece)
+		if (piece == LadderType::middlePiece)
 		{
-			if (ladder->GetLadderPiece() == LadderPiece::middlePiece)
+			if (ladder->GetLadderPiece() == LadderType::middlePiece)
 			{
 			}
-			else if (ladder->GetLadderPiece() == LadderPiece::couplingPiece)
+			else if (ladder->GetLadderPiece() == LadderType::couplingPiece)
 			{
 				
 			}

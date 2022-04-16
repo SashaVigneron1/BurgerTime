@@ -51,7 +51,7 @@ void PeakAEngine::Initialize()
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-	Renderer::GetInstance().Init(m_Window);
+	RENDERER.Init(m_Window);
 	ImGUIManager::GetInstance().Initialize(m_Window);
 
 	if (m_UseSteam)
@@ -84,7 +84,7 @@ void PeakAEngine::Cleanup()
 {
 	if (m_UseSteam) SteamAPI_Shutdown();
 
-	Renderer::GetInstance().Destroy();
+	RENDERER.Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
 	SDL_Quit();
@@ -99,7 +99,7 @@ void PeakAEngine::Run()
 
 	LoadGame();
 	{
-		const auto& renderer = Renderer::GetInstance();
+		const auto& renderer = RENDERER;
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
 		auto& imguiManager = ImGUIManager::GetInstance();

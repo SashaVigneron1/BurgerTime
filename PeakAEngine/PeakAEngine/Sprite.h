@@ -34,8 +34,8 @@ struct SpriteRow
 class Sprite final
 {
 public:
-	Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, int nrCols, float frameSec, GameObject* attachedObj);
-	Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, int nrCols, float frameSec, float width, GameObject* attachedObj);
+	Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, int nrCols, float frameSec, GameObject* attachedObj, int layerId = 0);
+	Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, int nrCols, float frameSec, float width, GameObject* attachedObj, int layerId = 0);
 	~Sprite();
 	Sprite(const Sprite& other) = delete;
 	Sprite(Sprite&& other) = delete;
@@ -66,6 +66,8 @@ private:
 	float m_FrameSec{ 0.f };
 	int m_ActFrame{ 0 };
 	float m_Scale;
+
+	int m_LayerId{ -1 };
 };
 
 

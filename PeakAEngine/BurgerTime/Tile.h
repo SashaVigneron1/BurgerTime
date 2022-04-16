@@ -4,8 +4,6 @@ enum class TileType
 {
 	Platform,
 	Ladder,
-	LadderEntry,
-	LadderExit,
 	Empty
 };
 

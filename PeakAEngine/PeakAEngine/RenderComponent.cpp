@@ -29,7 +29,7 @@ void RenderComponent::FixedUpdate()
 
 void RenderComponent::Render() const
 {
-	Renderer::GetInstance().RenderTexture(*m_pTexture, m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y);
+	RENDERER.RenderTexture(*m_pTexture, m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y);
 }
 
 void RenderComponent::SetTexture(const std::string& fileName)

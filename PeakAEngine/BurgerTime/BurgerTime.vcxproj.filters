@@ -68,6 +68,9 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Game Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Game Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BurgerTime.h">
@@ -112,5 +115,9 @@
     <ClInclude Include="Tile.h">
       <Filter>Game Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Game Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderLayers.h" />
   </ItemGroup>
 </Project>

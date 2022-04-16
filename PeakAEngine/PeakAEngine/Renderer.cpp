@@ -7,6 +7,9 @@
 #include "Texture2D.h"
 #include "backends/imgui_impl_opengl2.h"
 
+#include "RenderLayer.h"
+#include "ResourceManager.h"
+
 int GetOpenGLDriverIndex()
 {
 	auto openglIndex = -1;
@@ -21,28 +24,46 @@ int GetOpenGLDriverIndex()
 	return openglIndex;
 }
 
-void Renderer::Init(SDL_Window * window)
+void Renderer::Init(SDL_Window* window)
 {
 	m_Window = window;
 	m_Renderer = SDL_CreateRenderer(window, GetOpenGLDriverIndex(), SDL_RENDERER_ACCELERATED /* | SDL_RENDERER_PRESENTVSYNC*/);
-	if (m_Renderer == nullptr) 
+	if (m_Renderer == nullptr)
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
+	SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_BLEND);
+
+	SDL_GetWindowSize(window, &m_WindowWidth, &m_WindowHeight);
 }
 
 void Renderer::Render() const
 {
+	// Clear Previous Frame
 	const auto& color = GetBackgroundColor();
 	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(m_Renderer);
 
+	// Clear Previous Frame Of RenderTargets
+	for (size_t i = 0; i < m_pLayers.size(); i++)
+	{
+		SDL_SetRenderTarget(m_Renderer, m_pLayers[i]->GetTargetTexture());
+		SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_NONE);
+		SDL_SetRenderDrawColor(m_Renderer, 0,0,0,0);
+		SDL_RenderFillRect(m_Renderer, NULL);
+	}
+
 	SceneManager::GetInstance().Render();
+
+	// Render Layers
+	for (size_t i = 0; i < m_pLayers.size(); i++)
+		SDL_RenderCopy(m_Renderer, m_pLayers[i]->GetTargetTexture(), nullptr, nullptr);
 
 	// ImGui Render
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
+	// Present
 	SDL_RenderPresent(m_Renderer);
 }
 
@@ -53,27 +74,38 @@ void Renderer::Destroy()
 		SDL_DestroyRenderer(m_Renderer);
 		m_Renderer = nullptr;
 	}
+
+	for (size_t i = 0; i < m_pLayers.size(); i++)
+	{
+		delete m_pLayers[i];
+	}
 }
 
-void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
+void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, int layerId) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
 	dst.y = static_cast<int>(y);
 	dst.w = texture.GetWidth();
 	dst.h = texture.GetHeight();
-	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+
+	SDL_SetRenderTarget(m_Renderer, m_pLayers[layerId]->GetTargetTexture());
+	SDL_RenderCopy(m_Renderer, texture.GetSDLTexture(), nullptr, &dst);
+	SDL_SetRenderTarget(m_Renderer, nullptr);
 }
-void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height) const
+void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height, int layerId) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
 	dst.y = static_cast<int>(y);
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
-	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+
+	SDL_SetRenderTarget(m_Renderer, m_pLayers[layerId]->GetTargetTexture());
+	SDL_RenderCopy(m_Renderer, texture.GetSDLTexture(), nullptr, &dst);
+	SDL_SetRenderTarget(m_Renderer, nullptr);
 }
-void Renderer::RenderTexture(const Texture2D& texture, Rectf dstRect, Rectf srcRect, bool flipHorizontal, bool flipVertical) const
+void Renderer::RenderTexture(const Texture2D& texture, Rectf dstRect, Rectf srcRect, int layerId, bool flipHorizontal, bool flipVertical) const
 {
 	SDL_Rect src{};
 	src.x = static_cast<int>(srcRect.x);
@@ -97,5 +129,12 @@ void Renderer::RenderTexture(const Texture2D& texture, Rectf dstRect, Rectf srcR
 		flip = (SDL_RendererFlip)(flip | SDL_FLIP_HORIZONTAL);
 	}
 
-	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst, 0.0, nullptr, flip);
+	SDL_SetRenderTarget(m_Renderer, m_pLayers[layerId]->GetTargetTexture());
+	SDL_RenderCopyEx(m_Renderer, texture.GetSDLTexture(), &src, &dst, 0.0, nullptr, flip);
+	SDL_SetRenderTarget(m_Renderer, nullptr);
+}
+
+void Renderer::AddLayer()
+{
+	m_pLayers.push_back(RESOURCEMANAGER.CreateRenderLayer(m_WindowWidth, m_WindowHeight));
 }

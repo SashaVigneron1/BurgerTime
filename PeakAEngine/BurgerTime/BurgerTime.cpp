@@ -7,6 +7,8 @@
 #include "Level.h"
 #include "Prefabs.h"
 
+#include "RenderLayers.h"
+#include "PeakAEngine/Renderer.h"
 
 BurgerTime::~BurgerTime()
 {
@@ -15,6 +17,9 @@ BurgerTime::~BurgerTime()
 
 void BurgerTime::LoadGame()
 {
+	for (int i{}; i < (int)Layer::SIZE; ++i)
+		RENDERER.AddLayer();
+
 	AchievementSystem::GetInstance().Initialize(m_UseSteam);
 
 	Logger::LogInfo("Started Creating Scene Objects...");
