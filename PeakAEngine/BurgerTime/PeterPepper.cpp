@@ -22,7 +22,6 @@ PeterPepper::PeterPepper(SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhy
 	, m_Lives{ 3 }
 	, m_Score{ 0 }
 	, m_LadderCount{ 0 }
-	, m_CanMoveHorizontally{ false }
 	, m_CanMoveVertically{ false }
 {
 }
@@ -31,13 +30,25 @@ PeterPepper::~PeterPepper() = default;
 
 void PeterPepper::Update()
 {
-	RaycastCallback callback;
-	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &callback);
-	if (callback.m_pOther && callback.m_pOther->hasTag("Platform"))
-		m_CanMoveHorizontally = true;
-	else
-		m_CanMoveHorizontally = false;
 
+	// Ground Checks
+	const float halfWidth{ 40 };
+
+	bool canMoveLeft{ false };
+	bool canMoveRight{ false };
+
+	RaycastCallback firstCallback;
+	// If left side on platform
+	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x - halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &firstCallback);
+	if (firstCallback.m_pOther && firstCallback.m_pOther->HasTag("Platform"))
+		canMoveLeft = true;
+	RaycastCallback secondCallback;
+	// If right side on platform
+	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x + halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &secondCallback);
+	if (secondCallback.m_pOther && secondCallback.m_pOther->HasTag("Platform"))
+		canMoveRight = true;
+
+	// Movement
 	bool moving{ false };
 	if (m_CanMoveVertically)
 	{
@@ -54,20 +65,17 @@ void PeterPepper::Update()
 			moving = true;
 		}
 	}
-	if (m_CanMoveHorizontally)
+	if (canMoveRight && InputManager::GetInstance().IsDown('d'))
 	{
-		if (InputManager::GetInstance().IsDown('d'))
-		{
-			m_pGameObject->Translate(200 * Time::DeltaTime(), 0, 0);
-			m_pSpriteRenderer->SetDirection(Direction::FacingRight);
-			moving = true;
-		}
-		else if (InputManager::GetInstance().IsDown('q'))
-		{
-			m_pGameObject->Translate(-200 * Time::DeltaTime(), 0, 0);
-			m_pSpriteRenderer->SetDirection(Direction::FacingLeft);
-			moving = true;
-		}
+		m_pGameObject->Translate(200 * Time::DeltaTime(), 0, 0);
+		m_pSpriteRenderer->SetDirection(Direction::FacingRight);
+		moving = true;
+	}
+	else if (canMoveLeft && InputManager::GetInstance().IsDown('q'))
+	{
+		m_pGameObject->Translate(-200 * Time::DeltaTime(), 0, 0);
+		m_pSpriteRenderer->SetDirection(Direction::FacingLeft);
+		moving = true;
 	}
 
 	if (!moving)

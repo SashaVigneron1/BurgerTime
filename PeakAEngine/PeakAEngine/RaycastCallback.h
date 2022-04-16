@@ -4,6 +4,7 @@
 #include <b2_world_callbacks.h>
 #include <b2_contact.h>
 
+#include "Logger.h"
 #include "PhysicsComponent.h"
 
 

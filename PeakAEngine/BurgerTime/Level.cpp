@@ -23,11 +23,11 @@ void Level::Initialize(Scene* scene)
 	{
 		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
 		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Platform, TileType::Platform, TileType::Platform, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Ladder, TileType::Empty, TileType::Ladder, TileType::Platform, TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Ladder, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Ladder, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Empty,
+		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Empty,
+		TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
+		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty,
+		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Empty,
+		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Empty,
 		TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform,
 	};
 

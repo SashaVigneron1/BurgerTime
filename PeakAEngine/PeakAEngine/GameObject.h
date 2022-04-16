@@ -52,7 +52,7 @@ public:
 	void OnGUI();
 
 	void AddTag(const std::string& tag) { m_Tags.insert(tag); }
-	bool hasTag(const std::string& tag) { return m_Tags.contains(tag); }
+	bool HasTag(const std::string& tag) { return m_Tags.contains(tag); }
 
 	Scene* GetScene() { return m_pScene; }
 private:

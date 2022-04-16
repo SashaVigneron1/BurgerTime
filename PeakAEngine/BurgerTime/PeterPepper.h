@@ -39,7 +39,6 @@ private:
 	SpriteRenderer* m_pSpriteRenderer;
 	PhysicsComponent* m_pPhysics;
 
-	bool m_CanMoveHorizontally;
 	bool m_CanMoveVertically;
 	int m_LadderCount;
 };
