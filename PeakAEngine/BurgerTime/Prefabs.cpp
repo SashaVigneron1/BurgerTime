@@ -82,6 +82,7 @@ void CreatePlatform(Scene* pScene, PlatformType type, float tileSize, const glm:
 {
 	// GameObject
 	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y + tileSize / 2, 0 }));
+	go->AddTag("Platform");
 	go->AddComponent(new Platform(go));
 
 	// Physics

@@ -31,19 +31,12 @@ PeterPepper::~PeterPepper() = default;
 
 void PeterPepper::Update()
 {
-	//ToDo: More Efficient
-
 	RaycastCallback callback;
-	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 100, &callback);
-	if (callback.m_pOther && callback.m_pOther->GetComponent<Platform>())
-	{
-		Logger::LogInfo(std::to_string(callback.m_fraction));
+	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &callback);
+	if (callback.m_pOther && callback.m_pOther->hasTag("Platform"))
 		m_CanMoveHorizontally = true;
-	}
 	else
-	{
 		m_CanMoveHorizontally = false;
-	}
 
 	bool moving{ false };
 	if (m_CanMoveVertically)

@@ -1,4 +1,5 @@
 #pragma once
+#include <set>
 #include <vector>
 #include "Transform.h"
 
@@ -50,6 +51,9 @@ public:
 
 	void OnGUI();
 
+	void AddTag(const std::string& tag) { m_Tags.insert(tag); }
+	bool hasTag(const std::string& tag) { return m_Tags.contains(tag); }
+
 	Scene* GetScene() { return m_pScene; }
 private:
 	//// Functions
@@ -68,6 +72,8 @@ private:
 
 	GameObject* m_pParentObj;
 	std::vector<GameObject*> m_pChildren;
+
+	std::set<std::string> m_Tags;
 
 	Scene* m_pScene;
 };
