@@ -3,6 +3,11 @@
 #include "BaseObserver.h"
 
 
+Subject::~Subject()
+{
+	RemoveObservers();
+}
+
 void Subject::RemoveObserver(BaseObserver* pObserver)
 {
 	for (size_t i = 0; i < m_pObservers.size(); i++)
@@ -20,5 +25,13 @@ void Subject::Notify(Component* pComponent, Event event)
 	for(auto observer : m_pObservers)
 	{
 		observer->Notify(pComponent, event);
+	}
+}
+
+void Subject::RemoveObservers()
+{
+	for(int i{}; i < m_pObservers.size(); ++i)
+	{
+		m_pObservers.pop_back();
 	}
 }

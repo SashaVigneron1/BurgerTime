@@ -1,9 +1,13 @@
 #pragma once
 #include <set>
 #include <vector>
+
+#include "InputManager.h"
+#include "Scene.h"
 #include "Transform.h"
 
 
+class Command;
 class Scene;
 class Component;
 class Transform;
@@ -27,6 +31,7 @@ public:
 	AddComponent(T* component);
 
 	// Updates & Drawing
+	void Destroy() { m_pScene->Remove(this); };
 	void Update();
 	void FixedUpdate();
 	void Render() const;
@@ -54,6 +59,10 @@ public:
 	void AddTag(const std::string& tag) { m_Tags.insert(tag); }
 	bool HasTag(const std::string& tag) { return m_Tags.contains(tag); }
 
+	void AddCommand(ControllerButton button, Command* pCommand, int controllerIndex = 0) { InputManager::GetInstance().AddCommand(button, pCommand, controllerIndex);  m_pCommands.push_back(pCommand); }
+	void AddCommand(char sdlKey, Command* pCommand) { InputManager::GetInstance().AddCommand(sdlKey, pCommand), m_pCommands.push_back(pCommand); }
+	void DestroyCommands();
+
 	Scene* GetScene() { return m_pScene; }
 private:
 	//// Functions
@@ -72,6 +81,8 @@ private:
 
 	GameObject* m_pParentObj;
 	std::vector<GameObject*> m_pChildren;
+
+	std::vector<Command*> m_pCommands;
 
 	std::set<std::string> m_Tags;
 

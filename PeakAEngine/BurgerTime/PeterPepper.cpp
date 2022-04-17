@@ -30,6 +30,8 @@ PeterPepper::~PeterPepper() = default;
 
 void PeterPepper::Update()
 {
+	// ToDo: Up ladder
+	// ToDo: Down Ladder
 
 	// Ground Checks
 	const float halfWidth{ 40 };
@@ -49,6 +51,7 @@ void PeterPepper::Update()
 		canMoveRight = true;
 
 	// Movement
+	//ToDo: Snap To Level
 	bool moving{ false };
 	if (m_CanMoveVertically)
 	{
@@ -82,6 +85,11 @@ void PeterPepper::Update()
 		m_pSpriteRenderer->SetActiveSprite("Idle");
 	else
 		m_pSpriteRenderer->SetActiveSprite("Walking");
+
+	if (InputManager::GetInstance().IsPressed('r'))
+	{
+		m_pGameObject->Destroy();
+	}
 }
 void PeterPepper::FixedUpdate()
 {

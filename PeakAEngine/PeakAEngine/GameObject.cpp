@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 #include "BaseComponent.h"
+#include "InputManager.h"
 #include "RenderComponent.h"
 #include "Sprite.h"
 
@@ -18,6 +19,7 @@ GameObject::GameObject(Scene* pScene, const glm::vec3& position)
 
 GameObject::~GameObject()
 {
+	DestroyCommands();
 	for (auto baseComp : m_pComponents)
 	{
 		delete baseComp;
@@ -106,6 +108,15 @@ void GameObject::SetPositionDirty()
 	m_PositionIsDirty = true;
 	for (auto child : m_pChildren) 
 		child->SetPositionDirty();
+}
+
+void GameObject::DestroyCommands()
+{
+	for ( auto command : m_pCommands)
+	{
+		InputManager::GetInstance().RemoveCommand(command);
+	}
+
 }
 
 void GameObject::UpdateWorldPosition()

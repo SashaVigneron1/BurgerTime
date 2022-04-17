@@ -7,7 +7,6 @@
 
 
 #include "PeakAEngine/GameObject.h"
-#include "PeakAEngine/InputManager.h"
 
 #include "PeakAEngine/SpriteRenderer.h"
 #include "PeakAEngine/PhysicsComponent.h"
@@ -57,8 +56,8 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 	// Commands
 	auto pPeterPepperDieCommand = new PeterPepper_Die(pPeterPepper);
 	auto* pPeterPepperKillEnemyCommand = new PeterPepper_KillEnemy(pPeterPepper);
-	InputManager::GetInstance().AddCommand('z', pPeterPepperDieCommand);
-	InputManager::GetInstance().AddCommand('d', pPeterPepperKillEnemyCommand);
+	go->AddCommand('z', pPeterPepperDieCommand);
+	go->AddCommand('d', pPeterPepperKillEnemyCommand);
 }
 void CreateLadder(Scene* pScene, float tileSize, const glm::vec2& position)
 {

@@ -8,6 +8,8 @@ class Scene
 	friend Scene& SceneManager::CreateScene(const std::string& name);
 public:
 	GameObject* Add(GameObject* object);
+	void Remove(GameObject* object);
+
 
 	void Update();
 	void FixedUpdate();

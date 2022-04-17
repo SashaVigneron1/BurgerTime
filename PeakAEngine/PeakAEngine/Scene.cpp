@@ -29,6 +29,19 @@ GameObject* Scene::Add(GameObject* object)
 	return object;
 }
 
+void Scene::Remove(GameObject* object)
+{
+	for (int i{}; i < m_Objects.size(); ++i)
+	{
+		if (m_Objects[i] == object)
+		{
+			delete object;
+			m_Objects[i] = m_Objects.back();
+			m_Objects.pop_back();
+		}
+	}
+}
+
 void Scene::Update()
 {
 	for(auto& object : m_Objects)
@@ -40,7 +53,7 @@ void Scene::FixedUpdate()
 {
 	if (auto physicsWorld = GetPhysicsWorld())
 	{
-		physicsWorld->Step(Time::FixedTime(), 10, 8);
+		physicsWorld->Step(Time::FixedTime(), 1, 10);
 		physicsWorld->ClearForces();
 	}
 	

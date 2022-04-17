@@ -11,7 +11,7 @@ class Subject abstract
 {
 public:
 	Subject() = default;
-	virtual ~Subject() = default;
+	virtual ~Subject();
 
 	Subject(const Subject& other) = delete;
 	Subject(Subject&& other) noexcept = delete;
@@ -22,6 +22,7 @@ public:
 	void RemoveObserver(BaseObserver* pObserver);
 
 	void Notify(Component* pComponent, Event event);
+	void RemoveObservers();
 
 private:
 	std::vector<BaseObserver*> m_pObservers;

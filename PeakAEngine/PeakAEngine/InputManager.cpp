@@ -116,6 +116,34 @@ void InputManager::AddCommand(char sdlKey, Command* pCommand)
 	m_KeyCommands[sdlKey].push_back(pCommand);
 }
 
+void InputManager::RemoveCommand(Command* pCommand)
+{
+	for (auto& [button, commands] : m_ControllerCommands)
+	{
+		for (int i{}; i < commands.size(); ++i)
+		{
+			if (pCommand == commands[i])
+			{
+				delete pCommand;
+				commands[i] = commands.back();
+				commands.pop_back();
+			}
+		}
+	}
+	for (auto& [button, commands] : m_KeyCommands)
+	{
+		for (int i{}; i < commands.size(); ++i)
+		{
+			if (pCommand == commands[i])
+			{
+				delete pCommand;
+				commands[i] = commands.back();
+				commands.pop_back();
+			}
+		}
+	}
+}
+
 void InputManager::HandleInput()
 {
 	// Controller

@@ -15,7 +15,6 @@ public:
 	BaseObserver& operator=(BaseObserver&& other) noexcept = delete;
 
 	virtual void Notify(Component* pComponent, Event event) = 0;
-
 private:
 
 };

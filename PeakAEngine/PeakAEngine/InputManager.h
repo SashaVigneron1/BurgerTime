@@ -39,6 +39,7 @@ public:
 
 	void AddCommand(ControllerButton button, Command* pCommand, int controllerIndex = 0);
 	void AddCommand(char sdlKey, Command* pCommand);
+	void RemoveCommand(Command* pCommand);
 
 	void HandleInput();
 	bool ProcessInput();

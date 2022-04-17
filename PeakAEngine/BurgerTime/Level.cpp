@@ -6,6 +6,7 @@
 #include "Platform.h"
 #include "Prefabs.h"
 #include "Tile.h"
+#include "PeakAEngine/Transform.h"
 
 Level::Level()
 	: m_Columns{ 8 }
@@ -21,7 +22,7 @@ void Level::Initialize(Scene* scene)
 
 	m_TileTypes =
 	{
-		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
+		TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty,
 		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
 		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Empty,
 		TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
@@ -66,4 +67,10 @@ void Level::Initialize(Scene* scene)
 			break;
 		}
 	}
+}
+
+void Level::SnapToGrid(Transform* pTransform)
+{
+	auto pos = pTransform->GetWorldPosition();
+
 }
