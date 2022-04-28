@@ -43,6 +43,9 @@
     <Filter Include="Engine Files\Core\Observers">
       <UniqueIdentifier>{f2becb58-70e7-4501-94e1-553a05308b68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Files\Core\Managers\Sound">
+      <UniqueIdentifier>{1e30057e-3590-439c-b107-974fe22b3964}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PeakAEnginePCH.h">
@@ -162,6 +165,15 @@
     <ClInclude Include="RaycastCallback.h">
       <Filter>Engine Files\Core\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSystem.h">
+      <Filter>Engine Files\Core\Managers\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioClip.h">
+      <Filter>Engine Files\Core\Managers\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -274,6 +286,15 @@
     </ClCompile>
     <ClCompile Include="RaycastCallback.cpp">
       <Filter>Engine Files\Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Engine Files\Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundSystem.cpp">
+      <Filter>Engine Files\Core\Managers\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioClip.cpp">
+      <Filter>Engine Files\Core\Managers\Sound</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

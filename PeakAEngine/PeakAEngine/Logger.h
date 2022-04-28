@@ -28,6 +28,7 @@ public:
 	static void LogInfo(const std::string& message) { SetConsoleColor(defaultColor); std::cout << message << std::endl; SetConsoleColor(defaultColor); }
 	static void LogWarning(const std::string& message) { SetConsoleColor(ConsoleColor::Yellow); std::cout << message << std::endl; SetConsoleColor(defaultColor); }
 	static void LogError(const std::string& message) { SetConsoleColor(ConsoleColor::LightRed); std::cerr << message << std::endl; SetConsoleColor(defaultColor); }
+	static void LogError(const char* message, const char* errormsg);
 	static void LogMessage(const std::string& message, ConsoleColor color) { SetConsoleColor(color); std::cout << message << std::endl; SetConsoleColor(defaultColor); }
 	static void LogSuccess(const std::string& message) { SetConsoleColor(ConsoleColor::LightGreen); std::cout << message << std::endl; SetConsoleColor(defaultColor); }
 

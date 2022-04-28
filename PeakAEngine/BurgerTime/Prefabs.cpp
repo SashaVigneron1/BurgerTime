@@ -54,10 +54,11 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 	pPeterPepper->AddObserver(&AchievementSystem::GetInstance());
 
 	// Commands
-	auto pPeterPepperDieCommand = new PeterPepper_Die(pPeterPepper);
-	auto* pPeterPepperKillEnemyCommand = new PeterPepper_KillEnemy(pPeterPepper);
-	go->AddCommand('z', pPeterPepperDieCommand);
-	go->AddCommand('d', pPeterPepperKillEnemyCommand);
+	//ToDo: Fix Deletion
+	/*auto pPeterPepperDieCommand = new PeterPepper_Die(pPeterPepper);
+	auto* pPeterPepperKillEnemyCommand = new PeterPepper_KillEnemy(pPeterPepper);*/
+	/*go->AddCommand('z', pPeterPepperDieCommand);
+	go->AddCommand('d', pPeterPepperKillEnemyCommand);*/
 }
 void CreateLadder(Scene* pScene, float tileSize, const glm::vec2& position)
 {

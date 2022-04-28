@@ -1,4 +1,7 @@
 #pragma once
+
+//ToDo: Constructor private of derived classes
+
 template <typename T>
 class Singleton
 {

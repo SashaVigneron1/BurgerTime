@@ -30,7 +30,7 @@ void Subject::Notify(Component* pComponent, Event event)
 
 void Subject::RemoveObservers()
 {
-	for(int i{}; i < m_pObservers.size(); ++i)
+	for(int i{}; i < (int)m_pObservers.size(); ++i)
 	{
 		m_pObservers.pop_back();
 	}

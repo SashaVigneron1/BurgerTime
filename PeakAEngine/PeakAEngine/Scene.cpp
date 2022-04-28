@@ -31,7 +31,7 @@ GameObject* Scene::Add(GameObject* object)
 
 void Scene::Remove(GameObject* object)
 {
-	for (int i{}; i < m_Objects.size(); ++i)
+	for (int i{}; i < (int)m_Objects.size(); ++i)
 	{
 		if (m_Objects[i] == object)
 		{
