@@ -44,7 +44,7 @@ void BurgerTime::LoadGame()
 	serviceLocator.RegisterSoundSystem(new Logged_SoundSystem());
 	int id = serviceLocator.GetSoundSystem()->AddClip("Resources/test.wav");
 	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	/*std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	serviceLocator.GetSoundSystem()->Play(id);
 	std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	serviceLocator.GetSoundSystem()->Play(id);
@@ -70,6 +70,6 @@ void BurgerTime::LoadGame()
 	serviceLocator.GetSoundSystem()->Play(id);
 	std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	std::this_thread::sleep_for(std::chrono::milliseconds(500));*/
 
 }
