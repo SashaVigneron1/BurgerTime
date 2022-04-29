@@ -31,6 +31,8 @@ public:
 		return (int)m_pClips.size() - 1;
 	}
 
+	void RunEventQueue();
+
 private:
 	std::vector<AudioClip*> m_pClips;
 	std::queue<AudioClip*> m_SoundsToPlay;
@@ -61,26 +63,7 @@ SoundSystem::SoundSystemImpl::SoundSystemImpl()
 	}
 
 	// Credits to Senne De Vocht (2GD06) for helping me with this part.
-	m_Thread = std::thread([&]()
-		{
-			while (true)
-			{
-				// Wait for a sound to be played or for the thread to be stopped
-				std::unique_lock<std::mutex> lock(m_Mutex);
-				m_CV.wait(lock, [&]() { return !m_SoundsToPlay.empty() || m_StopThread.load(); });
-
-				// Check if thread needs to be stopped
-				if (m_StopThread.load())
-					break;
-
-				// Play the sound
-				const auto clip = m_SoundsToPlay.front();
-				clip->Play();
-
-				// Remove the sound from the queue
-				m_SoundsToPlay.pop();
-			}
-		});
+	m_Thread = std::thread(&SoundSystemImpl::RunEventQueue, this);
 }
 
 SoundSystem::SoundSystemImpl::~SoundSystemImpl()
@@ -89,6 +72,27 @@ SoundSystem::SoundSystemImpl::~SoundSystemImpl()
 	m_StopThread.store(true);
 	m_CV.notify_all();
 	m_Thread.join();
+}
+
+void SoundSystem::SoundSystemImpl::RunEventQueue()
+{
+	while (true)
+	{
+		// Wait for a sound to be played or for the thread to be stopped
+		std::unique_lock<std::mutex> lock(m_Mutex);
+		m_CV.wait(lock, [&]() { return !m_SoundsToPlay.empty() || m_StopThread.load(); });
+
+		// Check if thread needs to be stopped
+		if (m_StopThread.load())
+			break;
+
+		// Play the sound
+		const auto clip = m_SoundsToPlay.front();
+		clip->Play();
+
+		// Remove the sound from the queue
+		m_SoundsToPlay.pop();
+	}
 }
 
 
