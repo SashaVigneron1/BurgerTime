@@ -2,14 +2,11 @@
 #include "Level.h"
 
 #include "BurgerTime.h"
-#include "Ladder.h"
 #include "Platform.h"
 #include "Prefabs.h"
 #include "Tile.h"
 #include "PeakAEngine/JsonParser.h"
 #include "PeakAEngine/Transform.h"
-
-#include "rapidjson.h"
 
 Level::Level(bool useJsonFile, const std::string& jsonFilePath)
 	: m_Columns{ 8 }
@@ -78,17 +75,16 @@ void Level::Initialize(Scene* scene)
 		switch (tileType)
 		{
 		case TileType::Ladder:
-
 			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
-			if (tileAbove == TileType::Platform)
-			{
-				CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row - 1) });
-			}
 			break;
 		case TileType::Platform:
 			if (tileAbove == TileType::Ladder || tileUnderneath == TileType::Ladder)
 			{
 				CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+				if (tileUnderneath == TileType::Ladder)
+				{
+					CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row) });
+				}
 			}
 			else
 			{
