@@ -1,49 +1,56 @@
 #include "PeakAEnginePCH.h"
 #include "SceneManager.h"
 
-#include "Renderer.h"
+#include "Logger.h"
 #include "Scene.h"
-
-#include "backends/imgui_impl_opengl2.h"
-#include "backends/imgui_impl_sdl.h"
 
 #include "SDL.h"
 
 void SceneManager::Update()
 {
-	for(auto& scene : m_Scenes)
-	{
-		scene->Update();
-	}
+	if (m_pActiveScene)
+		m_pActiveScene->Update();
 }
 void SceneManager::FixedUpdate()
 {
-	for (auto& scene : m_Scenes)
-	{
-		scene->FixedUpdate();
-	}
+	if (m_pActiveScene)
+		m_pActiveScene->FixedUpdate();
 }
 
 
 void SceneManager::Render()
 {
-	for (const auto& scene : m_Scenes)
-	{
-		scene->Render();
-	}
+	if (m_pActiveScene)
+		m_pActiveScene->Render();
 }
 
 void SceneManager::OnGUI()
 {
-	for (const auto& scene : m_Scenes)
-	{
-		scene->OnGUI();
-	}
+	if (m_pActiveScene)
+		m_pActiveScene->OnGUI();
 }
 
 Scene& SceneManager::CreateScene(const std::string& name)
 {
 	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
 	m_Scenes.push_back(scene);
+
+	if (m_Scenes.size() == 1)
+		m_pActiveScene = scene.get();
+
 	return *scene;
+}
+
+void SceneManager::LoadScene(const std::string& name)
+{
+	for(auto scene : m_Scenes)
+	{
+		if (scene->GetName() == name)
+		{
+			m_pActiveScene = scene.get();
+			return;
+		}
+	}
+
+	Logger::LogError("[SceneManager] Scene with the name '" + name + "' not found.");
 }

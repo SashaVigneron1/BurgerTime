@@ -84,14 +84,20 @@ void SoundSystem::SoundSystemImpl::RunEventQueue()
 
 		// Check if thread needs to be stopped
 		if (m_StopThread.load())
+		{
+			lock.unlock();
 			break;
-
-		// Play the sound
-		const auto clip = m_SoundsToPlay.front();
-		clip->Play();
+		}
 
 		// Remove the sound from the queue
+		const auto clip = m_SoundsToPlay.front();
 		m_SoundsToPlay.pop();
+
+		lock.unlock();
+
+		// Play the sound
+		clip->Play();
+
 	}
 }
 

@@ -25,8 +25,6 @@ void BurgerTime::LoadGame()
 
 	AchievementSystem::GetInstance().Initialize(m_UseSteam);
 
-	
-
 	Logger::LogInfo("Started Creating Scene Objects...");
 	auto& scene = SceneManager::GetInstance().CreateScene("BurgerTime");
 
@@ -35,41 +33,12 @@ void BurgerTime::LoadGame()
 
 	// Enemies
 
-
 	// Player
 	CreatePeterPepper(&scene, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
 
 	// Sound Test
-	auto& serviceLocator = ServiceLocator::GetInstance();
+	/*auto& serviceLocator = ServiceLocator::GetInstance();
 	serviceLocator.RegisterSoundSystem(new Logged_SoundSystem());
 	int id = serviceLocator.GetSoundSystem()->AddClip("Resources/test.wav");
-	serviceLocator.GetSoundSystem()->Play(id);
-	/*std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	serviceLocator.GetSoundSystem()->Play(id);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));*/
-
+	serviceLocator.GetSoundSystem()->Play(id);*/
 }

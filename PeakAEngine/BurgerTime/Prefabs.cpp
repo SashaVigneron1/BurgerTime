@@ -25,7 +25,7 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 	auto go = pScene->Add(new GameObject(pScene, {position.x, position.y, 0}));
 	//// PETER PEPPER
 	// Info
-	const float size = 70;
+	const float size = 35;
 	const float frameSec = 0.05f;
 	// Sprite
 	SpriteRenderer* pSpriteRenderer = go->AddComponent(new SpriteRenderer(go));

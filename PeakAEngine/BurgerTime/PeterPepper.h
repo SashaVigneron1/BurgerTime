@@ -33,7 +33,7 @@ private:
 	friend class PeterPepper_KillEnemy;
 	void KillEnemy();
 
-	// Variables
+	//// Variables
 	int m_Lives;
 	int m_Score;
 	SpriteRenderer* m_pSpriteRenderer;
@@ -41,4 +41,7 @@ private:
 
 	bool m_CanMoveVertically;
 	int m_LadderCount;
+
+	// Movement
+	float m_MovementSpeed;
 };

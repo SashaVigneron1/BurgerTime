@@ -16,7 +16,7 @@ Level::Level()
 
 void Level::Initialize(Scene* scene)
 {
-	const float tileSize = 80.0f;
+	const float tileSize = 40.0f;
 	const glm::vec2 topLeft = { BurgerTime::WindowWidth() / 2 - tileSize * m_Columns / 2 + tileSize/2
 								,BurgerTime::WindowHeight() / 2 - tileSize * m_Rows / 2 + tileSize / 2 };
 

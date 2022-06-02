@@ -23,6 +23,7 @@ PeterPepper::PeterPepper(SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhy
 	, m_Score{ 0 }
 	, m_LadderCount{ 0 }
 	, m_CanMoveVertically{ false }
+	, m_MovementSpeed{ 100.0f }
 {
 }
 
@@ -34,7 +35,7 @@ void PeterPepper::Update()
 	// ToDo: Down Ladder
 
 	// Ground Checks
-	const float halfWidth{ 40 };
+	const float halfWidth{ 20 };
 
 	bool canMoveLeft{ false };
 	bool canMoveRight{ false };
@@ -57,26 +58,26 @@ void PeterPepper::Update()
 	{
 		if (InputManager::GetInstance().IsDown('z'))
 		{
-			m_pGameObject->Translate(0, -200 * Time::DeltaTime(), 0);
+			m_pGameObject->Translate(0, -m_MovementSpeed * Time::DeltaTime(), 0);
 			m_pSpriteRenderer->SetDirection(Direction::FacingAwayFromCamera);
 			moving = true;
 		}
 		else if (InputManager::GetInstance().IsDown('s'))
 		{
-			m_pGameObject->Translate(0, 200 * Time::DeltaTime(), 0);
+			m_pGameObject->Translate(0, m_MovementSpeed * Time::DeltaTime(), 0);
 			m_pSpriteRenderer->SetDirection(Direction::FacingCamera);
 			moving = true;
 		}
 	}
 	if (canMoveRight && InputManager::GetInstance().IsDown('d'))
 	{
-		m_pGameObject->Translate(200 * Time::DeltaTime(), 0, 0);
+		m_pGameObject->Translate(m_MovementSpeed * Time::DeltaTime(), 0, 0);
 		m_pSpriteRenderer->SetDirection(Direction::FacingRight);
 		moving = true;
 	}
 	else if (canMoveLeft && InputManager::GetInstance().IsDown('q'))
 	{
-		m_pGameObject->Translate(-200 * Time::DeltaTime(), 0, 0);
+		m_pGameObject->Translate(-m_MovementSpeed * Time::DeltaTime(), 0, 0);
 		m_pSpriteRenderer->SetDirection(Direction::FacingLeft);
 		moving = true;
 	}
