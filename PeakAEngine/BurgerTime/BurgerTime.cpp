@@ -28,7 +28,7 @@ void BurgerTime::LoadGame()
 	Logger::LogInfo("Started Creating Scene Objects...");
 	auto& scene = SceneManager::GetInstance().CreateScene("BurgerTime");
 
-	m_pLevel = new Level();
+	m_pLevel = new Level(true, "Resources/level1.json");
 	m_pLevel->Initialize(&scene);
 
 	// Enemies

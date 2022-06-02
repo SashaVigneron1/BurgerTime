@@ -6,40 +6,74 @@
 #include "Platform.h"
 #include "Prefabs.h"
 #include "Tile.h"
+#include "PeakAEngine/JsonParser.h"
 #include "PeakAEngine/Transform.h"
 
-Level::Level()
+#include "rapidjson.h"
+
+Level::Level(bool useJsonFile, const std::string& jsonFilePath)
 	: m_Columns{ 8 }
 	, m_Rows{ 8 }
+	, m_UseJsonFile{ useJsonFile }
+	, m_JsonFilePath{ jsonFilePath }
 {
 }
 
 void Level::Initialize(Scene* scene)
 {
+
+	if (m_UseJsonFile)
+	{
+		// Load Json Level
+		m_TileLayout.clear();
+
+		JsonParser parser{ m_JsonFilePath };
+		auto doc = parser.GetDocument();
+
+		for (auto itr = doc->Begin(); itr != doc->End(); ++itr)
+		{
+			auto& pos = *itr;
+
+			m_Columns = pos["Columns"].GetInt();
+			m_Rows = pos["Rows"].GetInt();
+			auto& loc = pos["Tiles"];
+
+			for (int i = 0; i < (int)loc.Size(); i++)
+			{
+				const rapidjson::Value& tileType = loc[i];
+
+				m_TileLayout.push_back((TileType)tileType.GetInt());
+			}
+		}
+	}
+	else
+	{
+		// Load Predefined Level
+		m_TileLayout =
+		{
+			TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty,
+			TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
+			TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Empty,
+			TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
+			TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty,
+			TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Empty,
+			TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Empty,
+			TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform,
+		};
+	}
+
 	const float tileSize = 40.0f;
-	const glm::vec2 topLeft = { BurgerTime::WindowWidth() / 2 - tileSize * m_Columns / 2 + tileSize/2
+	const glm::vec2 topLeft = { BurgerTime::WindowWidth() / 2 - tileSize * m_Columns / 2 + tileSize / 2
 								,BurgerTime::WindowHeight() / 2 - tileSize * m_Rows / 2 + tileSize / 2 };
 
-	m_TileTypes =
+	for (int i = 0; i < (int)m_TileLayout.size(); i++)
 	{
-		TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Empty,
-		TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Ladder, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Empty,
-		TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform, TileType::Platform,
-	};
-
-	for (int i = 0; i < (int)m_TileTypes.size(); i++)
-	{
-		const auto tileType = m_TileTypes[i];
+		const auto tileType = m_TileLayout[i];
 		const int column{ i % m_Columns };
 		const int row{ i / m_Rows };
 
-		TileType tileAbove = (i > m_Columns) ? m_TileTypes[i - m_Columns] : TileType::Empty;
-		TileType tileUnderneath = (i < (int)m_TileTypes.size() - m_Columns) ? m_TileTypes[i + m_Columns] : TileType::Empty;
+		TileType tileAbove = (i > m_Columns) ? m_TileLayout[i - m_Columns] : TileType::Empty;
+		TileType tileUnderneath = (i < (int)m_TileLayout.size() - m_Columns) ? m_TileLayout[i + m_Columns] : TileType::Empty;
 
 		switch (tileType)
 		{

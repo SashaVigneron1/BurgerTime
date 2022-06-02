@@ -7,7 +7,7 @@ class Scene;
 class Level
 {
 public:
-	Level();
+	Level(bool useJsonFile = false, const std::string& jsonFilePath = "");
 	~Level() = default;
 	Level(const Level& other) = delete;
 	Level(Level&& other) noexcept = delete;
@@ -18,8 +18,11 @@ public:
 	void SnapToGrid(Transform* pTransform);
 
 private:
-	std::vector<TileType> m_TileTypes;
+	std::vector<TileType> m_TileLayout;
 	int m_Rows;
 	int m_Columns;
+
+	bool m_UseJsonFile;
+	std::string m_JsonFilePath;
 };
 

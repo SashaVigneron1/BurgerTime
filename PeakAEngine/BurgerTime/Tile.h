@@ -2,9 +2,9 @@
 
 enum class TileType
 {
-	Platform,
-	Ladder,
-	Empty
+	Platform = 0,
+	Ladder = 1,
+	Empty = 2
 };
 
 class Tile
