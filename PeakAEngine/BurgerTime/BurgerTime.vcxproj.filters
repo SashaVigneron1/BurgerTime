@@ -71,6 +71,9 @@
     <ClCompile Include="Platform.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="BurgerPiecePart.cpp">
+      <Filter>Game Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BurgerTime.h">
@@ -119,5 +122,8 @@
       <Filter>Game Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="RenderLayers.h" />
+    <ClInclude Include="BurgerPiecePart.h">
+      <Filter>Game Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

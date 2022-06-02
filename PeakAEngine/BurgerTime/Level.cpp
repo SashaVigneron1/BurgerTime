@@ -91,12 +91,24 @@ void Level::Initialize(Scene* scene)
 				CreatePlatform(scene, PlatformType::normal, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
 			}
 			break;
+		case TileType::BurgerIngredient:
+			//ToDo: Spawn Burger
 
+			// If is bottom ingredient: Lower Bun
+			// Else if top ingredient: Upper Bun
+			// Else: Random Ingredient
+
+			break;
+		case TileType::BurgerCatcher:
+			//ToDo: Spawn BurgerCatcher
+			break;
 		default:
 			// Default case for Empty
 			break;
 		}
 	}
+
+	CreateBurgerIngredient(scene, BurgerPieceType::Cheese, 20, glm::vec2{300,400});
 }
 
 void Level::SnapToGrid(Transform* pTransform)

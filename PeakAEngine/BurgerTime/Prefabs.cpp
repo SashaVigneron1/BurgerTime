@@ -59,6 +59,8 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 	auto* pPeterPepperKillEnemyCommand = new PeterPepper_KillEnemy(pPeterPepper);*/
 	/*go->AddCommand('z', pPeterPepperDieCommand);
 	go->AddCommand('d', pPeterPepperKillEnemyCommand);*/
+
+	go->AddTag("PeterPepper");
 }
 void CreateLadder(Scene* pScene, float tileSize, const glm::vec2& position)
 {
@@ -97,4 +99,13 @@ void CreatePlatform(Scene* pScene, PlatformType type, float tileSize, const glm:
 				SpriteRow{Direction::FacingCamera, 0}
 		},
 		1, 1.f, tileSize, go, (int)Layer::Platforms));
+}
+
+void CreateBurgerIngredient(Scene* pScene, BurgerPieceType type, float tileSize, const glm::vec2& position)
+{
+	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y, 0 }));
+	auto physics = go->AddComponent(new PhysicsComponent(go));
+	go->AddComponent(new BurgerPiece(type, physics, go));
+
+	tileSize;
 }

@@ -40,15 +40,15 @@ void PeterPepper::Update()
 	bool canMoveLeft{ false };
 	bool canMoveRight{ false };
 
-	RaycastCallback firstCallback;
+	RaycastCallback leftCallback;
 	// If left side on platform
-	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x - halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &firstCallback);
-	if (firstCallback.m_pOther && firstCallback.m_pOther->HasTag("Platform"))
+	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x - halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &leftCallback);
+	if (leftCallback.m_pOther && (leftCallback.m_pOther->HasTag("Platform") || leftCallback.m_pOther->HasTag("BurgerPiece")))
 		canMoveLeft = true;
-	RaycastCallback secondCallback;
+	RaycastCallback rightCallback;
 	// If right side on platform
-	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x + halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &secondCallback);
-	if (secondCallback.m_pOther && secondCallback.m_pOther->HasTag("Platform"))
+	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x + halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &rightCallback);
+	if (rightCallback.m_pOther && (rightCallback.m_pOther->HasTag("Platform") || rightCallback.m_pOther->HasTag("BurgerPiece")))
 		canMoveRight = true;
 
 	// Movement
