@@ -4,6 +4,7 @@
 #include "PeakAEngine/GameObject.h"
 #include "Events.h"
 #include "Ladder.h"
+#include "Level.h"
 #include "Platform.h"
 
 #include "3rdParty/imgui-1.87/imgui.h"
@@ -24,7 +25,9 @@ PeterPepper::PeterPepper(SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhy
 	, m_LadderCount{ 0 }
 	, m_CanMoveVertically{ false }
 	, m_MovementSpeed{ 100.0f }
+	, m_pLevel{nullptr}
 {
+	//m_pLevel = GetGameObject()->GetScene()->FindObjectOfType<Level>();
 }
 
 PeterPepper::~PeterPepper() = default;
@@ -91,6 +94,8 @@ void PeterPepper::Update()
 	{
 		m_pGameObject->Destroy();
 	}
+
+	if (m_pLevel) m_pLevel->SnapToGrid(GetGameObject()->GetTransform());
 }
 void PeterPepper::FixedUpdate()
 {

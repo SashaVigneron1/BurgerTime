@@ -2,6 +2,7 @@
 #include "PeakAEngine/BaseComponent.h"
 #include "PeakAEngine/Subject.h"
 
+class Level;
 class PhysicsComponent;
 class SpriteRenderer;
 
@@ -44,4 +45,6 @@ private:
 
 	// Movement
 	float m_MovementSpeed;
+
+	Level* m_pLevel;
 };

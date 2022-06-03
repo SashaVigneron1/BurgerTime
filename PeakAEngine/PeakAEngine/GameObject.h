@@ -45,6 +45,7 @@ public:
 	GameObject* GetChildAt(int index) const;
 
 	// Other
+	Transform* GetTransform() const { return m_pTransform; }
 	void Translate(float x, float y, float z) { m_pTransform->Translate(x, y, z); SetPositionDirty(); }
 	void SetWorldPosition(const float x, const float y) { m_pTransform->SetWorldPosition(x, y, 0); SetPositionDirty(); }
 	void SetLocalPosition(const float x, const float y) { m_pTransform->SetLocalPosition(x, y, 0); SetPositionDirty(); }

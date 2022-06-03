@@ -10,7 +10,7 @@
 #include "PeakAEngine/Time.h"
 #include "PeakAEngine/RaycastCallback.h"
 
-BurgerPiece::BurgerPiece(BurgerPieceType type, PhysicsComponent* pPhysics, GameObject* go)
+BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent* pPhysics, GameObject* go)
 	: Component{ go }
 	, m_Type{ type }
 	, m_IsFalling{false}
@@ -44,14 +44,15 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, PhysicsComponent* pPhysics, GameO
 
 	auto thisGO = GetGameObject();
 	auto scene = thisGO->GetScene();
-	float partOffset = 20.0f;
+	float partOffset = tileSize * (3.f/5.f);
+	float burgerOffsetX = -14.0f;
 
 	// LEFT
 	#pragma region Left
 	// GameObject
 	auto gameObj = new GameObject(scene);
 	gameObj->SetParent(thisGO, false);
-	gameObj->SetLocalPosition(-2*partOffset, 0);
+	gameObj->SetLocalPosition(burgerOffsetX, 0);
 	gameObj->AddTag("IngredientPart");
 	auto burgerPiecePart = gameObj->AddComponent(new BurgerPiecePart(gameObj));
 	burgerPiecePart->AddObserver(this);
@@ -79,7 +80,7 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, PhysicsComponent* pPhysics, GameO
 	// GameObject
 	gameObj = new GameObject(scene);
 	gameObj->SetParent(thisGO, false);
-	gameObj->SetLocalPosition(-partOffset, 0);
+	gameObj->SetLocalPosition(burgerOffsetX + partOffset, 0);
 	gameObj->AddTag("IngredientPart");
 	burgerPiecePart = gameObj->AddComponent(new BurgerPiecePart(gameObj));
 	burgerPiecePart->AddObserver(this);
@@ -106,7 +107,7 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, PhysicsComponent* pPhysics, GameO
 	// GameObject
 	gameObj = new GameObject(scene);
 	gameObj->SetParent(thisGO, false);
-	gameObj->SetLocalPosition(0, 0);
+	gameObj->SetLocalPosition(burgerOffsetX + 2* partOffset, 0);
 	gameObj->AddTag("IngredientPart");
 	burgerPiecePart = gameObj->AddComponent(new BurgerPiecePart(gameObj));
 	burgerPiecePart->AddObserver(this);
@@ -133,7 +134,7 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, PhysicsComponent* pPhysics, GameO
 	// GameObject
 	gameObj = new GameObject(scene);
 	gameObj->SetParent(thisGO, false);
-	gameObj->SetLocalPosition(partOffset, 0);
+	gameObj->SetLocalPosition(burgerOffsetX + 3*partOffset, 0);
 	gameObj->AddTag("IngredientPart");
 	burgerPiecePart = gameObj->AddComponent(new BurgerPiecePart(gameObj));
 	burgerPiecePart->AddObserver(this);

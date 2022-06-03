@@ -9,18 +9,18 @@ class BurgerPiecePart;
 
 enum class BurgerPieceType
 {
-	LowerBun = 0,
-	UpperBun = 1,
-	Cheese = 2,
-	Patty = 3,
-	Tomato = 4,
-	Salad = 5
+	UpperBun = 0,
+	Cheese = 1,
+	Patty = 2,
+	Tomato = 3,
+	Salad = 4,
+	LowerBun = 5
 };
 
 class BurgerPiece final : public Component, public BaseObserver
 {
 public: 
-	BurgerPiece(BurgerPieceType type, PhysicsComponent* physics, GameObject* go);
+	BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent* physics, GameObject* go);
 	virtual ~BurgerPiece() override = default;
 
 	BurgerPiece(const BurgerPiece& other) = delete;

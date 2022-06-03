@@ -74,6 +74,8 @@ void Level::Initialize(Scene* scene)
 
 		TileType tileAbove = (i > m_Rows) ? m_TileLayout[i - m_Rows] : TileType::Empty;
 		TileType tileUnderneath = (i < (int)m_TileLayout.size() - m_Rows) ? m_TileLayout[i + m_Rows] : TileType::Empty;
+		TileType tileLeft = (i > 0) ? m_TileLayout[i - 1] : TileType::Empty;
+		//TileType tileRight = (i < (int)m_TileLayout.size() - 1) ? m_TileLayout[i + 1] : TileType::Empty;
 
 		switch (tileType)
 		{
@@ -100,15 +102,68 @@ void Level::Initialize(Scene* scene)
 			CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
 			break;
 		case TileType::BurgerIngredient:
-			//ToDo: Spawn Burger
+			if (tileLeft != TileType::BurgerIngredient)
+			{
+				BurgerPieceType type = BurgerPieceType::Cheese;
 
-			// If is bottom ingredient: Lower Bun
-			// Else if top ingredient: Upper Bun
-			// Else: Random Ingredient
+				// If is bottom ingredient: Lower Bun
+				// Else if top ingredient: Upper Bun
+				// Else Random Ingredient
+
+				if (row == m_Columns - 1)
+					type = BurgerPieceType::LowerBun;
+				else if (row == 0)
+					type = BurgerPieceType::UpperBun;
+				else
+				{
+					// Check if lowerbun
+					bool isLowerBun = true;
+					for (int j{ row+1 }; j < m_Columns; ++j)
+					{
+						if (m_TileLayout[m_Rows * j + column] == TileType::BurgerIngredient)
+						{
+							isLowerBun = false;
+							break;
+						}
+					}
+
+					if (isLowerBun)
+						type = BurgerPieceType::LowerBun;
+					else
+					{
+						// Check if UpperBun
+						bool isTopBun = true;
+						for (int j{ 0 }; j < row-1; ++j)
+						{
+							if (m_TileLayout[m_Rows * j + column] == TileType::BurgerIngredient)
+							{
+								isTopBun = false;
+								break;
+							}
+						}
+
+						if (isTopBun)
+							type = BurgerPieceType::UpperBun;
+						else
+						{
+							// Select Random Ingredient
+							type = (BurgerPieceType)(rand() % ((int)BurgerPieceType::LowerBun-1) + 1);
+						}
+					}
+				}
+
+				CreateBurgerIngredient(scene, type, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			}
+
+			CreatePlatform(scene, PlatformType::normal, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+
+			
 
 			break;
 		case TileType::BurgerCatcher:
+			
 			//ToDo: Spawn BurgerCatcher
+			
 			break;
 		default:
 			// Default case for Empty
@@ -116,11 +171,9 @@ void Level::Initialize(Scene* scene)
 		}
 	}
 
-	CreateBurgerIngredient(scene, BurgerPieceType::Cheese, 20, glm::vec2{300,400});
 }
 
 void Level::SnapToGrid(Transform* pTransform)
 {
-	auto pos = pTransform->GetWorldPosition();
-
+	pTransform->SetWorldPosition({100,100,0});
 }
