@@ -11,6 +11,7 @@
 
 #include "RenderLayers.h"
 #include "PeakAEngine/Renderer.h"
+#include "PeakAEngine/Scene.h"
 #include "PeakAEngine/ServiceLocator.h"
 
 BurgerTime::~BurgerTime()
@@ -27,11 +28,13 @@ void BurgerTime::LoadGame()
 
 	Logger::LogInfo("Started Creating Scene Objects...");
 	auto& scene = SceneManager::GetInstance().CreateScene("BurgerTime");
+	scene.EnableOnGUI(true);
 
 	m_pLevel = new Level(true, "Resources/level2.json");
 	m_pLevel->Initialize(&scene);
 
 	// Enemies
+
 
 	// Player
 	CreatePeterPepper(&scene, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });

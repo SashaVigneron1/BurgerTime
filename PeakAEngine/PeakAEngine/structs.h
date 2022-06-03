@@ -6,6 +6,12 @@ struct Rectf
 	float x, y;
 	float width, height;
 };
+
+struct Color4f
+{
+	float r, g, b, a;
+};
+
 struct Vector2f
 {
 	Vector2f operator+(const Vector2f& other)

@@ -9,10 +9,12 @@
 #include "RaycastCallback.h"
 
 #include "GameObject.h"
+#include "Renderer.h"
 #include "Scene.h"
 
 PhysicsComponent::PhysicsComponent(GameObject* attachedObj)
-	: Component{attachedObj}
+	: Component{ attachedObj }
+	, m_DebugColor{1,0,0,0.3f}
 {
 	CreatePhysicsBody();
 }
@@ -25,13 +27,22 @@ PhysicsComponent::~PhysicsComponent()
 
 void PhysicsComponent::Update()
 {
-	
+
 }
 
 void PhysicsComponent::FixedUpdate()
 {
 	auto pos = m_pGameObject->GetWorldPosition();
 	m_pBody->SetTransform(b2Vec2{ pos.x, pos.y }, 0);
+}
+
+void PhysicsComponent::Render() const
+{
+	if (Renderer::DrawDebugPhysics)
+	{
+		auto pos = m_pGameObject->GetWorldPosition();
+		Renderer::GetInstance().FillRect({ pos.x + m_Center.x - m_Width / 2,pos.y + m_Center.y - m_Height / 2, m_Width, m_Height }, m_DebugColor, 4);
+	}
 }
 
 void PhysicsComponent::Raycast(Vector2f origin, Vector2f direction, float range, RaycastCallback* outHit)
@@ -48,8 +59,12 @@ void PhysicsComponent::AddBoxCollider(float width, float height, bool isTrigger,
 {
 	if (!m_pBody) CreatePhysicsBody();
 
+	m_Center = center;
+	m_Width = width;
+	m_Height = height;
+
 	b2PolygonShape boxShape{};
-	boxShape.SetAsBox(width/2, height/2, b2Vec2{ center.x, center.y }, 0);
+	boxShape.SetAsBox(width / 2, height / 2, b2Vec2{ center.x, center.y }, 0);
 
 	b2FixtureDef fixture{};
 	fixture.userData.pointer = (uintptr_t)this;
@@ -57,6 +72,11 @@ void PhysicsComponent::AddBoxCollider(float width, float height, bool isTrigger,
 	fixture.shape = &boxShape;
 
 	m_pBody->CreateFixture(&fixture);
+}
+
+void PhysicsComponent::SetDebugColor(const Color4f color)
+{
+	m_DebugColor = color;
 }
 
 void PhysicsComponent::CreatePhysicsBody()

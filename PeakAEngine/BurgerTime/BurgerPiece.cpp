@@ -56,6 +56,7 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	gameObj->SetParent(thisGO, false);
 	gameObj->SetLocalPosition(burgerOffsetX, 0);
 	gameObj->AddTag("IngredientPart");
+	gameObj->AddTag("BurgerPiece");
 	auto burgerPiecePart = gameObj->AddComponent(new BurgerPiecePart(gameObj));
 	burgerPiecePart->AddObserver(this);
 
@@ -73,7 +74,6 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	physics->OnTriggerEnter = std::bind(&BurgerPiecePart::OnTriggerEnter, burgerPiecePart, std::placeholders::_1);
 	physics->OnTriggerExit = std::bind(&BurgerPiecePart::OnTriggerExit, burgerPiecePart, std::placeholders::_1);
 
-	gameObj->AddTag("BurgerPiece");
 	m_pParts.push_back(burgerPiecePart);
 	#pragma endregion
 
@@ -84,6 +84,7 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	gameObj->SetParent(thisGO, false);
 	gameObj->SetLocalPosition(burgerOffsetX + partOffset, 0);
 	gameObj->AddTag("IngredientPart");
+	gameObj->AddTag("BurgerPiece");
 	burgerPiecePart = gameObj->AddComponent(new BurgerPiecePart(gameObj));
 	burgerPiecePart->AddObserver(this);
 
@@ -100,7 +101,6 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	physics->AddBoxCollider(partOffset, partOffset, true);
 	physics->OnTriggerEnter = std::bind(&BurgerPiecePart::OnTriggerEnter, burgerPiecePart, std::placeholders::_1);
 	physics->OnTriggerExit = std::bind(&BurgerPiecePart::OnTriggerExit, burgerPiecePart, std::placeholders::_1);
-	gameObj->AddTag("BurgerPiece");
 	m_pParts.push_back(burgerPiecePart);
 	#pragma endregion
 
@@ -111,6 +111,7 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	gameObj->SetParent(thisGO, false);
 	gameObj->SetLocalPosition(burgerOffsetX + 2* partOffset, 0);
 	gameObj->AddTag("IngredientPart");
+	gameObj->AddTag("BurgerPiece");
 	burgerPiecePart = gameObj->AddComponent(new BurgerPiecePart(gameObj));
 	burgerPiecePart->AddObserver(this);
 
@@ -127,7 +128,6 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	physics->AddBoxCollider(partOffset, partOffset, true);
 	physics->OnTriggerEnter = std::bind(&BurgerPiecePart::OnTriggerEnter, burgerPiecePart, std::placeholders::_1);
 	physics->OnTriggerExit = std::bind(&BurgerPiecePart::OnTriggerExit, burgerPiecePart, std::placeholders::_1);
-	gameObj->AddTag("BurgerPiece");
 	m_pParts.push_back(burgerPiecePart);
 	#pragma endregion
 
@@ -138,6 +138,7 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	gameObj->SetParent(thisGO, false);
 	gameObj->SetLocalPosition(burgerOffsetX + 3*partOffset, 0);
 	gameObj->AddTag("IngredientPart");
+	gameObj->AddTag("BurgerPiece");
 	burgerPiecePart = gameObj->AddComponent(new BurgerPiecePart(gameObj));
 	burgerPiecePart->AddObserver(this);
 
@@ -154,7 +155,6 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	physics->AddBoxCollider(partOffset, partOffset, true);
 	physics->OnTriggerEnter = std::bind(&BurgerPiecePart::OnTriggerEnter, burgerPiecePart, std::placeholders::_1);
 	physics->OnTriggerExit = std::bind(&BurgerPiecePart::OnTriggerExit, burgerPiecePart, std::placeholders::_1);
-	gameObj->AddTag("BurgerPiece");
 	m_pParts.push_back(burgerPiecePart);
 	#pragma endregion
 }

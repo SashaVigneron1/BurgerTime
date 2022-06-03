@@ -54,6 +54,7 @@ public:
 
 	const std::string& GetName() const { return m_Name; }
 	b2World* GetPhysicsWorld() { return m_pPhysicsHandler->GetPhysicsWorld(); }
+	void EnableOnGUI(bool value) { m_EnableOnGUI = value; }
 private:
 	explicit Scene(const std::string& name);
 
@@ -63,5 +64,7 @@ private:
 	static unsigned int m_IdCounter;
 
 	PhysicsHandler* m_pPhysicsHandler;
+
+	bool m_EnableOnGUI;
 };
 

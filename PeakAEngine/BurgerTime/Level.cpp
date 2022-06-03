@@ -63,8 +63,8 @@ void Level::Initialize(Scene* scene)
 	}
 
 	const float tileSize = 40.0f;
-	const glm::vec2 topLeft = { BurgerTime::WindowWidth() / 2 - tileSize * m_Columns / 2 + tileSize / 2
-								,BurgerTime::WindowHeight() / 2 - tileSize * m_Rows / 2 + tileSize / 2 };
+	const glm::vec2 topLeft = { BurgerTime::WindowWidth() / 2 - tileSize * m_Rows / 2 + tileSize / 2
+								,BurgerTime::WindowHeight() / 2 - tileSize * m_Columns / 2 + tileSize / 2 };
 
 	for (int i = 0; i < (int)m_TileLayout.size(); i++)
 	{
@@ -175,5 +175,6 @@ void Level::Initialize(Scene* scene)
 
 void Level::SnapToGrid(Transform* pTransform)
 {
+	//ToDo: Snap To Level
 	pTransform->SetWorldPosition({100,100,0});
 }

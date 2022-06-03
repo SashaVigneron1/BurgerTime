@@ -4,13 +4,17 @@
 #include <b2_world.h>
 
 #include "GameObject.h"
+#include "imgui.h"
+#include "Renderer.h"
 #include "Time.h"
 
 unsigned int Scene::m_IdCounter = 0;
 
-Scene::Scene(const std::string& name) : m_Name(name)
+Scene::Scene(const std::string& name)
+	: m_Name{name}
+	, m_pPhysicsHandler{ new PhysicsHandler() }
+	, m_EnableOnGUI{false}
 {
-	m_pPhysicsHandler = new PhysicsHandler();
 }
 
 Scene::~Scene()
@@ -56,7 +60,6 @@ void Scene::FixedUpdate()
 		physicsWorld->Step(Time::FixedTime(), 1, 10);
 		physicsWorld->ClearForces();
 	}
-	
 
 	for (auto& object : m_Objects)
 	{
@@ -75,9 +78,15 @@ void Scene::Render() const
 
 void Scene::OnGUI()
 {
+	if (!m_EnableOnGUI) return;
+
+
+	ImGui::Begin(m_Name.c_str());
+	ImGui::Checkbox("Enable Debugging", &Renderer::DrawDebugPhysics);
 	for (const auto& object : m_Objects)
 	{
 		object->OnGUI();
 	}
+	ImGui::End();
 }
 

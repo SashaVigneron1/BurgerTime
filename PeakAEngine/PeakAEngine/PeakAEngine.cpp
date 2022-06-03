@@ -106,7 +106,7 @@ void PeakAEngine::Run()
 		auto timer = Time();
 		//auto timer2 = Time(); This is not possible, since Time inherits from SingleInstance
 
-		constexpr float fixedUpdateInterval = MsPerFrame / 100.f;
+		const float fixedUpdateInterval = FixedUpdateInterval;
 		timer.SetFixedTime(fixedUpdateInterval);
 		float fixedUpdateTimer = 0.0f;
 		bool isRunning = true;

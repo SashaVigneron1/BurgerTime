@@ -24,7 +24,11 @@ PeterPepper::PeterPepper(SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhy
 	, m_Score{ 0 }
 	, m_LadderCount{ 0 }
 	, m_CanMoveVertically{ false }
-	, m_MovementSpeed{ 100.0f }
+	, m_IsMovingLeft{ false }
+	, m_IsMovingRight{ false }
+	, m_IsMovingUp{ false }
+	, m_IsMovingDown{ false }
+	, m_MovementSpeed{ 1.f }
 	, m_pLevel{nullptr}
 {
 	//m_pLevel = GetGameObject()->GetScene()->FindObjectOfType<Level>();
@@ -34,54 +38,85 @@ PeterPepper::~PeterPepper() = default;
 
 void PeterPepper::Update()
 {
-	// ToDo: Up ladder
-	// ToDo: Down Ladder
+	// Reset Input
+	m_IsMovingLeft = false;
+	m_IsMovingRight = false;
+	m_IsMovingUp = false;
+	m_IsMovingDown = false;
 
 	// Ground Checks
-	//const float halfWidth{ 20 };
+	const float halfWidth{ 20 };
 
-	bool canMoveLeft{ true };
-	bool canMoveRight{ true };
+	bool canMoveLeft{ false };
+	bool canMoveRight{ false };
+	bool canMoveDown{ false };
+	bool canMoveUp{ false };
 
-	//RaycastCallback leftCallback;
+	constexpr float horizontalCheckRange{ 20 };
+	constexpr float verticalCheckRange{ 75 };
+
+	RaycastCallback leftCallback;
 	// If left side on platform
-	//m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x - halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &leftCallback);
-	//if (leftCallback.m_pOther && (leftCallback.m_pOther->HasTag("Platform") || leftCallback.m_pOther->HasTag("BurgerPiece") || leftCallback.m_pOther->HasTag("Ladder")))
-	//	canMoveLeft = true;
-	//RaycastCallback rightCallback;
-	//// If right side on platform
-	//m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x + halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &rightCallback);
-	//if (rightCallback.m_pOther && (rightCallback.m_pOther->HasTag("Platform") || rightCallback.m_pOther->HasTag("BurgerPiece") || rightCallback.m_pOther->HasTag("Ladder")))
-	//	canMoveRight = true;
+	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x - halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, horizontalCheckRange, &leftCallback);
+	if (leftCallback.m_pOther && leftCallback.ContainsObjectWithTag("Platform")) canMoveLeft = true;
+	RaycastCallback rightCallback;
+	// If right side on platform
+	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x + halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, horizontalCheckRange, &rightCallback);
+	if (rightCallback.m_pOther && rightCallback.ContainsObjectWithTag("Platform")) canMoveRight = true;
 
+	RaycastCallback downCallback;
+	// Check Ladder
+	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y }, { 0,1 }, verticalCheckRange, &downCallback);
+	if (downCallback.m_pOther && downCallback.ContainsObjectWithTag("Ladder"))
+		canMoveDown = true;
+	RaycastCallback upCallback;
+	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y }, { 0,-1 }, verticalCheckRange, &upCallback);
+	if (upCallback.m_pOther && upCallback.ContainsObjectWithTag("Ladder"))
+		canMoveUp = true;
+
+	if ((m_CanMoveVertically || canMoveUp) && InputManager::GetInstance().IsDown('z'))
+		m_IsMovingUp = true;
+	else if ((m_CanMoveVertically || canMoveDown) && InputManager::GetInstance().IsDown('s'))
+		m_IsMovingDown = true;
+	else if (canMoveRight && InputManager::GetInstance().IsDown('d'))
+		m_IsMovingRight = true;
+	else if (canMoveLeft && InputManager::GetInstance().IsDown('q'))
+		m_IsMovingLeft = true;
+
+	/*if (InputManager::GetInstance().IsPressed('r'))
+	{
+		m_pGameObject->Destroy();
+		return;
+	}*/
+
+	if (m_pLevel) m_pLevel->SnapToGrid(GetGameObject()->GetTransform());
+}
+void PeterPepper::FixedUpdate()
+{
 	// Movement
-	//ToDo: Snap To Level
 	bool moving{ false };
-	if (m_CanMoveVertically)
+	if (m_IsMovingLeft)
 	{
-		if (InputManager::GetInstance().IsDown('z'))
-		{
-			m_pGameObject->Translate(0, -m_MovementSpeed * Time::DeltaTime(), 0);
-			m_pSpriteRenderer->SetDirection(Direction::FacingAwayFromCamera);
-			moving = true;
-		}
-		else if (InputManager::GetInstance().IsDown('s'))
-		{
-			m_pGameObject->Translate(0, m_MovementSpeed * Time::DeltaTime(), 0);
-			m_pSpriteRenderer->SetDirection(Direction::FacingCamera);
-			moving = true;
-		}
+		m_pGameObject->Translate(-m_MovementSpeed, 0, 0);
+		m_pSpriteRenderer->SetDirection(Direction::FacingLeft);
+		moving = true;
 	}
-	if (canMoveRight && InputManager::GetInstance().IsDown('d'))
+	else if (m_IsMovingRight)
 	{
-		m_pGameObject->Translate(m_MovementSpeed * Time::DeltaTime(), 0, 0);
+		m_pGameObject->Translate(m_MovementSpeed, 0, 0);
 		m_pSpriteRenderer->SetDirection(Direction::FacingRight);
 		moving = true;
 	}
-	else if (canMoveLeft && InputManager::GetInstance().IsDown('q'))
+	else if (m_IsMovingDown)
 	{
-		m_pGameObject->Translate(-m_MovementSpeed * Time::DeltaTime(), 0, 0);
-		m_pSpriteRenderer->SetDirection(Direction::FacingLeft);
+		m_pGameObject->Translate(0, m_MovementSpeed, 0);
+		m_pSpriteRenderer->SetDirection(Direction::FacingCamera);
+		moving = true;
+	}
+	else if (m_IsMovingUp)
+	{
+		m_pGameObject->Translate(0, -m_MovementSpeed, 0);
+		m_pSpriteRenderer->SetDirection(Direction::FacingAwayFromCamera);
 		moving = true;
 	}
 
@@ -89,17 +124,6 @@ void PeterPepper::Update()
 		m_pSpriteRenderer->SetActiveSprite("Idle");
 	else
 		m_pSpriteRenderer->SetActiveSprite("Walking");
-
-	if (InputManager::GetInstance().IsPressed('r'))
-	{
-		m_pGameObject->Destroy();
-	}
-
-	if (m_pLevel) m_pLevel->SnapToGrid(GetGameObject()->GetTransform());
-}
-void PeterPepper::FixedUpdate()
-{
-
 }
 void PeterPepper::OnGUI()
 {

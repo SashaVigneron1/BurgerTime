@@ -47,4 +47,10 @@ private:
 	float m_MovementSpeed;
 
 	Level* m_pLevel;
+
+
+	bool m_IsMovingLeft;
+	bool m_IsMovingRight;
+	bool m_IsMovingUp;
+	bool m_IsMovingDown;
 };

@@ -10,6 +10,8 @@
 #include "RenderLayer.h"
 #include "ResourceManager.h"
 
+bool Renderer::DrawDebugPhysics = true;
+
 int GetOpenGLDriverIndex()
 {
 	auto openglIndex = -1;
@@ -47,6 +49,7 @@ void Renderer::Render() const
 	// Clear Previous Frame Of RenderTargets
 	for (size_t i = 0; i < m_pLayers.size(); i++)
 	{
+		SDL_SetRenderDrawColor(m_Renderer, 0,0, 0, 0);
 		SDL_SetRenderTarget(m_Renderer, m_pLayers[i]->GetTargetTexture());
 		SDL_RenderFillRect(m_Renderer, NULL);
 	}
@@ -129,6 +132,21 @@ void Renderer::RenderTexture(const Texture2D& texture, Rectf dstRect, Rectf srcR
 
 	SDL_SetRenderTarget(m_Renderer, m_pLayers[layerId]->GetTargetTexture());
 	SDL_RenderCopyEx(m_Renderer, texture.GetSDLTexture(), &src, &dst, 0.0, nullptr, flip);
+	SDL_SetRenderTarget(m_Renderer, nullptr);
+}
+
+void Renderer::FillRect(const Rectf& rect, const Color4f& color, int layerId) const
+{
+	SDL_Rect dst{};
+	dst.x = static_cast<int>(rect.x);
+	dst.y = static_cast<int>(rect.y);
+	dst.w = static_cast<int>(rect.width);
+	dst.h = static_cast<int>(rect.height);
+
+	SDL_SetRenderTarget(m_Renderer, m_pLayers[layerId]->GetTargetTexture());
+	SDL_SetRenderDrawColor(m_Renderer, Uint8(color.r * 255), Uint8(color.g * 255), Uint8(color.b * 255), Uint8(color.a * 255));
+	SDL_RenderFillRect(m_Renderer, &dst);
+	SDL_SetRenderDrawColor(m_Renderer, 0,0,0,255);
 	SDL_SetRenderTarget(m_Renderer, nullptr);
 }
 

@@ -13,6 +13,8 @@ class Renderer final : public Singleton<Renderer>
 {
 	
 public:
+	static bool DrawDebugPhysics;
+
 	void Init(SDL_Window* window);
 	void Render() const;
 	void Destroy();
@@ -20,6 +22,8 @@ public:
 	void RenderTexture(const Texture2D& texture, float x, float y, int layerId = 0) const;
 	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height, int layerId = 0) const;
 	void RenderTexture(const Texture2D& texture, Rectf dstRect, Rectf srcRect = {}, int layerId = 0, bool flipHorizontal = false, bool flipVertical = false) const;
+
+	void FillRect(const Rectf& rect, const Color4f& color = {1,1,1,1}, int layerId = 0) const;
 
 	SDL_Renderer* GetSDLRenderer() const { return m_Renderer; }
 	SDL_Window* GetSDLWindow() const { return m_Window; }
