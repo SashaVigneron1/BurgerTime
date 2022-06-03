@@ -15,7 +15,6 @@ public:
 	Level& operator=(Level&& other) noexcept = delete;
 
 	void Initialize(Scene* scene);
-	void SnapToGrid(Transform* pTransform);
 
 private:
 	std::vector<TileType> m_TileLayout;

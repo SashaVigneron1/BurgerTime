@@ -14,6 +14,7 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	: Component{ go }
 	, m_Type{ type }
 	, m_IsFalling{false}
+	, m_IsCollected{false}
 	, m_pPhysics{ pPhysics }
 	, m_FallingSpeed{ 80.0f }
 	, m_MinFallingTime{0.2f}
@@ -161,6 +162,9 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 
 void BurgerPiece::Update()
 {
+	if (m_IsCollected)
+		return;
+
 	if (m_IsFalling)
 	{
 		// Shift Down
@@ -179,6 +183,10 @@ void BurgerPiece::Update()
 			{
 				// If Other piece: Wait here & set other piece falling
 				auto otherBurger = raycastDownCallback.m_pOther->GetComponent<BurgerPiece>();
+
+				if (otherBurger->IsCollected())
+					return;
+
 				if (otherBurger)
 					otherBurger->SetFalling();
 
@@ -208,11 +216,19 @@ void BurgerPiece::FixedUpdate()
 
 void BurgerPiece::SetFalling()
 {
+	if (m_IsCollected)
+		return;
+
 	m_IsFalling = true;
 	for (auto part : m_pParts)
 	{
 		part->ResetDownPosition();
 	}
+}
+
+void BurgerPiece::StopFalling()
+{
+	m_IsFalling = false;
 }
 
 void BurgerPiece::Notify(Component* /*pComponent*/, Event event)

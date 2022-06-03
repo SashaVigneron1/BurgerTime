@@ -10,7 +10,7 @@
 #include "RenderLayer.h"
 #include "ResourceManager.h"
 
-bool Renderer::DrawDebugPhysics = true;
+bool Renderer::DrawDebugPhysics = false;
 
 int GetOpenGLDriverIndex()
 {

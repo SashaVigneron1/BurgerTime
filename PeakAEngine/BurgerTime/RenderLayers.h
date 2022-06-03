@@ -6,7 +6,8 @@ enum class Layer
 	Platforms = 1,
 	Enemies = 2,
 	Burger = 3,
-	Player = 4,
-	SIZE = 5
+	BurgerCatcher = 4,
+	Player = 5,
+	SIZE = 6
 };
 

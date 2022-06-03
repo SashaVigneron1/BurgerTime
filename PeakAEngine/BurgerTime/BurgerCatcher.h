@@ -1,8 +1,10 @@
 #pragma once
 #include "PeakAEngine/BaseComponent.h"
-#include "PeakAEngine/BaseObserver.h"
+#include "PeakAEngine/Subject.h"
 
-class BurgerCatcher : public Component, public BaseObserver
+class PhysicsComponent;
+
+class BurgerCatcher : public Component, public Subject
 {
 public:
 	BurgerCatcher(GameObject* go);
@@ -17,8 +19,11 @@ public:
 	void OnGUI() override {}
 	void Render() const override {}
 
-	void Notify(Component* pComponent, Event event) override;
+	void OnTriggerEnter(PhysicsComponent* pOther);
+	void OnTriggerExit(PhysicsComponent* pOther);
 
 private:
+	int m_StackCount;
+	float m_HeightPerIngredient;
 };
 

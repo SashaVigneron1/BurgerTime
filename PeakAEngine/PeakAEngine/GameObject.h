@@ -24,7 +24,7 @@ public:
 	GameObject& operator=(GameObject&& other) = delete;
 
 	// Components
-	template<typename T> T* GetComponent() const;
+	template<typename T> inline T* GetComponent() const;
 	template<typename T> void RemoveComponent();
 	template<typename T>
 	std::enable_if_t<std::is_base_of_v<Component, T>, T*>
@@ -93,17 +93,14 @@ private:
 
 
 template <typename  T>
-T* GameObject::GetComponent() const
+inline T* GameObject::GetComponent() const
 {
-	for (auto baseComp : m_pComponents)
-	{
-		T* component = dynamic_cast<T*>(baseComp);
-		if (component)
-		{
-			return component;
-		}
-	}
-	return nullptr;
+	T* pComp{ nullptr };
+
+	for (size_t idx{}; idx < m_pComponents.size() && !pComp; ++idx)
+		pComp = dynamic_cast<T*>(m_pComponents[idx]);
+
+	return pComp;
 }
 
 template <typename T>

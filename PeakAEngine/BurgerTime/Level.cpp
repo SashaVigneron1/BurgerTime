@@ -152,18 +152,14 @@ void Level::Initialize(Scene* scene)
 					}
 				}
 
+				//ToDo: Check If There Already Is A Burger Catcher
+				//If Not: Spawn Burger Catcher
+				CreateBurgerCatcher(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * m_Rows + 2});
+
 				CreateBurgerIngredient(scene, type, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
 			}
 
 			CreatePlatform(scene, PlatformType::normal, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
-
-			
-
-			break;
-		case TileType::BurgerCatcher:
-			
-			//ToDo: Spawn BurgerCatcher
-			
 			break;
 		default:
 			// Default case for Empty
@@ -173,8 +169,3 @@ void Level::Initialize(Scene* scene)
 
 }
 
-void Level::SnapToGrid(Transform* pTransform)
-{
-	//ToDo: Snap To Level
-	pTransform->SetWorldPosition({100,100,0});
-}

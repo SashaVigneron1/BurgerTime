@@ -10,37 +10,6 @@ public:
 	GameObject* Add(GameObject* object);
 	void Remove(GameObject* object);
 
-	template<typename T>
-	T* FindObjectOfType()
-	{
-		for (auto obj : m_Objects)
-		{
-			T* objOfType = dynamic_cast<T*>(obj);
-			if (objOfType)
-			{
-				return objOfType;
-			}
-		}
-		return nullptr;
-	}
-	template<typename T>
-	std::vector<T*> FindObjectsOfType()
-	{
-		std::vector<T*> objects;
-
-		for (auto obj : m_Objects)
-		{
-			T* objOfType = dynamic_cast<T*>(obj);
-			if (objOfType)
-			{
-				objects.push_back(objOfType);
-			}
-		}
-
-		return objects;
-	}
-
-
 	void Update();
 	void FixedUpdate();
 	void Render() const;

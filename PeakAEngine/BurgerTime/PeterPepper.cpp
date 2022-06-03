@@ -29,9 +29,7 @@ PeterPepper::PeterPepper(SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhy
 	, m_IsMovingUp{ false }
 	, m_IsMovingDown{ false }
 	, m_MovementSpeed{ 1.f }
-	, m_pLevel{nullptr}
 {
-	//m_pLevel = GetGameObject()->GetScene()->FindObjectOfType<Level>();
 }
 
 PeterPepper::~PeterPepper() = default;
@@ -82,14 +80,6 @@ void PeterPepper::Update()
 		m_IsMovingRight = true;
 	else if (canMoveLeft && InputManager::GetInstance().IsDown('q'))
 		m_IsMovingLeft = true;
-
-	/*if (InputManager::GetInstance().IsPressed('r'))
-	{
-		m_pGameObject->Destroy();
-		return;
-	}*/
-
-	if (m_pLevel) m_pLevel->SnapToGrid(GetGameObject()->GetTransform());
 }
 void PeterPepper::FixedUpdate()
 {

@@ -34,11 +34,15 @@ public:
 	void Render() const override {}
 
 	void SetFalling();
+	void StopFalling();
 
 	void Notify(Component* pComponent, Event event) override;
+	void SetCollected() { m_IsCollected = true;	}
+	bool IsCollected() const { return m_IsCollected; }
 
 private:
 	bool m_IsFalling;
+	bool m_IsCollected;
 
 	BurgerPieceType m_Type;
 
