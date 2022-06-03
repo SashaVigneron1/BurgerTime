@@ -33,6 +33,8 @@ public:
 	void OnGUI() override {}
 	void Render() const override {}
 
+	void SetFalling();
+
 	void Notify(Component* pComponent, Event event) override;
 
 private:
@@ -44,6 +46,8 @@ private:
 
 	PhysicsComponent* m_pPhysics;
 
+	float m_MinFallingTime;
+	float m_AccFallingTime;
 	float m_FallingSpeed;
 };
 

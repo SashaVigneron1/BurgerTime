@@ -38,21 +38,21 @@ void PeterPepper::Update()
 	// ToDo: Down Ladder
 
 	// Ground Checks
-	const float halfWidth{ 20 };
+	//const float halfWidth{ 20 };
 
-	bool canMoveLeft{ false };
-	bool canMoveRight{ false };
+	bool canMoveLeft{ true };
+	bool canMoveRight{ true };
 
-	RaycastCallback leftCallback;
+	//RaycastCallback leftCallback;
 	// If left side on platform
-	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x - halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &leftCallback);
-	if (leftCallback.m_pOther && (leftCallback.m_pOther->HasTag("Platform") || leftCallback.m_pOther->HasTag("BurgerPiece") || leftCallback.m_pOther->HasTag("Ladder")))
-		canMoveLeft = true;
-	RaycastCallback rightCallback;
-	// If right side on platform
-	m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x + halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &rightCallback);
-	if (rightCallback.m_pOther && (rightCallback.m_pOther->HasTag("Platform") || rightCallback.m_pOther->HasTag("BurgerPiece") || rightCallback.m_pOther->HasTag("Ladder")))
-		canMoveRight = true;
+	//m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x - halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &leftCallback);
+	//if (leftCallback.m_pOther && (leftCallback.m_pOther->HasTag("Platform") || leftCallback.m_pOther->HasTag("BurgerPiece") || leftCallback.m_pOther->HasTag("Ladder")))
+	//	canMoveLeft = true;
+	//RaycastCallback rightCallback;
+	//// If right side on platform
+	//m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x + halfWidth, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &rightCallback);
+	//if (rightCallback.m_pOther && (rightCallback.m_pOther->HasTag("Platform") || rightCallback.m_pOther->HasTag("BurgerPiece") || rightCallback.m_pOther->HasTag("Ladder")))
+	//	canMoveRight = true;
 
 	// Movement
 	//ToDo: Snap To Level

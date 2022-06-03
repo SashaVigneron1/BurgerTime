@@ -42,3 +42,14 @@ void BurgerPiecePart::OnTriggerEnter(PhysicsComponent* pOther)
 void BurgerPiecePart::OnTriggerExit(PhysicsComponent* /*pOther*/)
 {
 }
+
+void BurgerPiecePart::ResetDownPosition()
+{
+	if (m_IsDown)
+	{
+		m_IsDown = false;
+		auto newPos = GetGameObject()->GetLocalPosition();
+		newPos.y -= m_DownOffset;
+		GetGameObject()->SetLocalPosition(newPos);
+	}
+}

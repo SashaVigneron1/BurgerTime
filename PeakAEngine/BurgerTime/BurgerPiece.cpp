@@ -16,6 +16,8 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	, m_IsFalling{false}
 	, m_pPhysics{ pPhysics }
 	, m_FallingSpeed{ 80.0f }
+	, m_MinFallingTime{0.2f}
+	, m_AccFallingTime{}
 {
 	// Spawn 4 BurgerPieceParts
 
@@ -159,29 +161,57 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 
 void BurgerPiece::Update()
 {
+	if (m_IsFalling)
+	{
+		// Shift Down
+		m_pGameObject->Translate(0, m_FallingSpeed * Time::DeltaTime(), 0);
 
+		m_AccFallingTime += Time::DeltaTime();
+		if (m_AccFallingTime > m_MinFallingTime)
+		{
+			float raycastYOffset{ 0.f };
+			float range{ 10.0f };
+
+			RaycastCallback raycastDownCallback;
+			// If left side on platform
+			m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y + raycastYOffset }, { 0,1 }, range, &raycastDownCallback);
+			if (raycastDownCallback.m_pOther && raycastDownCallback.m_pOther->HasTag("BurgerIngredient"))
+			{
+				// If Other piece: Wait here & set other piece falling
+				auto otherBurger = raycastDownCallback.m_pOther->GetComponent<BurgerPiece>();
+				if (otherBurger)
+					otherBurger->SetFalling();
+
+				// If Catcher: Notify Score
+
+				// Move this obj to other objects position
+				auto otherPos = raycastDownCallback.m_pOther->GetWorldPosition();
+				auto thisPos = m_pGameObject->GetWorldPosition();
+				m_pGameObject->Translate(0, otherPos.y - thisPos.y, 0);
+
+				// Put Ingredient Parts Back To Original Position
+				for (auto part : m_pParts)
+				{
+					part->ResetDownPosition();
+				}
+				// Stop Falling
+				m_IsFalling = false;
+				m_AccFallingTime = 0.0f;
+			}
+		}
+	}
 }
 
 void BurgerPiece::FixedUpdate()
 {
-	if (m_IsFalling)
+}
+
+void BurgerPiece::SetFalling()
+{
+	m_IsFalling = true;
+	for (auto part : m_pParts)
 	{
-		// Shift Down
-		auto newPos = GetGameObject()->GetLocalPosition();
-		newPos.y += m_FallingSpeed * Time::FixedTime();
-		GetGameObject()->SetLocalPosition(newPos);
-
-		RaycastCallback raycastDownCallback;
-		// If left side on platform
-		m_pPhysics->Raycast({ m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y }, { 0,1 }, 75, &raycastDownCallback);
-		if (raycastDownCallback.m_pOther)
-		{
-			// If Other piece: Wait here & set other piece falling
-
-			// If Catcher: Notify Score
-
-			//m_IsFalling = false;
-		}
+		part->ResetDownPosition();
 	}
 }
 

@@ -108,4 +108,6 @@ void CreateBurgerIngredient(Scene* pScene, BurgerPieceType type, float tileSize,
 	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y, 0 }));
 	auto physics = go->AddComponent(new PhysicsComponent(go));
 	go->AddComponent(new BurgerPiece(type, tileSize, physics, go));
+	physics->AddBoxCollider(tileSize * 4, tileSize, true);
+	go->AddTag("BurgerIngredient");
 }

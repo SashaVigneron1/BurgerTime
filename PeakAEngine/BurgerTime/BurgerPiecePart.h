@@ -24,6 +24,7 @@ public:
 	void OnTriggerExit(PhysicsComponent* pOther);
 
 	bool IsDown() const { return m_IsDown; }
+	void ResetDownPosition();
 
 private:
 	float m_DownOffset;
