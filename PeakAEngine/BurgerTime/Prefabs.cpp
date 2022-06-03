@@ -79,6 +79,7 @@ void CreateLadder(Scene* pScene, float tileSize, const glm::vec2& position)
 				SpriteRow{Direction::FacingCamera, 0}
 		},
 		1, 1.f, tileSize, go, (int)Layer::Ladders));
+	go->AddTag("Ladder");
 }
 void CreatePlatform(Scene* pScene, PlatformType type, float tileSize, const glm::vec2& position)
 {
@@ -99,6 +100,7 @@ void CreatePlatform(Scene* pScene, PlatformType type, float tileSize, const glm:
 				SpriteRow{Direction::FacingCamera, 0}
 		},
 		1, 1.f, tileSize, go, (int)Layer::Platforms));
+
 }
 
 void CreateBurgerIngredient(Scene* pScene, BurgerPieceType type, float tileSize, const glm::vec2& position)

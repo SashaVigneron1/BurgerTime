@@ -5,8 +5,11 @@ enum class TileType
 	Empty = 0,
 	Platform = 1,
 	Ladder = 2,
-	BurgerIngredient = 3,
-	BurgerCatcher = 4
+	PlatformWithLadderUp = 3,
+	PlatformWithLadderDown = 4,
+	PlatformWithLadderBoth = 5,
+	BurgerIngredient = 6,
+	BurgerCatcher = 7
 };
 
 class Tile

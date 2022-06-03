@@ -23,22 +23,22 @@ void BurgerPiecePart::FixedUpdate()
 
 void BurgerPiecePart::OnTriggerEnter(PhysicsComponent* pOther)
 {
-	if (pOther->GetGameObject()->HasTag("PeterPepper"))
+	if (!m_IsDown)
 	{
-		m_IsDown = true;
+		if (pOther->GetGameObject()->HasTag("PeterPepper"))
+		{
+			m_IsDown = true;
 
-		// Shift Down
-		auto newPos = GetGameObject()->GetLocalPosition();
-		newPos.y += m_DownOffset;
-		GetGameObject()->SetLocalPosition(newPos);
+			// Shift Down
+			auto newPos = GetGameObject()->GetLocalPosition();
+			newPos.y += m_DownOffset;
+			GetGameObject()->SetLocalPosition(newPos);
 
-		Notify(this, Event::OnBurgerPieceDown);
+			Notify(this, Event::OnBurgerPieceDown);
+		}
 	}
-
-	pOther;
 }
 
-void BurgerPiecePart::OnTriggerExit(PhysicsComponent* pOther)
+void BurgerPiecePart::OnTriggerExit(PhysicsComponent* /*pOther*/)
 {
-	pOther;
 }

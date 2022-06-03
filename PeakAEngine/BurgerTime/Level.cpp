@@ -45,7 +45,10 @@ void Level::Initialize(Scene* scene)
 	}
 	else
 	{
-		// Load Predefined Level
+		m_Columns = 8;
+		m_Rows = 8;
+
+		// Load Predefined Level (Incomplete)
 		m_TileLayout =
 		{
 			TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty, TileType::Platform, TileType::Empty, TileType::Empty, TileType::Empty,
@@ -66,11 +69,11 @@ void Level::Initialize(Scene* scene)
 	for (int i = 0; i < (int)m_TileLayout.size(); i++)
 	{
 		const auto tileType = m_TileLayout[i];
-		const int column{ i % m_Columns };
+		const int column{ i % m_Rows };
 		const int row{ i / m_Rows };
 
-		TileType tileAbove = (i > m_Columns) ? m_TileLayout[i - m_Columns] : TileType::Empty;
-		TileType tileUnderneath = (i < (int)m_TileLayout.size() - m_Columns) ? m_TileLayout[i + m_Columns] : TileType::Empty;
+		TileType tileAbove = (i > m_Rows) ? m_TileLayout[i - m_Rows] : TileType::Empty;
+		TileType tileUnderneath = (i < (int)m_TileLayout.size() - m_Rows) ? m_TileLayout[i + m_Rows] : TileType::Empty;
 
 		switch (tileType)
 		{
@@ -79,17 +82,22 @@ void Level::Initialize(Scene* scene)
 			break;
 		case TileType::Platform:
 			if (tileAbove == TileType::Ladder || tileUnderneath == TileType::Ladder)
-			{
 				CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
-				if (tileUnderneath == TileType::Ladder)
-				{
-					CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row) });
-				}
-			}
 			else
-			{
 				CreatePlatform(scene, PlatformType::normal, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
-			}
+			break;
+		case TileType::PlatformWithLadderUp:
+			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row - 1) });
+			CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			break;
+		case TileType::PlatformWithLadderDown:
+			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			break;
+		case TileType::PlatformWithLadderBoth:
+			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row - 1) });
+			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
 			break;
 		case TileType::BurgerIngredient:
 			//ToDo: Spawn Burger

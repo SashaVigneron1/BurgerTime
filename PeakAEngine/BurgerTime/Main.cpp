@@ -5,7 +5,7 @@
 
 int main()
 {
-    BurgerTime engine{500,500,false};
+    BurgerTime engine{700,700,false};
     engine.Run();
     return 0;
 }
