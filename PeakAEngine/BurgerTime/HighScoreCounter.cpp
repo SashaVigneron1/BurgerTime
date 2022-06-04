@@ -26,8 +26,6 @@ HighScoreCounter::~HighScoreCounter() = default;
 
 void HighScoreCounter::Update()
 {
-	if (InputManager::GetInstance().IsPressed('y'))
-		Notify(this, Event::GameOver);
 }
 
 void HighScoreCounter::FixedUpdate()

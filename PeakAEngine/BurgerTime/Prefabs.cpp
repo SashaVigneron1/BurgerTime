@@ -200,7 +200,7 @@ void CreateMainMenu(Scene* pScene, BurgerTime* pGame)
 	go->AddComponent(new Button(Rectf{ 0,0,BurgerTime::WindowWidth() / 2,100 }, spriteRenderer, "Idle", "Highlighted", "Pressed",
 		[]
 		{
-			SceneManager::GetInstance().LoadScene("Level2_Solo");
+			SceneManager::GetInstance().LoadScene("Level1_Solo");
 		}
 		, go));
 
@@ -226,7 +226,7 @@ void CreateMainMenu(Scene* pScene, BurgerTime* pGame)
 	go->AddComponent(new Button(Rectf{ 0,0,BurgerTime::WindowWidth() / 2,100 }, spriteRenderer, "Idle", "Highlighted", "Pressed",
 		[]
 		{
-			SceneManager::GetInstance().LoadScene("Level2_Coop");
+			SceneManager::GetInstance().LoadScene("Level1_Coop");
 		}
 		, go));
 
