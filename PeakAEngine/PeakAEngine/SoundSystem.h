@@ -24,8 +24,6 @@ protected:
 private: 
 	class SoundSystemImpl;
 	SoundSystemImpl* m_pSoundSystem;
-
-
 };
 
 class NULL_SoundSystem final : public SoundSystem

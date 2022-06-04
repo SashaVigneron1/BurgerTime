@@ -4,12 +4,19 @@
 #include <unordered_map>
 #include <utility>
 
+#include "structs.h"
+
 enum class ControllerButton
 {
 	ButtonA = 0x1000,
 	ButtonB = 0x2000,
 	ButtonX = 0x4000,
 	ButtonY = 0x8000
+};
+enum class MouseButton
+{
+	LMB = 0,
+	RMB = 1
 };
 
 class Command;
@@ -49,6 +56,9 @@ public:
 	bool IsPressed(char sdlKey);
 	bool IsUp(ControllerButton button, int controllerIndex = 0) const;
 	bool IsUp(char sdlKey);
+
+	Vector2f GetMousePosition() const;
+	bool GetMouseButtonDown(MouseButton button) const;
 private:
 	class InputManagerImpl;
 	InputManagerImpl* m_pInputManager;

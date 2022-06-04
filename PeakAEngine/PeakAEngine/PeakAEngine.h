@@ -15,6 +15,7 @@ public:
 	virtual void LoadGame();
 	void Cleanup();
 	void Run();
+	void Quit() { m_IsRunning = false; }
 
 	static float WindowWidth() { return m_WindowWidth; }
 	static float WindowHeight() { return m_WindowHeight; }
@@ -27,4 +28,6 @@ protected:
 	inline static const float FixedUpdateInterval = 0.01f;
 	SDL_Window* m_Window{};
 	bool m_UseSteam{ false };
+
+	bool m_IsRunning{ true };
 };

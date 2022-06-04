@@ -1,11 +1,14 @@
 #include "pch.h"
 #include "Level.h"
 
+#include "BurgerCatcher.h"
 #include "BurgerTime.h"
 #include "Platform.h"
 #include "Prefabs.h"
+#include "ScoreCounter.h"
 #include "Tile.h"
 #include "PeakAEngine/JsonParser.h"
+#include "PeakAEngine/Scene.h"
 #include "PeakAEngine/Transform.h"
 
 Level::Level(bool useJsonFile, const std::string& jsonFilePath)
@@ -66,6 +69,8 @@ void Level::Initialize(Scene* scene)
 	const glm::vec2 topLeft = { BurgerTime::WindowWidth() / 2 - tileSize * m_Rows / 2 + tileSize / 2
 								,BurgerTime::WindowHeight() / 2 - tileSize * m_Columns / 2 + tileSize / 2 };
 
+	std::set<int> burgerCatcherColumns;
+
 	for (int i = 0; i < (int)m_TileLayout.size(); i++)
 	{
 		const auto tileType = m_TileLayout[i];
@@ -75,7 +80,6 @@ void Level::Initialize(Scene* scene)
 		TileType tileAbove = (i > m_Rows) ? m_TileLayout[i - m_Rows] : TileType::Empty;
 		TileType tileUnderneath = (i < (int)m_TileLayout.size() - m_Rows) ? m_TileLayout[i + m_Rows] : TileType::Empty;
 		TileType tileLeft = (i > 0) ? m_TileLayout[i - 1] : TileType::Empty;
-		//TileType tileRight = (i < (int)m_TileLayout.size() - 1) ? m_TileLayout[i + 1] : TileType::Empty;
 
 		switch (tileType)
 		{
@@ -152,9 +156,12 @@ void Level::Initialize(Scene* scene)
 					}
 				}
 
-				//ToDo: Check If There Already Is A Burger Catcher
-				//If Not: Spawn Burger Catcher
-				CreateBurgerCatcher(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * m_Rows + 2});
+				if (!burgerCatcherColumns.contains(column) && !burgerCatcherColumns.contains(column-1))
+				{
+					auto catcher = CreateBurgerCatcher(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * m_Rows + 2 });
+					catcher->AddObserver(scene->FindObjectOfType<ScoreCounter>());
+					burgerCatcherColumns.insert(column);
+				}
 
 				CreateBurgerIngredient(scene, type, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
 			}

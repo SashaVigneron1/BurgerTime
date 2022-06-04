@@ -111,7 +111,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\steamworks\redistributable_bin\;$(SolutionDir)\3rdParty\SDL2_mixer\$(Configuration)\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)BurgerTime\Resources" "$(OutputPath)Resources\" /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)BurgerTime\Resources" "$(OutputPath)Resources\" /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -137,7 +137,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\steamworks\redistributable_bin\;$(SolutionDir)\3rdParty\SDL2_mixer\$(Configuration)\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)BurgerTime\Resources" "$(OutputPath)Resources\" /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)BurgerTime\Resources" "$(OutputPath)Resources\" /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -159,7 +159,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\steamworks\redistributable_bin\win64\;$(SolutionDir)\3rdParty\SDL2_mixer\$(Configuration)\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)BurgerTime\Resources" "$(OutputPath)Resources\" /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)BurgerTime\Resources" "$(OutputPath)Resources\" /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -185,7 +185,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\steamworks\redistributable_bin\win64\;$(SolutionDir)\3rdParty\SDL2_mixer\$(Configuration)\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)BurgerTime\Resources" "$(OutputPath)Resources\" /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)BurgerTime\Resources" "$(OutputPath)Resources\" /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -196,8 +196,10 @@
     <ClCompile Include="BurgerPiecePart.cpp" />
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="Commands.cpp" />
+    <ClCompile Include="HighScoreCounter.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelCounter.cpp" />
     <ClCompile Include="LivesCounter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="pch.cpp">
@@ -206,6 +208,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PepperCounter.cpp" />
     <ClCompile Include="PeterPepper.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Prefabs.cpp" />
@@ -221,10 +224,13 @@
     <ClInclude Include="BurgerTime.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Events.h" />
+    <ClInclude Include="HighScoreCounter.h" />
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelCounter.h" />
     <ClInclude Include="LivesCounter.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PepperCounter.h" />
     <ClInclude Include="PeterPepper.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Prefabs.h" />

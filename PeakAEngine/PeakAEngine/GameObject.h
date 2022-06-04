@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "InputManager.h"
-#include "Scene.h"
 #include "Transform.h"
 
 
@@ -31,7 +30,7 @@ public:
 	AddComponent(T* component);
 
 	// Updates & Drawing
-	void Destroy() { m_pScene->Remove(this); };
+	void Destroy();
 	void Update();
 	void FixedUpdate();
 	void Render() const;

@@ -1,25 +1,24 @@
 #include "pch.h"
-#include "LivesCounter.h"
+#include "LevelCounter.h"
 
 #include "PeakAEngine/GameObject.h"
 #include "PeakAEngine/Text.h"
 
-#include "PeterPepper.h"
 #include "Events.h"
 #include "RenderLayers.h"
 #include "PeakAEngine/Sprite.h"
 #include "PeakAEngine/SpriteRenderer.h"
 
-LivesCounter::LivesCounter(float size, int maxLives, GameObject* attachedObj)
+LevelCounter::LevelCounter(float size, int maxLevels, GameObject* attachedObj)
 	: Component(attachedObj)
-	, m_Lives{maxLives}
-	, m_MaxLives{maxLives}
+	, m_Level{ 0 }
+	, m_MaxLevels{maxLevels}
 {
 	auto thisGO = GetGameObject();
 	auto scene = thisGO->GetScene();
 	float offset = size + 5.0f;
 
-	for(int i{}; i < m_MaxLives; ++i)
+	for (int i{}; i < m_MaxLevels; ++i)
 	{
 		// Create Sprite Object
 		auto gameObj = new GameObject(scene);
@@ -27,49 +26,49 @@ LivesCounter::LivesCounter(float size, int maxLives, GameObject* attachedObj)
 		gameObj->SetLocalPosition(0, -offset * i);
 
 		auto spriteRenderer = gameObj->AddComponent(new SpriteRenderer(gameObj));
-		spriteRenderer->AddSprite("Idle", new  Sprite("UI/Life.png",
+		spriteRenderer->AddSprite("Idle", new  Sprite("UI/Level.png",
 			{
 					SpriteRow{Direction::FacingCamera, 0}
 			},
 			1, 1.f, size, gameObj, (int)Layer::UI));
 
-		m_LivesObjects.push_back(gameObj);
+		m_LevelObjects.push_back(gameObj);
 	}
 
 	UpdateUI();
 }
 
-LivesCounter::~LivesCounter() = default;
+LevelCounter::~LevelCounter() = default;
 
-void LivesCounter::Update()
+void LevelCounter::Update()
 {
 	if (InputManager::GetInstance().IsPressed('l'))
-		Notify(this, Event::OnPlayerDied);
+		Notify(this, Event::OnLevelComplete);
 }
 
-void LivesCounter::FixedUpdate()
+void LevelCounter::FixedUpdate()
 {
 
 }
 
-void LivesCounter::Notify(Component * /*pComponent*/, Event event)
+void LevelCounter::Notify(Component* /*pComponent*/, Event event)
 {
-	if (event == Event::OnPlayerDied)
+	if (event == Event::OnLevelComplete)
 	{
-		--m_Lives;
+		++m_Level;
 	}
 
 	UpdateUI();
 }
 
-void LivesCounter::UpdateUI()
+void LevelCounter::UpdateUI()
 {
-	for(int i{}; i < m_MaxLives; ++i)
+	for (int i{}; i < m_MaxLevels; ++i)
 	{
-		if (i < m_Lives)
-			m_LivesObjects[i]->SetActive(true);
+		if (i < m_Level)
+			m_LevelObjects[i]->SetActive(true);
 		else
-			m_LivesObjects[i]->SetActive(false);
+			m_LevelObjects[i]->SetActive(false);
 	}
 }
 

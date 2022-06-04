@@ -4,14 +4,14 @@
 #include "PeakAEngine/GameObject.h"
 #include "PeakAEngine/Text.h"
 
-#include "PeterPepper.h"
 #include "Events.h"
 
 ScoreCounter::ScoreCounter(GameObject* attachedObj, Text* pTextComponent)
 	: Component(attachedObj)
 	, m_pText{ pTextComponent }
+	, m_Score{ 0 }
 {
-
+	UpdateText();
 }
 
 ScoreCounter::~ScoreCounter() = default;
@@ -26,19 +26,27 @@ void ScoreCounter::FixedUpdate()
 
 }
 
-void ScoreCounter::Notify(Component* pComponent, Event event)
+void ScoreCounter::Notify(Component* /*pComponent*/, Event event)
 {
-	if (event == Event::OnBurgerFell || event == Event::OnEnemyDied)
+	switch (event)
 	{
-		auto peter = dynamic_cast<PeterPepper*>(pComponent);
-		if (peter)
-		{
-			std::string text = "Score: ";
-			text += std::to_string(peter->GetScore());
-			if (m_pText) m_pText->SetText(text);
-		}
-
+		case Event::OnBurgerFell:
+			m_Score += 50;
+			break;
+		case Event::OnEnemyDied:
+			m_Score += 100;
+			break;
+		case Event::OnPlayerDied:
+			m_Score = 0;
+			break;
 	}
 
+	UpdateText();
+}
+
+void ScoreCounter::UpdateText()
+{
+	std::string text = std::to_string(m_Score);
+	if (m_pText) m_pText->SetText(text);
 }
 

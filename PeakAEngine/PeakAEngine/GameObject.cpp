@@ -4,6 +4,7 @@
 #include "BaseComponent.h"
 #include "InputManager.h"
 #include "RenderComponent.h"
+#include "Scene.h"
 #include "Sprite.h"
 
 #include "Transform.h"
@@ -31,6 +32,11 @@ GameObject::~GameObject()
 	delete m_pTransform;
 }
 
+
+void GameObject::Destroy()
+{
+	m_pScene->Remove(this);
+}
 
 void GameObject::Update()
 {

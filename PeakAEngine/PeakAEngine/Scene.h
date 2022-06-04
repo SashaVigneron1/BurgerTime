@@ -1,14 +1,26 @@
 #pragma once
 #include "SceneManager.h"
 #include "PhysicsHandler.h"
+#include "GameObject.h"
 
-class GameObject;
 class Scene
 {
 	friend Scene& SceneManager::CreateScene(const std::string& name);
 public:
 	GameObject* Add(GameObject* object);
 	void Remove(GameObject* object);
+
+	template<typename T>
+	inline T* FindObjectOfType() const
+	{
+		for (auto obj : m_Objects)
+		{
+			auto objOfType = obj->GetComponent<T>();
+			if (objOfType)
+				return objOfType;
+		}
+		return nullptr;
+	}
 
 	void Update();
 	void FixedUpdate();

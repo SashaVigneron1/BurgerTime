@@ -46,9 +46,6 @@
     <Filter Include="Engine Files\Core\Managers\Sound">
       <UniqueIdentifier>{1e30057e-3590-439c-b107-974fe22b3964}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine Files\Utils">
-      <UniqueIdentifier>{c5d3e24b-d6dc-4685-a529-db18fa5592a4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PeakAEnginePCH.h">
@@ -177,8 +174,14 @@
     <ClInclude Include="AudioClip.h">
       <Filter>Engine Files\Core\Managers\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClInclude>
     <ClInclude Include="JsonParser.h">
-      <Filter>Engine Files\Utils</Filter>
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FileIO.h">
+      <Filter>Engine Files\Core\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -302,8 +305,14 @@
     <ClCompile Include="AudioClip.cpp">
       <Filter>Engine Files\Core\Managers\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Engine Files\GameObjects\Components\BaseComponents</Filter>
+    </ClCompile>
     <ClCompile Include="JsonParser.cpp">
-      <Filter>Engine Files\Utils</Filter>
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FileIO.cpp">
+      <Filter>Engine Files\Core\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

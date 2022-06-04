@@ -260,7 +260,9 @@ xcopy $(SolutionDir)3rdParty\steamworks\steam_appid.txt $(OutputPath) /R /Y
     <ClInclude Include="AudioClip.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseObserver.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="FileIO.h" />
     <ClInclude Include="JsonParser.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSCounter.h" />
@@ -352,7 +354,9 @@ xcopy $(SolutionDir)3rdParty\steamworks\steam_appid.txt $(OutputPath) /R /Y
     <ClCompile Include="AudioClip.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="BaseObserver.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Command.cpp" />
+    <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="JsonParser.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSCounter.cpp" />

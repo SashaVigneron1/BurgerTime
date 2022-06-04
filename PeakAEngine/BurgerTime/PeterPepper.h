@@ -2,6 +2,7 @@
 #include "PeakAEngine/BaseComponent.h"
 #include "PeakAEngine/Subject.h"
 
+class PepperCounter;
 class Level;
 class PhysicsComponent;
 class SpriteRenderer;
@@ -9,7 +10,7 @@ class SpriteRenderer;
 class PeterPepper final : public Component, public Subject
 {
 public:
-	PeterPepper(SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhysics, GameObject* attachedObj);
+	PeterPepper(PepperCounter* pPepperCounter, SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhysics, GameObject* attachedObj);
 	virtual ~PeterPepper() override;
 	PeterPepper(const PeterPepper& other) = delete;
 	PeterPepper(PeterPepper&& other) = delete;
@@ -37,6 +38,7 @@ private:
 	//// Variables
 	int m_Lives;
 	int m_Score;
+	PepperCounter* m_pPepperCounter;
 	SpriteRenderer* m_pSpriteRenderer;
 	PhysicsComponent* m_pPhysics;
 

@@ -210,9 +210,6 @@ bool InputManager::ProcessInput()
 		{
 			m_Keys[(char)e.key.keysym.sym] = KeyInput{ false, false, true };
 		}
-		else if (e.type == SDL_MOUSEBUTTONDOWN) {
-
-		}
 
 		// ImGui Process Events
 		ImGui_ImplSDL2_ProcessEvent(&e);
@@ -245,5 +242,36 @@ bool InputManager::IsDown(char sdlKey)
 bool InputManager::IsUp(char sdlKey)
 {
 	return m_Keys[(char)sdlKey].isReleased;
+}
+
+Vector2f InputManager::GetMousePosition() const
+{
+	int x, y;
+
+
+	SDL_GetMouseState(&x, &y);
+	//std::cout << "MousePos:\t" << x << " " << y << std::endl;
+
+	return { (float)x, (float)y };
+}
+
+bool InputManager::GetMouseButtonDown(MouseButton button) const
+{
+	int x, y;
+	Uint32 buttons;
+
+	SDL_PumpEvents();  // make sure we have the latest mouse state.
+
+	buttons = SDL_GetMouseState(&x, &y);
+
+	switch(button)
+	{
+		case MouseButton::LMB:
+			return buttons & SDL_BUTTON_LMASK;
+		case MouseButton::RMB:
+			return buttons & SDL_BUTTON_RMASK;
+	}
+
+	return false;
 }
 #pragma endregion

@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "PeakAEngine/BaseComponent.h"
 #include "PeakAEngine/BaseObserver.h"
 
@@ -8,7 +10,7 @@ class Text;
 class LivesCounter final : public Component, public BaseObserver
 {
 public:
-	LivesCounter(GameObject* attachedObj, Text* pTextComponent);
+	LivesCounter(float size, int maxLives, GameObject* attachedObj);
 	virtual ~LivesCounter() override;
 	LivesCounter(const LivesCounter& other) = delete;
 	LivesCounter(LivesCounter&& other) = delete;
@@ -22,8 +24,12 @@ public:
 
 	void Notify(Component* pComponent, Event event) override;
 
+	void UpdateUI();
 
 private:
-	Text* m_pText;
+	int m_MaxLives;
+	int m_Lives;
+
+	std::vector<GameObject*> m_LivesObjects;
 };
 

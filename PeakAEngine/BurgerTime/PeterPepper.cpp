@@ -5,6 +5,7 @@
 #include "Events.h"
 #include "Ladder.h"
 #include "Level.h"
+#include "PepperCounter.h"
 #include "Platform.h"
 
 #include "3rdParty/imgui-1.87/imgui.h"
@@ -16,8 +17,10 @@
 
 #include "PeakAEngine/SpriteRenderer.h"
 
-PeterPepper::PeterPepper(SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhysics, GameObject* attachedObj)
+
+PeterPepper::PeterPepper(PepperCounter* pPepperCounter, SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhysics, GameObject* attachedObj)
 	: Component{ attachedObj }
+	, m_pPepperCounter{ pPepperCounter }
 	, m_pSpriteRenderer{ pSpriteRenderer }
 	, m_pPhysics{ pPhysics }
 	, m_Lives{ 3 }
@@ -80,6 +83,16 @@ void PeterPepper::Update()
 		m_IsMovingRight = true;
 	else if (canMoveLeft && InputManager::GetInstance().IsDown('q'))
 		m_IsMovingLeft = true;
+
+	if (InputManager::GetInstance().IsPressed('e'))
+	{
+		if (m_pPepperCounter->GetPepperCount())
+		{
+			//ToDo: Use Pepper
+			Notify(this, Event::OnUsePepper);
+		}
+	}	
+
 }
 void PeterPepper::FixedUpdate()
 {
@@ -157,9 +170,8 @@ void PeterPepper::Die()
 
 void PeterPepper::KillEnemy()
 {
-	// Teachers: put m_Score in the observer, not in the subject
-	// ToDo: Ask Teachers
 
+	//ToDo: Cleanup this code
 
 	// This magic number is just for testing purposes
 	m_Score += 250;

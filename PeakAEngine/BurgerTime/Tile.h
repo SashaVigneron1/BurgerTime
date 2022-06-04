@@ -8,7 +8,7 @@ enum class TileType
 	PlatformWithLadderUp = 3,
 	PlatformWithLadderDown = 4,
 	PlatformWithLadderBoth = 5,
-	BurgerIngredient = 6
+	BurgerIngredient = 6,
 };
 
 class Tile

@@ -27,17 +27,45 @@ void BurgerTime::LoadGame()
 	AchievementSystem::GetInstance().Initialize(m_UseSteam);
 
 	Logger::LogInfo("Started Creating Scene Objects...");
-	auto& scene = SceneManager::GetInstance().CreateScene("BurgerTime");
-	scene.EnableOnGUI(true);
 
-	m_pLevel = new Level(true, "Resources/level2.json");
-	m_pLevel->Initialize(&scene);
+	#pragma region MainMenu
+	auto& mainMenu = SceneManager::GetInstance().CreateScene("MainMenu");
+	mainMenu.EnableOnGUI(false);
+
+	CreateMainMenu(&mainMenu, this);
+
+	#pragma endregion
+
+	#pragma region Level2Solo
+	auto& level2Solo = SceneManager::GetInstance().CreateScene("Level2_Solo");
+	level2Solo.EnableOnGUI(true);
+
+	// UI
+	CreateUI(&level2Solo);
+
+	// Level
+	m_pLevel = new Level(true, "Resources/Levels/level2.json");
+	m_pLevel->Initialize(&level2Solo);
+
+	// Enemies
+
+	// Player
+	CreatePeterPepper(&level2Solo, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
+	#pragma endregion
+
+	#pragma region Level2Coop
+	auto& level2Coop = SceneManager::GetInstance().CreateScene("Level2_Coop");
+	level2Coop.EnableOnGUI(true);
+
+	m_pLevel = new Level(true, "Resources/Levels/level2.json");
+	m_pLevel->Initialize(&level2Coop);
 
 	// Enemies
 
 
-	// Player
-	CreatePeterPepper(&scene, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
+	// Players
+	CreatePeterPepper(&level2Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
+	#pragma endregion
 
 	// Sound Test
 	/*auto& serviceLocator = ServiceLocator::GetInstance();

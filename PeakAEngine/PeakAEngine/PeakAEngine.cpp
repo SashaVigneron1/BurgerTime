@@ -109,8 +109,7 @@ void PeakAEngine::Run()
 		const float fixedUpdateInterval = FixedUpdateInterval;
 		timer.SetFixedTime(fixedUpdateInterval);
 		float fixedUpdateTimer = 0.0f;
-		bool isRunning = true;
-		while (isRunning)
+		while (m_IsRunning)
 		{
 			int currFrame = 0;
 
@@ -121,7 +120,7 @@ void PeakAEngine::Run()
 			fixedUpdateTimer += Time::DeltaTime();
 
 			imguiManager.InitializeFrame();
-			isRunning = input.ProcessInput();
+			m_IsRunning = input.ProcessInput();
 			input.HandleInput();
 			sceneManager.Update();
 			sceneManager.OnGUI();

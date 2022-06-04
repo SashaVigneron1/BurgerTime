@@ -22,7 +22,10 @@ public:
 
 	void Notify(Component* pComponent, Event event) override;
 
+	void UpdateText();
+	int GetScore() const { return m_Score; }
 
 private:
 	Text* m_pText;
+	int m_Score;
 };

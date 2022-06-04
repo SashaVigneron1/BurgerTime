@@ -3,8 +3,17 @@
 enum class Event
 {
 	OnPlayerDied = 0,
+
 	OnBurgerFell = 1,
 	OnEnemyDied = 2,
+	OnBurgerPieceDown = 4,
+
 	OnGameStarted = 3,
-	OnBurgerPieceDown = 4
+
+	OnUsePepper = 5,
+
+	OnLevelComplete = 5,
+	GameOver = 7
+
+
 };

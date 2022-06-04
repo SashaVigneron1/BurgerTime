@@ -8,6 +8,7 @@ enum class Layer
 	Burger = 3,
 	BurgerCatcher = 4,
 	Player = 5,
-	SIZE = 6
+	UI = 6,
+	SIZE = 7
 };
 
