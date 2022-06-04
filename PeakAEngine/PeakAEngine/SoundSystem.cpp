@@ -25,9 +25,9 @@ public:
 		m_SoundsToPlay.push(m_pClips[clipId]);
 		m_CV.notify_all();
 	}
-	int AddClip(const std::string& clipFilePath)
+	int AddClip(const std::string& clipFilePath, int loops = 0)
 	{
-		m_pClips.push_back(new AudioClip{ clipFilePath });
+		m_pClips.push_back(new AudioClip{ clipFilePath, loops });
 		return (int)m_pClips.size() - 1;
 	}
 
@@ -112,7 +112,7 @@ void SoundSystem::Play(int clipId)
 	m_pSoundSystem->Play(clipId);
 }
 
-int SoundSystem::AddClip(const std::string& clipFilePath)
+int SoundSystem::AddClip(const std::string& clipFilePath, int loops)
 {
-	return m_pSoundSystem->AddClip(clipFilePath);
+	return m_pSoundSystem->AddClip(clipFilePath, loops);
 }

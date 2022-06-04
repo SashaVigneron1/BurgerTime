@@ -4,8 +4,9 @@
 #include "Logger.h"
 #include "SDL_mixer.h"
 
-AudioClip::AudioClip(const std::string& filepath)
+AudioClip::AudioClip(const std::string& filepath, int loops)
 	: m_FilePath{ filepath }
+	, m_Loops{ loops }
 {
 	m_pChunk = Mix_LoadWAV(m_FilePath.c_str());
 	if (m_pChunk == nullptr)
@@ -23,7 +24,7 @@ AudioClip::~AudioClip()
 void AudioClip::Play()
 {
 	if (m_pChunk)
-		Mix_PlayChannel(-1, m_pChunk, 0);
+		Mix_PlayChannel(-1, m_pChunk, m_Loops);
 }
 
 void AudioClip::SetVolume(int volume)

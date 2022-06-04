@@ -139,8 +139,8 @@ void BurgerTime::LoadGame()
 	#pragma endregion
 
 	// Sound Test
-	/*auto& serviceLocator = ServiceLocator::GetInstance();
+	auto& serviceLocator = ServiceLocator::GetInstance();
 	serviceLocator.RegisterSoundSystem(new Logged_SoundSystem());
-	int id = serviceLocator.GetSoundSystem()->AddClip("Resources/test.wav");
-	serviceLocator.GetSoundSystem()->Play(id);*/
+	int id = serviceLocator.GetSoundSystem()->AddClip("Resources/Sounds/BackgroundMusic.wav", -1);
+	serviceLocator.GetSoundSystem()->Play(id);
 }

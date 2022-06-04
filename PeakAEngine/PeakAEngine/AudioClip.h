@@ -6,7 +6,7 @@ class AudioClip final
 {
 public:
 	//ToDo: Move this to resourcemanager
-	AudioClip(const std::string& filepath);
+	AudioClip(const std::string& filepath, int loops = 0);
 	~AudioClip();
 
 	AudioClip(const AudioClip& other) = delete;
@@ -21,5 +21,6 @@ public:
 private:
 	std::string m_FilePath;
 	Mix_Chunk* m_pChunk;
+	int m_Loops;
 };
 
