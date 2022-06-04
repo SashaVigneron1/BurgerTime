@@ -41,10 +41,10 @@ void BurgerTime::LoadGame()
 	level2Solo.EnableOnGUI(true);
 
 	// UI
-	CreateUI(&level2Solo);
+	CreateUI(&level2Solo, 2);
 
 	// Level
-	m_pLevel = new Level(true, "Resources/Levels/level2.json");
+	m_pLevel = new Level(true, true, "Resources/Levels/level2.json");
 	m_pLevel->Initialize(&level2Solo);
 
 	// Enemies
@@ -57,7 +57,10 @@ void BurgerTime::LoadGame()
 	auto& level2Coop = SceneManager::GetInstance().CreateScene("Level2_Coop");
 	level2Coop.EnableOnGUI(true);
 
-	m_pLevel = new Level(true, "Resources/Levels/level2.json");
+	// UI
+	CreateUI(&level2Coop, 1);
+
+	m_pLevel = new Level(false, true, "Resources/Levels/level2.json");
 	m_pLevel->Initialize(&level2Coop);
 
 	// Enemies

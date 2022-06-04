@@ -86,6 +86,9 @@
     <ClCompile Include="LevelCounter.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="LevelCompleter.cpp">
+      <Filter>Game Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BurgerTime.h">
@@ -147,6 +150,9 @@
       <Filter>Game Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="LevelCounter.h">
+      <Filter>Game Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelCompleter.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

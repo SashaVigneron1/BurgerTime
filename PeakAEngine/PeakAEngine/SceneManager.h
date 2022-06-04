@@ -8,11 +8,16 @@ class SceneManager final : public Singleton<SceneManager>
 public:
 	Scene& CreateScene(const std::string& name);
 	void LoadScene(const std::string& name);
+	void LoadNextScene();
 
+	void RemoveMarkedObjects();
 	void Update();
 	void FixedUpdate();
 	void Render();
 	void OnGUI();
+
+	Scene* GetActiveScene() const { return m_pActiveScene; }
+
 private:
 	friend class Singleton<SceneManager>;
 	SceneManager() = default;

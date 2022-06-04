@@ -63,6 +63,9 @@ public:
 	void AddCommand(char sdlKey, Command* pCommand) { InputManager::GetInstance().AddCommand(sdlKey, pCommand), m_pCommands.push_back(pCommand); }
 	void DestroyCommands();
 
+	bool IsMarkedForDestroy() const;
+	void SetMarkedForDestroy() { m_IsMarkedForDestroy = true; }
+
 	Scene* GetScene() { return m_pScene; }
 private:
 	//// Functions
@@ -75,6 +78,7 @@ private:
 	//// Variables
 	bool m_IsActive;
 	bool m_PositionIsDirty;
+	bool m_IsMarkedForDestroy;
 
 	Transform* m_pTransform;
 	std::vector<Component*> m_pComponents;
@@ -94,6 +98,9 @@ private:
 template <typename  T>
 inline T* GameObject::GetComponent() const
 {
+	if (m_IsMarkedForDestroy)
+		return nullptr;
+
 	T* pComp{ nullptr };
 
 	for (size_t idx{}; idx < m_pComponents.size() && !pComp; ++idx)

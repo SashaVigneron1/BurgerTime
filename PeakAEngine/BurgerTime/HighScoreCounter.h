@@ -24,7 +24,9 @@ public:
 	void Notify(Component* pComponent, Event event) override;
 
 	void UpdateText();
+	void SetScore(int i) { m_Score = i; UpdateText(); }
 
+	void SetActiveSceneScoreToMine();
 private:
 	FileIO m_fileIO;
 	Text* m_pText;

@@ -3,6 +3,12 @@
 
 #include "BurgerCatcher.h"
 #include "BurgerTime.h"
+#include "HighScoreCounter.h"
+#include "Ladder.h"
+#include "LevelCompleter.h"
+#include "LivesCounter.h"
+#include "PepperCounter.h"
+#include "PeterPepper.h"
 #include "Platform.h"
 #include "Prefabs.h"
 #include "ScoreCounter.h"
@@ -11,16 +17,28 @@
 #include "PeakAEngine/Scene.h"
 #include "PeakAEngine/Transform.h"
 
-Level::Level(bool useJsonFile, const std::string& jsonFilePath)
+Level::Level(bool isLastLevel, bool useJsonFile, const std::string& jsonFilePath)
 	: m_Columns{ 8 }
 	, m_Rows{ 8 }
+	, m_HasGeneratedCompleter{ false }
+	, m_IsLastLevel{ isLastLevel }
 	, m_UseJsonFile{ useJsonFile }
 	, m_JsonFilePath{ jsonFilePath }
 {
+	
 }
 
 void Level::Initialize(Scene* scene)
 {
+	m_pScene = scene;
+
+	if (!m_HasGeneratedCompleter)
+	{
+		auto levelCompleterObj = scene->Add(new GameObject(scene));
+		m_pLevelCompleter = levelCompleterObj->AddComponent(new LevelCompleter(m_IsLastLevel, this, levelCompleterObj));
+		m_HasGeneratedCompleter = true;
+	}
+	
 
 	if (m_UseJsonFile)
 	{
@@ -84,26 +102,26 @@ void Level::Initialize(Scene* scene)
 		switch (tileType)
 		{
 		case TileType::Ladder:
-			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			m_pLevelObjs.push_back(CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row })->GetGameObject());
 			break;
 		case TileType::Platform:
 			if (tileAbove == TileType::Ladder || tileUnderneath == TileType::Ladder)
-				CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+				m_pLevelObjs.push_back(CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row }));
 			else
-				CreatePlatform(scene, PlatformType::normal, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+				m_pLevelObjs.push_back(CreatePlatform(scene, PlatformType::normal, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row }));
 			break;
 		case TileType::PlatformWithLadderUp:
-			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row - 1) });
-			CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			m_pLevelObjs.push_back(CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row - 1) })->GetGameObject());
+			m_pLevelObjs.push_back(CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row }));
 			break;
 		case TileType::PlatformWithLadderDown:
-			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
-			CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			m_pLevelObjs.push_back(CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row })->GetGameObject());
+			m_pLevelObjs.push_back(CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row }));
 			break;
 		case TileType::PlatformWithLadderBoth:
-			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row - 1) });
-			CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
-			CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			m_pLevelObjs.push_back(CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * (row - 1) })->GetGameObject());
+			m_pLevelObjs.push_back(CreateLadder(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row })->GetGameObject());
+			m_pLevelObjs.push_back(CreatePlatform(scene, PlatformType::coupled, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row }));
 			break;
 		case TileType::BurgerIngredient:
 			if (tileLeft != TileType::BurgerIngredient)
@@ -161,12 +179,15 @@ void Level::Initialize(Scene* scene)
 					auto catcher = CreateBurgerCatcher(scene, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * m_Rows + 2 });
 					catcher->AddObserver(scene->FindObjectOfType<ScoreCounter>());
 					burgerCatcherColumns.insert(column);
+					m_pLevelObjs.push_back(catcher->GetGameObject());
 				}
 
-				CreateBurgerIngredient(scene, type, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+				auto burgerPiece = CreateBurgerIngredient(scene, type, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+				m_pLevelCompleter->AddBurgerPiece(burgerPiece);
+				m_pLevelObjs.push_back(burgerPiece->GetGameObject());
 			}
 
-			CreatePlatform(scene, PlatformType::normal, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row });
+			m_pLevelObjs.push_back(CreatePlatform(scene, PlatformType::normal, tileSize, { topLeft.x + tileSize * column, topLeft.y + tileSize * row }));
 			break;
 		default:
 			// Default case for Empty
@@ -174,5 +195,32 @@ void Level::Initialize(Scene* scene)
 		}
 	}
 
+}
+
+void Level::Reset()
+{
+	// Reset Variables
+	m_pScene->FindObjectOfType<ScoreCounter>()->SetScore(0);
+	m_pScene->FindObjectOfType<HighScoreCounter>()->SetScore(0);
+	m_pScene->FindObjectOfType<LivesCounter>()->SetLives(9);
+	m_pScene->FindObjectOfType<PepperCounter>()->SetPepperCount(5);
+
+	// Destroy Level
+	for(int i{}; i < m_pLevelObjs.size(); ++i)
+	{
+		m_pLevelObjs[i]->Destroy();
+	}
+	m_pLevelObjs.clear();
+
+	// Move Player to Start
+	auto player = m_pScene->FindObjectOfType<PeterPepper>()->GetGameObject();
+	glm::vec3 startPos = player->GetWorldPosition();
+	glm::vec3 endPos{ BurgerTime::WindowWidth() / 2, BurgerTime::WindowHeight() / 2, 0 };
+	glm::vec3 newPos = endPos - startPos;
+	player->Translate(newPos.x, newPos.y, newPos.z);
+
+	// Spawn Level
+	m_pLevelCompleter->Reset();
+	Initialize(m_pScene);
 }
 

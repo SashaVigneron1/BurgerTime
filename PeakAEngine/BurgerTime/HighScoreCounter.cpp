@@ -59,3 +59,8 @@ void HighScoreCounter::UpdateText()
 	if (m_pText) m_pText->SetText(text);
 }
 
+void HighScoreCounter::SetActiveSceneScoreToMine()
+{
+	SceneManager::GetInstance().GetActiveScene()->FindObjectOfType<HighScoreCounter>()->SetScore(m_Score);
+}
+

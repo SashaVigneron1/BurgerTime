@@ -4,6 +4,7 @@
 #include "PhysicsComponent.h"
 
 #include "box2d.h"
+#include "GameObject.h"
 
 class ContactListener final : public b2ContactListener
 {
@@ -37,7 +38,7 @@ void ContactListener::BeginContact(b2Contact* contact)
 	auto obj1 = reinterpret_cast<PhysicsComponent*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
 	auto obj2 = reinterpret_cast<PhysicsComponent*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
 
-	if (obj1 && obj2)
+	if (obj1 && obj2 && !obj1->GetGameObject()->IsMarkedForDestroy() && !obj2->GetGameObject()->IsMarkedForDestroy())
 	{
 		if (obj1->OnTriggerEnter != nullptr) obj1->OnTriggerEnter(obj2);
 		if (obj2->OnTriggerEnter != nullptr) obj2->OnTriggerEnter(obj1);
@@ -48,7 +49,7 @@ void ContactListener::EndContact(b2Contact* contact)
 	auto obj1 = reinterpret_cast<PhysicsComponent*>(contact->GetFixtureA()->GetUserData().pointer);
 	auto obj2 = reinterpret_cast<PhysicsComponent*>(contact->GetFixtureB()->GetUserData().pointer);
 
-	if (obj1 && obj2)
+	if (obj1 && obj2 && !obj1->GetGameObject()->IsMarkedForDestroy() && !obj2->GetGameObject()->IsMarkedForDestroy())
 	{
 		if (obj1->OnTriggerExit != nullptr) obj1->OnTriggerExit(obj2);
 		if (obj2->OnTriggerExit != nullptr) obj2->OnTriggerExit(obj1);

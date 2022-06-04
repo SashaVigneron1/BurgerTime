@@ -24,10 +24,12 @@ GameObject::~GameObject()
 	for (auto baseComp : m_pComponents)
 	{
 		delete baseComp;
+		baseComp = nullptr;
 	}
 	for (auto child : m_pChildren)
 	{
 		delete child;
+		child = nullptr;
 	}
 	delete m_pTransform;
 }
@@ -35,6 +37,12 @@ GameObject::~GameObject()
 
 void GameObject::Destroy()
 {
+	m_IsMarkedForDestroy = true;
+	for (auto child : m_pChildren)
+	{
+		child->SetMarkedForDestroy();
+	}
+		
 	m_pScene->Remove(this);
 }
 
@@ -123,6 +131,11 @@ void GameObject::DestroyCommands()
 		InputManager::GetInstance().RemoveCommand(command);
 	}
 
+}
+
+bool GameObject::IsMarkedForDestroy() const
+{
+	return m_IsMarkedForDestroy;
 }
 
 void GameObject::UpdateWorldPosition()

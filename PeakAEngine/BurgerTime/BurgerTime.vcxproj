@@ -199,6 +199,7 @@
     <ClCompile Include="HighScoreCounter.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelCompleter.cpp" />
     <ClCompile Include="LevelCounter.cpp" />
     <ClCompile Include="LivesCounter.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="HighScoreCounter.h" />
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelCompleter.h" />
     <ClInclude Include="LevelCounter.h" />
     <ClInclude Include="LivesCounter.h" />
     <ClInclude Include="pch.h" />

@@ -22,7 +22,9 @@ public:
 
 	void Notify(Component* pComponent, Event event) override;
 
+	void SetPepperCount(int i) { m_PepperCount = i; UpdateText(); }
 	void UpdateText();
+	void SetActiveSceneScoreToMine();
 
 	int GetPepperCount() const { return m_PepperCount; }
 

@@ -24,7 +24,11 @@ public:
 
 	void Notify(Component* pComponent, Event event) override;
 
+	void SetLives(int i) { m_Lives = i; UpdateUI(); }
 	void UpdateUI();
+
+	void SetActiveSceneScoreToMine();
+
 
 private:
 	int m_MaxLives;

@@ -42,8 +42,6 @@ LevelCounter::~LevelCounter() = default;
 
 void LevelCounter::Update()
 {
-	if (InputManager::GetInstance().IsPressed('l'))
-		Notify(this, Event::OnLevelComplete);
 }
 
 void LevelCounter::FixedUpdate()

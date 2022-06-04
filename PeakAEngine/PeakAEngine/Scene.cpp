@@ -35,23 +35,31 @@ GameObject* Scene::Add(GameObject* object)
 
 void Scene::Remove(GameObject* object)
 {
-	for (int i{}; i < (int)m_Objects.size(); ++i)
+	m_ObjectsToDestroy.push_back(object);
+}
+
+void Scene::RemoveMarkedObjects()
+{
+	// Destroy Objects
+	for (int i{}; i < m_ObjectsToDestroy.size(); ++i)
 	{
-		if (m_Objects[i] == object)
+		for (int j{}; j < (int)m_Objects.size(); ++j)
 		{
-			delete object;
-			m_Objects[i] = m_Objects.back();
-			m_Objects.pop_back();
+			if (m_Objects[j] == m_ObjectsToDestroy[i])
+			{
+				delete m_Objects[j];
+				m_Objects[j] = m_Objects.back();
+				m_Objects.pop_back();
+			}
 		}
 	}
+	m_ObjectsToDestroy.clear();
 }
 
 void Scene::Update()
 {
-	for(auto& object : m_Objects)
-	{
-		if (!object->GetParent()) object->Update();
-	}
+	for (int i{}; i < m_Objects.size(); ++i)
+		if (!m_Objects[i]->GetParent()) m_Objects[i]->Update();
 }
 void Scene::FixedUpdate()
 {

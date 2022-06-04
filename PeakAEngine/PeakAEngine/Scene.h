@@ -22,6 +22,7 @@ public:
 		return nullptr;
 	}
 
+	void RemoveMarkedObjects();
 	void Update();
 	void FixedUpdate();
 	void Render() const;
@@ -41,6 +42,7 @@ private:
 
 	std::string m_Name;
 	std::vector<GameObject*> m_Objects{};
+	std::vector<GameObject*> m_ObjectsToDestroy{};
 
 	static unsigned int m_IdCounter;
 

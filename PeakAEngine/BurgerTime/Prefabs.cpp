@@ -78,11 +78,11 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 
 	go->AddTag("PeterPepper");
 }
-void CreateLadder(Scene* pScene, float tileSize, const glm::vec2& position)
+Ladder* CreateLadder(Scene* pScene, float tileSize, const glm::vec2& position)
 {
 	// GameObject
 	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y + tileSize / 2, 0 }));
-	go->AddComponent(new Ladder(go));
+	auto pLadder = go->AddComponent(new Ladder(go));
 
 	// Physics
 	auto physics = go->AddComponent(new PhysicsComponent(go));
@@ -97,8 +97,10 @@ void CreateLadder(Scene* pScene, float tileSize, const glm::vec2& position)
 		},
 		1, 1.f, tileSize, go, (int)Layer::Ladders));
 	go->AddTag("Ladder");
+
+	return pLadder;
 }
-void CreatePlatform(Scene* pScene, PlatformType type, float tileSize, const glm::vec2& position)
+GameObject* CreatePlatform(Scene* pScene, PlatformType type, float tileSize, const glm::vec2& position)
 {
 	// GameObject
 	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y + tileSize / 2, 0 }));
@@ -119,9 +121,10 @@ void CreatePlatform(Scene* pScene, PlatformType type, float tileSize, const glm:
 		},
 		1, 1.f, tileSize, go, (int)Layer::Platforms));
 
+	return go;
 }
 
-void CreateBurgerIngredient(Scene* pScene, BurgerPieceType type, float tileSize, const glm::vec2& position)
+BurgerPiece* CreateBurgerIngredient(Scene* pScene, BurgerPieceType type, float tileSize, const glm::vec2& position)
 {
 	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y, 0 }));
 
@@ -129,9 +132,11 @@ void CreateBurgerIngredient(Scene* pScene, BurgerPieceType type, float tileSize,
 	physics->AddBoxCollider(tileSize * 2.5f, tileSize, true, { tileSize - 10,0 });
 	physics->SetDebugColor({ 0,0,1,0.3f });
 
-	go->AddComponent(new BurgerPiece(type, tileSize, physics, go));
+	auto burgerPiece = go->AddComponent(new BurgerPiece(type, tileSize, physics, go));
 
 	go->AddTag("BurgerIngredient");
+
+	return burgerPiece;
 }
 
 BurgerCatcher* CreateBurgerCatcher(Scene* pScene, float tileSize, const glm::vec2& position)
@@ -257,7 +262,7 @@ void CreateMainMenu(Scene* pScene, BurgerTime* pGame)
 	#pragma endregion
 }
 
-void CreateUI(Scene* pScene)
+void CreateUI(Scene* pScene, int indexCount)
 {
 	auto font = ResourceManager::GetInstance().LoadFont("UI/Cyber11.ttf", 45);
 
@@ -305,5 +310,6 @@ void CreateUI(Scene* pScene)
 
 	// Create What Level (burgers)
 	go = pScene->Add(new GameObject(pScene, { BurgerTime::WindowWidth() - iconSize + 5,BurgerTime::WindowHeight() - iconSize, 0 }));
-	go->AddComponent(new LevelCounter(iconSize, 3, go));
+	auto levelCounter = go->AddComponent(new LevelCounter(iconSize, 3, go));
+	levelCounter->SetLevel(indexCount);
 }

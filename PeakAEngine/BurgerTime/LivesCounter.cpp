@@ -7,6 +7,8 @@
 #include "PeterPepper.h"
 #include "Events.h"
 #include "RenderLayers.h"
+#include "PeakAEngine/Scene.h"
+#include "PeakAEngine/SceneManager.h"
 #include "PeakAEngine/Sprite.h"
 #include "PeakAEngine/SpriteRenderer.h"
 
@@ -43,6 +45,7 @@ LivesCounter::~LivesCounter() = default;
 
 void LivesCounter::Update()
 {
+	//ToDo: Remove
 	if (InputManager::GetInstance().IsPressed('l'))
 		Notify(this, Event::OnPlayerDied);
 }
@@ -57,6 +60,11 @@ void LivesCounter::Notify(Component * /*pComponent*/, Event event)
 	if (event == Event::OnPlayerDied)
 	{
 		--m_Lives;
+
+		if (m_Lives <= 0)
+		{
+			SceneManager::GetInstance().LoadScene("MainMenu");
+		}
 	}
 
 	UpdateUI();
@@ -71,5 +79,10 @@ void LivesCounter::UpdateUI()
 		else
 			m_LivesObjects[i]->SetActive(false);
 	}
+}
+
+void LivesCounter::SetActiveSceneScoreToMine()
+{
+	SceneManager::GetInstance().GetActiveScene()->FindObjectOfType<LivesCounter>()->SetLives(m_Lives);
 }
 

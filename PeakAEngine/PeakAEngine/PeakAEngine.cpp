@@ -111,6 +111,8 @@ void PeakAEngine::Run()
 		float fixedUpdateTimer = 0.0f;
 		while (m_IsRunning)
 		{
+			sceneManager.RemoveMarkedObjects();
+
 			int currFrame = 0;
 
 			// currTime

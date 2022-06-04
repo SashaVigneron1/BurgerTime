@@ -54,3 +54,29 @@ void SceneManager::LoadScene(const std::string& name)
 
 	Logger::LogError("[SceneManager] Scene with the name '" + name + "' not found.");
 }
+
+void SceneManager::LoadNextScene()
+{
+	bool previousSceneIsActive = false;
+	for (int i{}; i < m_Scenes.size(); ++i)
+	{
+		if (previousSceneIsActive)
+		{
+			m_pActiveScene = m_Scenes[i].get();
+			return;
+		}
+
+		if (m_Scenes[i].get() == m_pActiveScene)
+			previousSceneIsActive = true;
+	}
+
+	Logger::LogWarning("No next scene found.");
+}
+
+void SceneManager::RemoveMarkedObjects()
+{
+	for(auto scene : m_Scenes)
+	{
+		scene->RemoveMarkedObjects();
+	}
+}

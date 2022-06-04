@@ -24,6 +24,9 @@ public:
 
 	void UpdateText();
 	int GetScore() const { return m_Score; }
+	void SetScore(int i) { m_Score = i; UpdateText(); }
+
+	void SetActiveSceneScoreToMine();
 
 private:
 	Text* m_pText;

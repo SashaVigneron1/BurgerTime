@@ -5,6 +5,8 @@
 #include "PeakAEngine/Text.h"
 
 #include "Events.h"
+#include "PeakAEngine/Scene.h"
+#include "PeakAEngine/SceneManager.h"
 
 ScoreCounter::ScoreCounter(GameObject* attachedObj, Text* pTextComponent)
 	: Component(attachedObj)
@@ -48,5 +50,10 @@ void ScoreCounter::UpdateText()
 {
 	std::string text = std::to_string(m_Score);
 	if (m_pText) m_pText->SetText(text);
+}
+
+void ScoreCounter::SetActiveSceneScoreToMine()
+{
+	SceneManager::GetInstance().GetActiveScene()->FindObjectOfType<ScoreCounter>()->SetScore(m_Score);
 }
 

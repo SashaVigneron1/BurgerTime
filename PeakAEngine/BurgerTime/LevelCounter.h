@@ -25,6 +25,7 @@ public:
 	void Notify(Component* pComponent, Event event) override;
 
 	void UpdateUI();
+	void SetLevel(int level) { m_Level = level; UpdateUI(); }
 
 private:
 	int m_MaxLevels;
