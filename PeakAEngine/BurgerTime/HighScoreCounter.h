@@ -25,6 +25,7 @@ public:
 
 	void UpdateText();
 	void SetScore(int i) { m_Score = i; UpdateText(); }
+	void Reset();
 
 	void SetActiveSceneScoreToMine();
 private:

@@ -30,7 +30,6 @@ void HighScoreCounter::Update()
 
 void HighScoreCounter::FixedUpdate()
 {
-
 }
 
 void HighScoreCounter::Notify(Component* /*pComponent*/, Event event)
@@ -55,6 +54,18 @@ void HighScoreCounter::UpdateText()
 {
 	std::string text = std::to_string(m_Score);
 	if (m_pText) m_pText->SetText(text);
+}
+
+void HighScoreCounter::Reset()
+{
+	// Load Score
+	m_fileIO.ReOpenFile();
+	m_fileIO.ReturnToStart();
+	std::string scoreString = m_fileIO.ReadLine();
+	if (!scoreString.empty())
+		m_Score = std::stoi(scoreString);
+
+	UpdateText();
 }
 
 void HighScoreCounter::SetActiveSceneScoreToMine()

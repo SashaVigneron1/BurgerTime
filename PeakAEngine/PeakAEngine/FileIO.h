@@ -17,6 +17,7 @@ public:
 	std::string ReadLine();
 	void DeleteAllLines();
 	void ReturnToStart();
+	void ReOpenFile();
 private:
 	std::string m_FilePath;
 	std::fstream m_FileStream;

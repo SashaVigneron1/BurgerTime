@@ -201,6 +201,7 @@ void CreateMainMenu(Scene* pScene, BurgerTime* pGame)
 		[]
 		{
 			SceneManager::GetInstance().LoadScene("Level1_Solo");
+			SceneManager::GetInstance().GetActiveScene()->FindObjectOfType<HighScoreCounter>()->Reset();
 		}
 		, go));
 
@@ -227,6 +228,7 @@ void CreateMainMenu(Scene* pScene, BurgerTime* pGame)
 		[]
 		{
 			SceneManager::GetInstance().LoadScene("Level1_Coop");
+			SceneManager::GetInstance().GetActiveScene()->FindObjectOfType<HighScoreCounter>()->Reset();
 		}
 		, go));
 

@@ -201,7 +201,7 @@ void Level::Reset()
 {
 	// Reset Variables
 	m_pScene->FindObjectOfType<ScoreCounter>()->SetScore(0);
-	m_pScene->FindObjectOfType<HighScoreCounter>()->SetScore(0);
+	m_pScene->FindObjectOfType<HighScoreCounter>()->Reset();
 	m_pScene->FindObjectOfType<LivesCounter>()->SetLives(9);
 	m_pScene->FindObjectOfType<PepperCounter>()->SetPepperCount(5);
 

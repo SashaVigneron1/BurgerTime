@@ -64,3 +64,9 @@ void FileIO::ReturnToStart()
     m_FileStream.clear();
     m_FileStream.seekg(0);
 }
+
+void FileIO::ReOpenFile()
+{
+    m_FileStream.close();
+    m_FileStream.open(m_FilePath, std::ios::in | std::ios::out);
+}
