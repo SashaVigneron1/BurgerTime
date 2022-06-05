@@ -28,17 +28,17 @@ Button::~Button()
 void Button::Update()
 {
 	// Get Data
-	auto mousePos = InputManager::GetInstance().GetMousePosition();
-	auto spritePos = m_pGameObject->GetWorldPosition();
+	const auto mousePos = InputManager::GetInstance().GetMousePosition();
+	const auto spritePos = m_pGameObject->GetWorldPosition();
 
 	// Calculate IsHovering
-	float minX = spritePos.x - m_Rect.width / 2;
-	float maxX = spritePos.x + m_Rect.width / 2;
-	float minY = spritePos.y - m_Rect.height / 2;
-	float maxY = spritePos.y + m_Rect.height / 2;
+	const float minX = spritePos.x - m_Rect.width / 2;
+	const float maxX = spritePos.x + m_Rect.width / 2;
+	const float minY = spritePos.y - m_Rect.height / 2;
+	const float maxY = spritePos.y + m_Rect.height / 2;
 
-	bool isHovering = (mousePos.x > minX && mousePos.x < maxX) && (mousePos.y > minY && mousePos.y < maxY);
-	bool isPressed = isHovering && InputManager::GetInstance().GetMouseButtonDown(MouseButton::LMB);
+	const bool isHovering = (mousePos.x > minX && mousePos.x < maxX) && (mousePos.y > minY && mousePos.y < maxY);
+	const bool isPressed = isHovering && InputManager::GetInstance().GetMouseButtonDown(MouseButton::LMB);
 	
 	// If is hovering: Change Sprite
 	if (isHovering)

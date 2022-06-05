@@ -27,7 +27,7 @@ void EnemySpawner::Update()
 	if (m_AccSpawnTime > m_CurrTimeBetweenSpawns)
 	{
 		// Spawn Enemy
-		auto spawnPos = m_pLevel->GetRandomPlatformPosition();
+		const auto spawnPos = m_pLevel->GetRandomPlatformPosition();
 		CreateEnemy(m_pGameObject->GetScene(), { spawnPos.x, spawnPos.y - 30.0f });
 
 		// Reset Variables

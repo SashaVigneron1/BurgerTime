@@ -59,9 +59,6 @@
     <ClCompile Include="Level.cpp">
       <Filter>Game Files\Prefabs</Filter>
     </ClCompile>
-    <ClCompile Include="Burger.cpp">
-      <Filter>Game Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Game Files\Utils</Filter>
     </ClCompile>
@@ -129,9 +126,6 @@
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Game Files\Prefabs</Filter>
-    </ClInclude>
-    <ClInclude Include="Burger.h">
-      <Filter>Game Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Game Files\Utils</Filter>

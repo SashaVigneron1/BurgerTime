@@ -23,7 +23,7 @@ void BurgerCatcher::OnTriggerEnter(PhysicsComponent* pOther)
 {
 	if (pOther->GetGameObject()->HasTag("BurgerIngredient"))
 	{
-		auto burgerPiece = pOther->GetGameObject()->GetComponent<BurgerPiece>();
+		const auto burgerPiece = pOther->GetGameObject()->GetComponent<BurgerPiece>();
 		if (burgerPiece && !burgerPiece->IsCollected())
 		{
 			// Stop BurgerPiece From Falling
@@ -38,7 +38,7 @@ void BurgerCatcher::OnTriggerEnter(PhysicsComponent* pOther)
 			++m_StackCount;
 
 			// Notify Score System
-			int collectedEnemies = burgerPiece->GetCollectedEnemyCount();
+			const int collectedEnemies = burgerPiece->GetCollectedEnemyCount();
 			switch (collectedEnemies)
 			{
 			case 0:

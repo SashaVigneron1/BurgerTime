@@ -157,7 +157,7 @@ void PeterPepper::OnGUI()
 
 void PeterPepper::OnTriggerEnter(PhysicsComponent * other)
 {
-	auto isLadder = other->GetGameObject()->HasTag("Ladder");
+	const auto isLadder = other->GetGameObject()->HasTag("Ladder");
 
 	if (isLadder)
 	{
@@ -169,7 +169,7 @@ void PeterPepper::OnTriggerEnter(PhysicsComponent * other)
 
 void PeterPepper::OnTriggerExit(PhysicsComponent * other)
 {
-	auto isLadder = other->GetGameObject()->HasTag("Ladder");
+	const auto isLadder = other->GetGameObject()->HasTag("Ladder");
 
 	if (isLadder)
 	{
@@ -197,12 +197,12 @@ void PeterPepper::SprayPepper()
 
 	if (m_pPepperCounter->GetPepperCount())
 	{
-		auto thisPos = m_pGameObject->GetWorldPosition();
-		auto enemies = m_pGameObject->GetScene()->FindObjectsOfType<Enemy>();
+		const auto thisPos = m_pGameObject->GetWorldPosition();
+		const auto enemies = m_pGameObject->GetScene()->FindObjectsOfType<Enemy>();
 		for (auto enemy : enemies)
 		{
-			auto enemyPos = enemy->GetGameObject()->GetWorldPosition();
-			auto distance = glm::distance(thisPos, enemyPos);
+			const auto enemyPos = enemy->GetGameObject()->GetWorldPosition();
+			const auto distance = glm::distance(thisPos, enemyPos);
 			if (distance < 50.0f)
 			{
 				enemy->Stun();

@@ -14,9 +14,9 @@ LevelCounter::LevelCounter(float size, int maxLevels, GameObject* attachedObj)
 	, m_Level{ 0 }
 	, m_MaxLevels{maxLevels}
 {
-	auto thisGO = GetGameObject();
-	auto scene = thisGO->GetScene();
-	float offset = size + 5.0f;
+	const auto thisGO = GetGameObject();
+	const auto scene = thisGO->GetScene();
+	const float offset = size + 5.0f;
 
 	for (int i{}; i < m_MaxLevels; ++i)
 	{

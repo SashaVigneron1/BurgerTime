@@ -48,7 +48,7 @@ private:
 	int m_LadderCount;
 
 	// Movement
-	float m_MovementSpeed;
+	const float m_MovementSpeed;
 
 	bool m_InputLeft;
 	bool m_InputRight;
@@ -61,8 +61,8 @@ private:
 	bool m_IsMovingDown;
 
 	bool m_IsDying;
-	float m_DeathTimer;
+	const float m_DeathTimer;
 	float m_AccDeathTimer;
 
-	glm::vec3 m_SpawnPosition;
+	const glm::vec3 m_SpawnPosition;
 };

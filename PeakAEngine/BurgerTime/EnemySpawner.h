@@ -20,8 +20,8 @@ public:
 private:
 	Level* m_pLevel;
 
-	float m_MinTimeBetweenSpawns;
-	float m_MaxTimeBetweenSpawns;
+	const float m_MinTimeBetweenSpawns;
+	const float m_MaxTimeBetweenSpawns;
 	float m_CurrTimeBetweenSpawns;
 	float m_AccSpawnTime;
 };

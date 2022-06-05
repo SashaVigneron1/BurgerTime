@@ -24,7 +24,7 @@ public:
         const b2Vec2& normal, float fraction) override
     {
         m_fixture = fixture;
-        auto obj1 = reinterpret_cast<PhysicsComponent*>(fixture->GetBody()->GetUserData().pointer);
+        const auto obj1 = reinterpret_cast<PhysicsComponent*>(fixture->GetBody()->GetUserData().pointer);
         m_pOther = obj1->GetGameObject();
 
         // If objs not contains obj, add to objs

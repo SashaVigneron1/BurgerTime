@@ -27,6 +27,6 @@ public:
 	void ResetDownPosition();
 
 private:
-	float m_DownOffset;
+	const float m_DownOffset;
 	bool m_IsDown;
 };

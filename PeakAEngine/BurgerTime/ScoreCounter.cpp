@@ -63,7 +63,7 @@ void ScoreCounter::Notify(Component* /*pComponent*/, Event event)
 
 void ScoreCounter::UpdateText()
 {
-	std::string text = std::to_string(m_Score);
+	const std::string text = std::to_string(m_Score);
 	if (m_pText) m_pText->SetText(text);
 }
 

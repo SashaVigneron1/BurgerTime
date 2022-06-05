@@ -24,6 +24,6 @@ public:
 
 private:
 	int m_StackCount;
-	float m_HeightPerIngredient;
+	const float m_HeightPerIngredient;
 };
 

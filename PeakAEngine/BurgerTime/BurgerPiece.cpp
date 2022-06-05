@@ -46,10 +46,10 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 		break;
 	}
 
-	auto thisGO = GetGameObject();
-	auto scene = thisGO->GetScene();
-	float partOffset = tileSize * (3.f/5.f);
-	float burgerOffsetX = -14.0f;
+	const auto thisGO = GetGameObject();
+	const auto scene = thisGO->GetScene();
+	const float partOffset = tileSize * (3.f/5.f);
+	const float burgerOffsetX = -14.0f;
 
 	// LEFT
 	#pragma region Left
@@ -174,8 +174,8 @@ void BurgerPiece::Update()
 		m_AccFallingTime += Time::DeltaTime();
 		if (m_AccFallingTime > m_MinFallingTime)
 		{
-			float raycastYOffset{ 0.f };
-			float range{ 10.0f };
+			const float raycastYOffset{ 0.f };
+			const float range{ 10.0f };
 
 			RaycastCallback raycastDownCallback;
 			// If left side on platform
@@ -183,7 +183,7 @@ void BurgerPiece::Update()
 			if (raycastDownCallback.m_pOther && raycastDownCallback.m_pOther->HasTag("BurgerIngredient"))
 			{
 				// If Other piece: Wait here & set other piece falling
-				auto otherBurger = raycastDownCallback.m_pOther->GetComponent<BurgerPiece>();
+				const auto otherBurger = raycastDownCallback.m_pOther->GetComponent<BurgerPiece>();
 
 				if (otherBurger->IsCollected())
 					return;
@@ -201,8 +201,8 @@ void BurgerPiece::Update()
 				// If Catcher: Notify Score
 
 				// Move this obj to other objects position
-				auto otherPos = raycastDownCallback.m_pOther->GetWorldPosition();
-				auto thisPos = m_pGameObject->GetWorldPosition();
+				const auto otherPos = raycastDownCallback.m_pOther->GetWorldPosition();
+				const auto thisPos = m_pGameObject->GetWorldPosition();
 				m_pGameObject->Translate(0, otherPos.y - thisPos.y, 0);
 
 				// Put Ingredient Parts Back To Original Position

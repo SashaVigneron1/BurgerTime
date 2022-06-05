@@ -29,7 +29,7 @@ Enemy::Enemy(SpriteRenderer* pSpriteRenderer, PhysicsComponent* pPhysics, GameOb
 	, m_IsMovingDown{ false }
 {
 	auto players = m_pGameObject->GetScene()->FindObjectsOfType<PeterPepper>();
-	for (int i{}; i < players.size(); ++i)
+	for (int i{}; i < (int)players.size(); ++i)
 		m_pPlayers.push_back(players[i]->GetGameObject());
 
 	m_pSpriteRenderer->SetActiveSprite("Walking");
@@ -64,7 +64,7 @@ void Enemy::Update()
 	}
 
 	#pragma region CheckWhatDirectionWeCanMoveIn
-	const float halfWidth{ 20 };
+	constexpr float halfWidth{ 20 };
 
 	bool canMoveLeft{ false };
 	bool canMoveRight{ false };
@@ -103,8 +103,8 @@ void Enemy::Update()
 
 	for (auto player : m_pPlayers)
 	{
-		auto playerPos = player->GetWorldPosition();
-		auto distance = glm::distance(playerPos, thisPos);
+		const auto playerPos = player->GetWorldPosition();
+		const auto distance = glm::distance(playerPos, thisPos);
 
 		if (distance < closestDistance)
 		{
@@ -115,7 +115,7 @@ void Enemy::Update()
 	}
 
 	// Check Directions We Can Move In
-	constexpr float ignoreDistance{ 3.0f };
+	constexpr float ignoreDistance{ 1.0f };
 
 	// If Can Move Up && player.y < enemy.y
 	if ((m_CanMoveVertically || canMoveUp) && closestPlayerPos.y < thisPos.y && glm::abs(closestPlayerPos.y - thisPos.y) > ignoreDistance)
@@ -190,7 +190,7 @@ void Enemy::OnTriggerEnter(PhysicsComponent* pOther)
 {
 
 	// BURGERS
-	auto isBurger = pOther->GetGameObject()->HasTag("BurgerIngredient");
+	const auto isBurger = pOther->GetGameObject()->HasTag("BurgerIngredient");
 	if (isBurger)
 	{
 		auto burger = pOther->GetGameObject()->GetComponent<BurgerPiece>();
@@ -199,7 +199,7 @@ void Enemy::OnTriggerEnter(PhysicsComponent* pOther)
 	}
 
 	// PLAYERS
-	auto isPlayer = pOther->GetGameObject()->HasTag("PeterPepper");
+	const auto isPlayer = pOther->GetGameObject()->HasTag("PeterPepper");
 	if (isPlayer && !m_IsStunned)
 	{
 		// Hurt
@@ -207,7 +207,7 @@ void Enemy::OnTriggerEnter(PhysicsComponent* pOther)
 	}
 
 	// LADDERS
-	auto isLadder = pOther->GetGameObject()->HasTag("Ladder");
+	const auto isLadder = pOther->GetGameObject()->HasTag("Ladder");
 
 	if (isLadder)
 	{
@@ -219,11 +219,11 @@ void Enemy::OnTriggerEnter(PhysicsComponent* pOther)
 
 void Enemy::OnTriggerExit(PhysicsComponent* pOther)
 {
-	auto isBurger = pOther->GetGameObject()->HasTag("BurgerIngredient");
+	const auto isBurger = pOther->GetGameObject()->HasTag("BurgerIngredient");
 	if (isBurger)
 		m_pBurgerPiece = nullptr;
 
-	auto isLadder = pOther->GetGameObject()->HasTag("Ladder");
+	const auto isLadder = pOther->GetGameObject()->HasTag("Ladder");
 
 	if (isLadder)
 	{

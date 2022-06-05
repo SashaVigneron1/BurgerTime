@@ -22,6 +22,6 @@ public:
 	Tile& operator=(Tile&& other) noexcept = delete;
 
 private:
-	TileType m_pTileType;
+	const TileType m_pTileType;
 };
 

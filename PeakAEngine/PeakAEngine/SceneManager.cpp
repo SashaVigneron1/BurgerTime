@@ -62,7 +62,7 @@ void SceneManager::LoadScene(const std::string& name)
 void SceneManager::LoadNextScene()
 {
 	bool previousSceneIsActive = false;
-	for (int i{}; i < m_Scenes.size(); ++i)
+	for (int i{}; i < (int)m_Scenes.size(); ++i)
 	{
 		if (previousSceneIsActive)
 		{

@@ -47,15 +47,15 @@ private:
 	bool m_IsFalling;
 	bool m_IsCollected;
 
-	BurgerPieceType m_Type;
+	const BurgerPieceType m_Type;
 
 	std::vector<BurgerPiecePart*> m_pParts;
 
 	PhysicsComponent* m_pPhysics;
 
-	float m_MinFallingTime;
+	const float m_MinFallingTime;
 	float m_AccFallingTime;
-	float m_FallingSpeed;
+	const float m_FallingSpeed;
 
 	int m_CollectedEnemiesCount;
 };

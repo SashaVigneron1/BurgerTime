@@ -31,7 +31,7 @@ private:
 	bool m_HasGeneratedCompleter;
 
 	bool m_IsLastLevel;
-	bool m_UseJsonFile;
+	const bool m_UseJsonFile;
 	std::string m_JsonFilePath;
 };
 

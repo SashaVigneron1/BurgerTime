@@ -41,7 +41,7 @@ void Scene::Remove(GameObject* object)
 void Scene::RemoveMarkedObjects()
 {
 	// Destroy Objects
-	for (int i{}; i < m_ObjectsToDestroy.size(); ++i)
+	for (int i{}; i < (int)m_ObjectsToDestroy.size(); ++i)
 	{
 		for (int j{}; j < (int)m_Objects.size(); ++j)
 		{
@@ -58,7 +58,7 @@ void Scene::RemoveMarkedObjects()
 
 void Scene::Update()
 {
-	for (int i{}; i < m_Objects.size(); ++i)
+	for (int i{}; i < (int)m_Objects.size(); ++i)
 		if (!m_Objects[i]->GetParent()) m_Objects[i]->Update();
 }
 void Scene::FixedUpdate()

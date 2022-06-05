@@ -18,9 +18,9 @@ LivesCounter::LivesCounter(float size, int maxLives, GameObject* attachedObj)
 	, m_Lives{maxLives}
 	, m_MaxLives{maxLives}
 {
-	auto thisGO = GetGameObject();
-	auto scene = thisGO->GetScene();
-	float offset = size + 5.0f;
+	const auto thisGO = GetGameObject();
+	const auto scene = thisGO->GetScene();
+	const float offset = size + 5.0f;
 
 	for(int i{}; i < m_MaxLives; ++i)
 	{
@@ -46,9 +46,6 @@ LivesCounter::~LivesCounter() = default;
 
 void LivesCounter::Update()
 {
-	//ToDo: Remove
-	if (InputManager::GetInstance().IsPressed('l'))
-		Notify(this, Event::OnPlayerDied);
 }
 
 void LivesCounter::FixedUpdate()

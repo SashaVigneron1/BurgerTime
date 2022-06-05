@@ -208,7 +208,7 @@ void Level::Reset()
 	m_pScene->FindObjectOfType<PepperCounter>()->SetPepperCount(5);
 
 	// Destroy Level
-	for(int i{}; i < m_pLevelObjs.size(); ++i)
+	for(int i{}; i < (int)m_pLevelObjs.size(); ++i)
 	{
 		m_pLevelObjs[i]->Destroy();
 	}

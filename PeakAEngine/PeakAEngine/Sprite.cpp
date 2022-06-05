@@ -27,7 +27,7 @@ Sprite::Sprite(const std::string& fileName, const std::vector<SpriteRow>& rows, 
 	, m_LayerId{layerId}
 {
 	// Calculate width
-	float spriteWidth = (float)m_pTexture->GetWidth() / m_NrCols;
+	const float spriteWidth = (float)m_pTexture->GetWidth() / m_NrCols;
 	m_Scale = width / spriteWidth;
 
 	// Add Rows

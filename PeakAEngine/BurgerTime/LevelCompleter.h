@@ -23,7 +23,7 @@ public:
 	void Reset();
 	void ResetLevelNextFrame();
 private:
-	bool m_IsLastLevel;
+	const bool m_IsLastLevel;
 	bool m_ShouldReset;
 	bool m_HasReset;
 	Level* m_pLevel;

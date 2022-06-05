@@ -36,9 +36,9 @@ private:
 	bool m_IsFalling;
 	bool m_IsStunned;
 	float m_AccStunTime;
-	float m_StunTime;
+	const float m_StunTime;
 
-	float m_MovementSpeed;
+	const float m_MovementSpeed;
 
 	bool m_IsMovingLeft;
 	bool m_IsMovingRight;

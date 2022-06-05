@@ -3,8 +3,8 @@
 
 float RandomFloat(float min, float max)
 {
-	float random = ((float)rand()) / (float)RAND_MAX;
-	float diff = max - min;
-	float r = random * diff;
+	const float random = ((float)rand()) / (float)RAND_MAX;
+	const float diff = max - min;
+	const float r = random * diff;
 	return min + r;
 }
