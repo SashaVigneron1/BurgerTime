@@ -1,7 +1,6 @@
 #include "PeakAEnginePCH.h"
 #include "AudioClip.h"
 
-#include "Logger.h"
 #include "SDL_mixer.h"
 
 AudioClip::AudioClip(const std::string& filepath, int loops)

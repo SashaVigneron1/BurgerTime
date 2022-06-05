@@ -4,7 +4,6 @@
 #include "Level.h"
 #include "Prefabs.h"
 #include "PeakAEngine/GameObject.h"
-#include "PeakAEngine/Logger.h"
 #include "PeakAEngine/MathHelpers.h"
 #include "PeakAEngine/Time.h"
 

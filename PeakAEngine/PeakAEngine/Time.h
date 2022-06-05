@@ -13,6 +13,8 @@ public:
 	static float FixedTime() { return fixedTime; }
 	static float ElapsedTime() { return elapsedTime; }
 	static float DeltaTime() { return deltaTime; }
+
+	static std::string GetCurrentTimeAsString();
 private:
 	bool hasStarted = false;
 	static float elapsedTime;

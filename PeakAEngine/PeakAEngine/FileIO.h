@@ -5,7 +5,7 @@
 class FileIO final
 {
 public:
-	FileIO(const std::string& inputFilePath);
+	FileIO(const std::string& inputFilePath, bool useLogger = true);
 	~FileIO();
 
 	FileIO(const FileIO& other) = delete;
@@ -19,6 +19,7 @@ public:
 	void ReturnToStart();
 	void ReOpenFile();
 private:
+	bool m_UseLogger;
 	std::string m_FilePath;
 	std::fstream m_FileStream;
 };

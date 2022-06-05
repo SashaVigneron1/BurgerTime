@@ -1,19 +1,19 @@
 #include "PeakAEnginePCH.h"
 #include "FileIO.h"
 
-#include "Logger.h"
 
 
-FileIO::FileIO(const std::string& filePath)
+FileIO::FileIO(const std::string& filePath, bool useLogger)
 	: m_FilePath{ filePath }
     , m_FileStream{  }
+    , m_UseLogger{ useLogger }
 {
     m_FileStream.open(m_FilePath, std::ios::in | std::ios::out);
     if (!m_FileStream.is_open())
 	{
-		Logger::LogError("Failed to open file: " + m_FilePath);
+		if (m_UseLogger) Logger::LogError("[FileIO] Failed to open file: " + m_FilePath);
 
-        Logger::LogWarning("Creating new file: " + m_FilePath);
+        if (m_UseLogger) Logger::LogWarning("[FileIO] Creating new file: " + m_FilePath);
 
 		std::fstream fs;
         fs.open(m_FilePath, std::ios::out);
@@ -32,7 +32,7 @@ void FileIO::WriteLine(const std::string& line)
     {
         m_FileStream << line << std::endl;
     }
-    else Logger::LogError("[FileIO] Unable to open file: " + m_FilePath);
+    else if (m_UseLogger) Logger::LogError("[FileIO] Unable to open file: " + m_FilePath);
 }
 
 std::string FileIO::ReadLine()

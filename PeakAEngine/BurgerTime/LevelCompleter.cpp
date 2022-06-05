@@ -9,7 +9,6 @@
 #include "PepperCounter.h"
 #include "ScoreCounter.h"
 #include "PeakAEngine/GameObject.h"
-#include "PeakAEngine/Logger.h"
 #include "PeakAEngine/Scene.h"
 #include "PeakAEngine/SceneManager.h"
 

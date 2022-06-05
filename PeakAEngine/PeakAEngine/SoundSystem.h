@@ -1,7 +1,6 @@
 #pragma once
 #include <map>
 
-#include "Logger.h"
 
 class AudioClip;
 
@@ -56,7 +55,7 @@ public:
 
 	void Play(int clipId) override
 	{
-		Logger::LogInfo("Playing Sound: \tId:" + std::to_string(clipId));
+		Logger::LogInfo("[SoundSystem] Playing Sound: \tId:" + std::to_string(clipId));
 		m_pSoundSystem->Play(clipId);
 	}
 	int AddClip(const std::string& clipFilePath, int loops = 1) override

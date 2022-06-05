@@ -24,6 +24,8 @@ void JsonParser::LoadDocument()
 {
 	std::ifstream inputFileStream{ m_FilePath };
 	{
+		Logger::LogInfo("[JsonParser] Loading JsonDocument from file: " + m_FilePath);
+
 		using namespace rapidjson;
 
 		// Write Json Data into doc
@@ -38,8 +40,8 @@ void JsonParser::LoadDocument()
 		// ErrorCheck
 		if (m_pDocument->HasParseError())
 		{
-			std::cerr << "Error  : " << m_pDocument->GetParseError() << '\n'
-				<< "Offset : " << m_pDocument->GetErrorOffset() << '\n';
+			Logger::LogError("[JsonParser] Error: " + std::to_string(m_pDocument->GetParseError()));
+			Logger::LogError("[JsonParser] Offset: " + std::to_string(m_pDocument->GetErrorOffset()));
 		}
 	}
 }

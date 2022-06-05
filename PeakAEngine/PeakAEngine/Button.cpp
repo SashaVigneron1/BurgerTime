@@ -3,7 +3,6 @@
 
 #include "GameObject.h"
 #include "InputManager.h"
-#include "Logger.h"
 #include "Renderer.h"
 #include "SpriteRenderer.h"
 

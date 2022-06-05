@@ -9,7 +9,6 @@
 #include "Time.h"
 
 #include "ImGUIManager.h"
-#include "Logger.h"
 
 #include "steam_api.h"
 
@@ -31,6 +30,8 @@ void PrintSDLVersion()
 
 void PeakAEngine::Initialize()
 {
+	Logger::Initialize();
+
 	srand((unsigned int)time(nullptr));
 
 	PrintSDLVersion();
@@ -59,16 +60,16 @@ void PeakAEngine::Initialize()
 	if (m_UseSteam)
 	{
 		Logger::EmptyLine();
-		Logger::LogMessage("Initializing Steam...", Logger::ConsoleColor::LightBlue);
+		Logger::LogMessage("[PeakAEngine] Initializing Steam...", Logger::ConsoleColor::LightBlue);
 		Logger::SetConsoleColor(Logger::ConsoleColor::LightBlue);
 
 		if (!SteamAPI_Init())
 		{
-			Logger::LogError("Fatal Error - Steam must be running to play this game!(SteamAPI_Init() failed)");
+			Logger::LogError("[PeakAEngine] Fatal Error - Steam must be running to play this game!(SteamAPI_Init() failed)");
 		}
 		else
 		{
-			Logger::LogSuccess("Successfully initialized Steam.");
+			Logger::LogSuccess("[PeakAEngine] Successfully initialized Steam.");
 		}
 
 		Logger::EmptyLine();
@@ -84,6 +85,9 @@ void PeakAEngine::LoadGame()
 
 void PeakAEngine::Cleanup()
 {
+	Logger::EmptyLine();
+	Logger::LogInfo("[PeakAEngine] Cleaning up...");
+
 	if (m_UseSteam) SteamAPI_Shutdown();
 
 	RENDERER.Destroy();

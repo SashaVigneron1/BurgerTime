@@ -11,7 +11,6 @@
 
 #include "3rdParty/imgui-1.87/imgui.h"
 #include "PeakAEngine/InputManager.h"
-#include "PeakAEngine/Logger.h"
 #include "PeakAEngine/PhysicsComponent.h"
 #include "PeakAEngine/RaycastCallback.h"
 #include "PeakAEngine/Scene.h"

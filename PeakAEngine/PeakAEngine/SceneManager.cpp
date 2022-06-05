@@ -1,7 +1,6 @@
 #include "PeakAEnginePCH.h"
 #include "SceneManager.h"
 
-#include "Logger.h"
 #include "Scene.h"
 
 #include "SDL.h"
@@ -75,7 +74,7 @@ void SceneManager::LoadNextScene()
 			previousSceneIsActive = true;
 	}
 
-	Logger::LogWarning("No next scene found.");
+	Logger::LogWarning("[SceneManager] No next scene found.");
 }
 
 void SceneManager::RemoveMarkedObjects()

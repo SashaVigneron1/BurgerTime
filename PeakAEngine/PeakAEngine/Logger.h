@@ -1,6 +1,7 @@
 #pragma once
 #include "FileIO.h"
 #include "SingleInstance.h"
+#include "Time.h"
 
 class Logger final
 {
@@ -37,18 +38,27 @@ public:
 		SetConsoleColor(defaultColor);
 		std::cout << message << std::endl;
 		SetConsoleColor(defaultColor);
+
+		// Write To File
+		m_FileIO.WriteLine("[" + Time::GetCurrentTimeAsString() + "] [INFO] " + message);
 	}
 	static void LogWarning(const std::string& message)
 	{
 		SetConsoleColor(ConsoleColor::Yellow);
 		std::cout << message << std::endl;
 		SetConsoleColor(defaultColor);
+
+		// Write To File
+		m_FileIO.WriteLine("[" + Time::GetCurrentTimeAsString() + "] [WARNING] " + message);
 	}
 	static void LogError(const std::string& message)
 	{
 		SetConsoleColor(ConsoleColor::LightRed);
 		std::cerr << message << std::endl;
 		SetConsoleColor(defaultColor);
+
+		// Write To File
+		m_FileIO.WriteLine("[" + Time::GetCurrentTimeAsString() + "] [ERROR] " + message);
 	}
 	static void LogError(const char* message, const char* errormsg)
 	{
@@ -57,27 +67,43 @@ public:
 		string.append(message);
 		std::cerr << string.append(errormsg) << std::endl;
 		SetConsoleColor(defaultColor);
+
+		// Write To File
+		m_FileIO.WriteLine("[" + Time::GetCurrentTimeAsString() + "] [ERROR] " + message);
 	}
 	static void LogMessage(const std::string& message, ConsoleColor color)
 	{
 		SetConsoleColor(color);
 		std::cout << message << std::endl;
 		SetConsoleColor(defaultColor);
+
+		// Write To File
+		m_FileIO.WriteLine("[" + Time::GetCurrentTimeAsString() + "] [MESSAGE] " + message);
 	}
 	static void LogSuccess(const std::string& message)
 	{
 		SetConsoleColor(ConsoleColor::LightGreen);
 		std::cout << message << std::endl;
 		SetConsoleColor(defaultColor);
+
+		// Write To File
+		m_FileIO.WriteLine("[" + Time::GetCurrentTimeAsString() + "] [SUCCESS] " + message);
 	}
 	static void LogVector(const std::string& name, float x, float y, float z)
 	{
 		SetConsoleColor(defaultColor);
 		std::cout << name << ": " << x << ", " << y << ", " << z << ")" << std::endl;
 		SetConsoleColor(defaultColor);
+
+		// Write To File
+		m_FileIO.WriteLine("[" + Time::GetCurrentTimeAsString() + "] [Vector] " + name + ": " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z));
 	}
 
-	static void EmptyLine() { std::cout << std::endl; }
+	static void EmptyLine()
+	{
+		std::cout << std::endl;
+		m_FileIO.WriteLine("\n");
+	}
 
 	static void ClearConsole() { system("cls"); std::cout << std::flush; }
 	static void SetConsoleColor(ConsoleColor color)

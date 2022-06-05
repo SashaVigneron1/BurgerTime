@@ -30,19 +30,31 @@ void ResourceManager::Init(const std::string& dataPath)
 	}
 }
 
-std::shared_ptr<Texture2D> ResourceManager::LoadTexture(const std::string& file) const
+std::shared_ptr<Texture2D> ResourceManager::LoadTexture(const std::string& file)
 {
-	const auto fullPath = m_DataPath + file;
-	auto texture = IMG_LoadTexture(RENDERER.GetSDLRenderer(), fullPath.c_str());
-	if (texture == nullptr) 
+
+	if (!m_Textures.contains(file))
 	{
-		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
+		Logger::LogInfo("[ResourceManager] Loading Texture: " + file);
+
+		const auto fullPath = m_DataPath + file;
+		auto texture = IMG_LoadTexture(RENDERER.GetSDLRenderer(), fullPath.c_str());
+		if (texture == nullptr)
+		{
+			throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
+		}
+
+		m_Textures[file] = std::make_shared<Texture2D>(texture);
 	}
-	return std::make_shared<Texture2D>(texture);
+
+	std::shared_ptr<Texture2D> texture = m_Textures[file];
+	return texture;
 }
 
 std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 {
+	Logger::LogInfo("[ResourceManager] Loading Font: " + file);
+
 	return std::make_shared<Font>(m_DataPath + file, size);
 }
 

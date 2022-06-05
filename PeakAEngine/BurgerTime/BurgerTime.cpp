@@ -4,7 +4,6 @@
 #include <thread>
 
 #include "PeakAEngine/SceneManager.h"
-#include "PeakAEngine/Logger.h"
 #include "Achievements.h"
 #include "Level.h"
 #include "Prefabs.h"
@@ -29,7 +28,9 @@ void BurgerTime::LoadGame()
 
 	AchievementSystem::GetInstance().Initialize(m_UseSteam);
 
-	Logger::LogInfo("Started Creating Scene Objects...");
+	Logger::EmptyLine();
+	Logger::LogInfo("[BurgerTime] Started Creating Scene Objects...");
+	Logger::EmptyLine();
 
 	#pragma region MainMenu
 	auto& mainMenu = SceneManager::GetInstance().CreateScene("MainMenu");
@@ -147,9 +148,14 @@ void BurgerTime::LoadGame()
 	CreatePeterPepper(&level3Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 }, 0);
 	#pragma endregion
 
+	Logger::EmptyLine();
+	Logger::LogSuccess("[BurgerTime] Succesfully Created Scene Objects!");
+	Logger::EmptyLine();
+
 	// Sound Test
 	auto& serviceLocator = ServiceLocator::GetInstance();
 	serviceLocator.RegisterSoundSystem(new Logged_SoundSystem());
 	int id = serviceLocator.GetSoundSystem()->AddClip("Resources/Sounds/BackgroundMusic.wav", -1);
 	serviceLocator.GetSoundSystem()->Play(id);
+
 }

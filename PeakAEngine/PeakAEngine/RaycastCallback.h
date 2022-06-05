@@ -5,7 +5,6 @@
 #include <b2_contact.h>
 
 #include "GameObject.h"
-#include "Logger.h"
 #include "PhysicsComponent.h"
 
 
