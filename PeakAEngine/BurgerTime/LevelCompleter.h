@@ -23,8 +23,10 @@ public:
 
 	void AddBurgerPiece(BurgerPiece* pBurgerPiece) { m_pBurgerPieces.push_back(pBurgerPiece); }
 	void Reset();
+	void ResetLevelNextFrame();
 private:
 	bool m_IsLastLevel;
+	bool m_ShouldReset;
 	bool m_HasReset;
 	Level* m_pLevel;
 	std::vector<BurgerPiece*> m_pBurgerPieces;

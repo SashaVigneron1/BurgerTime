@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "PeakAEngine/PeakAEngine.h"
 
 class Level;
@@ -11,14 +13,13 @@ public:
 	{}
 	BurgerTime(float windowWidth, float windowHeight, bool useSteam)
 		: PeakAEngine{windowWidth, windowHeight, useSteam}
-		, m_pLevel{nullptr}
 	{}
 
 	virtual ~BurgerTime() override;
 
-	Level* m_pLevel;
 protected:
 	void LoadGame() override;
 
+	std::vector<Level*> m_pLevels;
 };
 

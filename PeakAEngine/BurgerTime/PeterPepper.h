@@ -25,6 +25,7 @@ public:
 	void OnTriggerEnter(PhysicsComponent* pOther);
 	void OnTriggerExit(PhysicsComponent* pOther);
 
+	void Die();
 private:
 	// Functions & friends
 	friend class PeterPepper_MoveUp;
@@ -35,6 +36,8 @@ private:
 	void MoveLeft() { m_InputLeft = true; }
 	friend class PeterPepper_MoveRight;
 	void MoveRight() { m_InputRight = true; }
+	friend class PeterPepper_SprayPepper;
+	void SprayPepper();
 
 	//// Variables
 	PepperCounter* m_pPepperCounter;
@@ -56,4 +59,6 @@ private:
 	bool m_IsMovingRight;
 	bool m_IsMovingUp;
 	bool m_IsMovingDown;
+
+	glm::vec3 m_SpawnPosition;
 };

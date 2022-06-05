@@ -14,8 +14,8 @@ enum class ControllerButton
 	ButtonY = 0x8000,
 	DPadUp = 0x0001,
 	DPadDown = 0x0002,
-	DPadRight = 0x0003,
 	DPadLeft = 0x0004,
+	DPadRight = 0x0008,
 };
 
 enum class MouseButton

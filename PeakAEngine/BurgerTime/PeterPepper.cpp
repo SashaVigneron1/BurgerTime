@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PeterPepper.h"
 
+#include "Enemy.h"
 #include "PeakAEngine/GameObject.h"
 #include "Events.h"
 #include "Ladder.h"
@@ -13,6 +14,7 @@
 #include "PeakAEngine/Logger.h"
 #include "PeakAEngine/PhysicsComponent.h"
 #include "PeakAEngine/RaycastCallback.h"
+#include "PeakAEngine/Scene.h"
 #include "PeakAEngine/Time.h"
 
 #include "PeakAEngine/SpriteRenderer.h"
@@ -23,17 +25,18 @@ PeterPepper::PeterPepper(PepperCounter* pPepperCounter, SpriteRenderer* pSpriteR
 	, m_pPepperCounter{ pPepperCounter }
 	, m_pSpriteRenderer{ pSpriteRenderer }
 	, m_pPhysics{ pPhysics }
-	, m_LadderCount{ 0 }
 	, m_CanMoveVertically{ false }
+	, m_LadderCount{ 0 }
 	, m_InputLeft{ false }
 	, m_InputRight{ false }
 	, m_InputUp{ false }
 	, m_InputDown{ false }
+	, m_MovementSpeed{ 1.f }
 	, m_IsMovingLeft{ false }
 	, m_IsMovingRight{ false }
 	, m_IsMovingUp{ false }
 	, m_IsMovingDown{ false }
-	, m_MovementSpeed{ 1.f }
+	, m_SpawnPosition{ attachedObj->GetTransform()->GetWorldPosition() }
 {
 }
 
@@ -86,15 +89,6 @@ void PeterPepper::Update()
 	else if (canMoveLeft && m_InputLeft)
 		m_IsMovingLeft = true;
 
-	if (InputManager::GetInstance().IsPressed('e'))
-	{
-		if (m_pPepperCounter->GetPepperCount())
-		{
-			//ToDo: Use Pepper
-			Notify(this, Event::OnUsePepper);
-		}
-	}
-
 	m_InputUp = false;
 	m_InputDown = false;
 	m_InputLeft = false;
@@ -137,19 +131,13 @@ void PeterPepper::FixedUpdate()
 }
 void PeterPepper::OnGUI()
 {
-	// Just a test
-	/*ImGui::Begin("Hello");
-
-	ImGui::Text("Hello Again!");
-
-	ImGui::End();*/
 }
 
 void PeterPepper::OnTriggerEnter(PhysicsComponent * other)
 {
-	Ladder* ladder = other->GetGameObject()->GetComponent<Ladder>();
+	auto isLadder = other->GetGameObject()->HasTag("Ladder");
 
-	if (ladder)
+	if (isLadder)
 	{
 		++m_LadderCount;
 		if (m_LadderCount > 0)
@@ -159,13 +147,42 @@ void PeterPepper::OnTriggerEnter(PhysicsComponent * other)
 
 void PeterPepper::OnTriggerExit(PhysicsComponent * other)
 {
-	Ladder* ladder = other->GetGameObject()->GetComponent<Ladder>();
+	auto isLadder = other->GetGameObject()->HasTag("Ladder");
 
-	if (ladder)
+	if (isLadder)
 	{
 		--m_LadderCount;
 		if (m_LadderCount <= 0)
 			m_CanMoveVertically = false;
+	}
+}
+
+void PeterPepper::Die()
+{
+	glm::vec3 startPos = m_pGameObject->GetWorldPosition();
+	glm::vec3 newPos = m_SpawnPosition - startPos;
+	m_pGameObject->Translate(newPos.x, newPos.y, newPos.z);
+
+	Notify(this, Event::OnPlayerDied);
+}
+
+void PeterPepper::SprayPepper()
+{
+	if (m_pPepperCounter->GetPepperCount())
+	{
+		auto thisPos = m_pGameObject->GetWorldPosition();
+		auto enemies = m_pGameObject->GetScene()->FindObjectsOfType<Enemy>();
+		for (auto enemy : enemies)
+		{
+			auto enemyPos = enemy->GetGameObject()->GetWorldPosition();
+			auto distance = glm::distance(thisPos, enemyPos);
+			if (distance < 50.0f)
+			{
+				enemy->Stun();
+			}
+		}
+
+		Notify(this, Event::OnUsePepper);
 	}
 }
 

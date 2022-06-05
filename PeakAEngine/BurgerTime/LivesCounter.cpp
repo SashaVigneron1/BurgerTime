@@ -6,6 +6,7 @@
 
 #include "PeterPepper.h"
 #include "Events.h"
+#include "LevelCompleter.h"
 #include "RenderLayers.h"
 #include "PeakAEngine/Scene.h"
 #include "PeakAEngine/SceneManager.h"
@@ -63,6 +64,7 @@ void LivesCounter::Notify(Component * /*pComponent*/, Event event)
 
 		if (m_Lives <= 0)
 		{
+			m_pGameObject->GetScene()->FindObjectOfType<LevelCompleter>()->ResetLevelNextFrame();
 			SceneManager::GetInstance().LoadScene("MainMenu");
 		}
 	}

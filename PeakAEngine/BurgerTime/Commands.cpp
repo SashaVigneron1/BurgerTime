@@ -41,3 +41,13 @@ void PeterPepper_MoveRight::Execute()
 	m_pPeterPepperComponent->MoveRight();
 }
 
+PeterPepper_SprayPepper::PeterPepper_SprayPepper(PeterPepper* pPeterPepper)
+	: m_pPeterPepperComponent{ pPeterPepper }
+{
+}
+void PeterPepper_SprayPepper::Execute()
+{
+	m_pPeterPepperComponent->SprayPepper();
+}
+
+

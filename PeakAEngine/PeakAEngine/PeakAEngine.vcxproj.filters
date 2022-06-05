@@ -183,6 +183,9 @@
     <ClInclude Include="FileIO.h">
       <Filter>Engine Files\Core\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="MathHelpers.h">
+      <Filter>Engine Files\Core\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

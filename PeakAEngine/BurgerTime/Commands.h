@@ -64,3 +64,19 @@ public:
 private:
 	PeterPepper* m_pPeterPepperComponent;
 };
+
+class PeterPepper_SprayPepper final : public Command
+{
+
+public:
+	PeterPepper_SprayPepper(PeterPepper* pPeterPepper);
+	virtual ~PeterPepper_SprayPepper() override = default;
+	PeterPepper_SprayPepper(const PeterPepper_SprayPepper& other) = delete;
+	PeterPepper_SprayPepper(PeterPepper_SprayPepper&& other) noexcept = delete;
+	PeterPepper_SprayPepper& operator=(const PeterPepper_SprayPepper& other) = delete;
+	PeterPepper_SprayPepper& operator=(PeterPepper_SprayPepper&& other) noexcept = delete;
+
+	virtual void Execute() override;
+private:
+	PeterPepper* m_pPeterPepperComponent;
+};

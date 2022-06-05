@@ -16,7 +16,10 @@
 
 BurgerTime::~BurgerTime()
 {
-	delete m_pLevel;
+	for (size_t i = 0; i < m_pLevels.size(); ++i)
+	{
+		delete m_pLevels[i];
+	}
 }
 
 void BurgerTime::LoadGame()
@@ -44,13 +47,14 @@ void BurgerTime::LoadGame()
 	CreateUI(&level1Solo, 1);
 
 	// Level
-	m_pLevel = new Level(false, true, "Resources/Levels/level2.json");
-	m_pLevel->Initialize(&level1Solo);
-
-	// Enemies
+	m_pLevels.push_back(new Level(false, true, "Resources/Levels/level2.json"));
+	m_pLevels.back()->Initialize(&level1Solo);
 
 	// Player
 	CreatePeterPepper(&level1Solo, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
+
+	// Enemies
+	CreateEnemySpawner(&level1Solo, m_pLevels.back());
 	#pragma endregion
 
 	#pragma region Level2Solo
@@ -61,10 +65,11 @@ void BurgerTime::LoadGame()
 	CreateUI(&level2Solo, 2);
 
 	// Level
-	m_pLevel = new Level(false, true, "Resources/Levels/level2.json");
-	m_pLevel->Initialize(&level2Solo);
+	m_pLevels.push_back(new Level(false, true, "Resources/Levels/level2.json"));
+	m_pLevels.back()->Initialize(&level2Solo);
 
 	// Enemies
+	CreateEnemySpawner(&level2Solo, m_pLevels.back());
 
 	// Player
 	CreatePeterPepper(&level2Solo, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
@@ -78,10 +83,11 @@ void BurgerTime::LoadGame()
 	CreateUI(&level3Solo, 3);
 
 	// Level
-	m_pLevel = new Level(true, true, "Resources/Levels/level2.json");
-	m_pLevel->Initialize(&level3Solo);
+	m_pLevels.push_back(new Level(true, true, "Resources/Levels/level2.json"));
+	m_pLevels.back()->Initialize(&level3Solo);
 
 	// Enemies
+	CreateEnemySpawner(&level3Solo, m_pLevels.back());
 
 	// Player
 	CreatePeterPepper(&level3Solo, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
@@ -94,16 +100,16 @@ void BurgerTime::LoadGame()
 	// UI
 	CreateUI(&level1Coop, 1);
 
-	m_pLevel = new Level(false, true, "Resources/Levels/level2.json");
-	m_pLevel->Initialize(&level1Coop);
+	m_pLevels.push_back(new Level(false, true, "Resources/Levels/level2.json"));
+	m_pLevels.back()->Initialize(&level1Coop);
 
 	// Enemies
-
+	CreateEnemySpawner(&level1Coop, m_pLevels.back());
 
 	// Players
 	CreatePeterPepper(&level1Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
 	CreatePeterPepper(&level1Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 }, 0);
-#pragma endregion
+	#pragma endregion
 
 	#pragma region Level2Coop
 	auto& level2Coop = SceneManager::GetInstance().CreateScene("Level2_Coop");
@@ -112,11 +118,11 @@ void BurgerTime::LoadGame()
 	// UI
 	CreateUI(&level2Coop, 2);
 
-	m_pLevel = new Level(false, true, "Resources/Levels/level2.json");
-	m_pLevel->Initialize(&level2Coop);
+	m_pLevels.push_back(new Level(false, true, "Resources/Levels/level2.json"));
+	m_pLevels.back()->Initialize(&level2Coop);
 
 	// Enemies
-
+	CreateEnemySpawner(&level2Coop, m_pLevels.back());
 
 	// Players
 	CreatePeterPepper(&level2Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
@@ -130,15 +136,16 @@ void BurgerTime::LoadGame()
 	// UI
 	CreateUI(&level3Coop, 3);
 
-	m_pLevel = new Level(true, true, "Resources/Levels/level2.json");
-	m_pLevel->Initialize(&level3Coop);
+	m_pLevels.push_back(new Level(true, true, "Resources/Levels/level2.json"));
+	m_pLevels.back()->Initialize(&level3Coop);
 
 	// Enemies
+	CreateEnemySpawner(&level3Coop, m_pLevels.back());
 
 	// Players
 	CreatePeterPepper(&level3Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
 	CreatePeterPepper(&level3Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 }, 0);
-#pragma endregion
+	#pragma endregion
 
 	// Sound Test
 	auto& serviceLocator = ServiceLocator::GetInstance();

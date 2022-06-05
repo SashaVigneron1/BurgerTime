@@ -10,7 +10,6 @@
 #include "Command.h"
 #pragma comment(lib, "XInput.lib")
 
-
 #pragma region Impl
 class InputManager::InputManagerImpl
 {

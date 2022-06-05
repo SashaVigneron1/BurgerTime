@@ -1,4 +1,5 @@
 #pragma once
+#include "FileIO.h"
 #include "SingleInstance.h"
 
 class Logger final
@@ -24,14 +25,51 @@ public:
 		White = 15
 	};
 
-	static ConsoleColor defaultColor;
-	static void LogInfo(const std::string& message) { SetConsoleColor(defaultColor); std::cout << message << std::endl; SetConsoleColor(defaultColor); }
-	static void LogWarning(const std::string& message) { SetConsoleColor(ConsoleColor::Yellow); std::cout << message << std::endl; SetConsoleColor(defaultColor); }
-	static void LogError(const std::string& message) { SetConsoleColor(ConsoleColor::LightRed); std::cerr << message << std::endl; SetConsoleColor(defaultColor); }
-	static void LogError(const char* message, const char* errormsg);
-	static void LogMessage(const std::string& message, ConsoleColor color) { SetConsoleColor(color); std::cout << message << std::endl; SetConsoleColor(defaultColor); }
-	static void LogSuccess(const std::string& message) { SetConsoleColor(ConsoleColor::LightGreen); std::cout << message << std::endl; SetConsoleColor(defaultColor); }
+	static void Initialize()
+	{
+		// Delete Previous Data From File
+		m_FileIO.DeleteAllLines();
+	}
 
+	static ConsoleColor defaultColor;
+	static void LogInfo(const std::string& message)
+	{
+		SetConsoleColor(defaultColor);
+		std::cout << message << std::endl;
+		SetConsoleColor(defaultColor);
+	}
+	static void LogWarning(const std::string& message)
+	{
+		SetConsoleColor(ConsoleColor::Yellow);
+		std::cout << message << std::endl;
+		SetConsoleColor(defaultColor);
+	}
+	static void LogError(const std::string& message)
+	{
+		SetConsoleColor(ConsoleColor::LightRed);
+		std::cerr << message << std::endl;
+		SetConsoleColor(defaultColor);
+	}
+	static void LogError(const char* message, const char* errormsg)
+	{
+		SetConsoleColor(ConsoleColor::LightRed);
+		std::string string;
+		string.append(message);
+		std::cerr << string.append(errormsg) << std::endl;
+		SetConsoleColor(defaultColor);
+	}
+	static void LogMessage(const std::string& message, ConsoleColor color)
+	{
+		SetConsoleColor(color);
+		std::cout << message << std::endl;
+		SetConsoleColor(defaultColor);
+	}
+	static void LogSuccess(const std::string& message)
+	{
+		SetConsoleColor(ConsoleColor::LightGreen);
+		std::cout << message << std::endl;
+		SetConsoleColor(defaultColor);
+	}
 	static void LogVector(const std::string& name, float x, float y, float z)
 	{
 		SetConsoleColor(defaultColor);
@@ -48,5 +86,6 @@ public:
 		SetConsoleTextAttribute(hConsole, WORD(color));
 	}
 private:
+	static FileIO m_FileIO;
 };
 

@@ -3,6 +3,7 @@
 
 #include "BurgerCatcher.h"
 #include "BurgerTime.h"
+#include "Enemy.h"
 #include "HighScoreCounter.h"
 #include "Ladder.h"
 #include "LevelCompleter.h"
@@ -38,7 +39,8 @@ void Level::Initialize(Scene* scene)
 		m_pLevelCompleter = levelCompleterObj->AddComponent(new LevelCompleter(m_IsLastLevel, this, levelCompleterObj));
 		m_HasGeneratedCompleter = true;
 	}
-	
+	m_pScene->FindObjectOfType<LivesCounter>()->Reset();
+
 
 	if (m_UseJsonFile)
 	{
@@ -212,6 +214,13 @@ void Level::Reset()
 	}
 	m_pLevelObjs.clear();
 
+	// Kill All Enemies
+	auto enemies = m_pScene->FindObjectsOfType<Enemy>();
+	for(auto enemy : enemies)
+	{
+		enemy->GetGameObject()->Destroy();
+	}
+
 	// Move Player to Start
 	auto players = m_pScene->FindObjectsOfType<PeterPepper>();
 	for(auto playerComponent : players)
@@ -226,5 +235,18 @@ void Level::Reset()
 	// Spawn Level
 	m_pLevelCompleter->Reset();
 	Initialize(m_pScene);
+}
+
+glm::vec3 Level::GetRandomPlatformPosition()
+{
+	GameObject* gameObj = nullptr;
+
+	do
+	{
+		gameObj = m_pLevelObjs[rand() % m_pLevelObjs.size()];
+	}
+	while (!gameObj->HasTag("Platform"));
+
+	return gameObj->GetWorldPosition();
 }
 

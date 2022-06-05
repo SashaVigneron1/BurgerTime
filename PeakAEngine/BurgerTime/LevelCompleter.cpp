@@ -27,40 +27,19 @@ LevelCompleter::~LevelCompleter()
 
 void LevelCompleter::Update()
 {
-	//ToDo: Remove
-	if (!m_HasReset)
+	if (m_ShouldReset)
 	{
-		if (InputManager::GetInstance().IsPressed('r'))
+		if (!m_HasReset)
 		{
-			if (!m_IsLastLevel)
-			{
-				m_HasReset = true;
+			m_ShouldReset = false;
+			m_HasReset = true;
 
-				SceneManager::GetInstance().LoadNextScene();
+			m_pGameObject->GetScene()->FindObjectOfType<HighScoreCounter>()->Notify(this, Event::GameOver);
 
-				// Update New Scene Variables
-				m_pGameObject->GetScene()->FindObjectOfType<ScoreCounter>()->SetActiveSceneScoreToMine();
-				m_pGameObject->GetScene()->FindObjectOfType<LivesCounter>()->SetActiveSceneScoreToMine();
-				m_pGameObject->GetScene()->FindObjectOfType<PepperCounter>()->SetActiveSceneScoreToMine();
-				m_pGameObject->GetScene()->FindObjectOfType<HighScoreCounter>()->SetActiveSceneScoreToMine();
-
-				// Reset This Level
-				m_pLevel->Reset();
-			}
-			else
-			{
-				m_HasReset = true;
-
-				m_pGameObject->GetScene()->FindObjectOfType<HighScoreCounter>()->Notify(this, Event::GameOver);
-
-				// Reset This Level
-				m_pLevel->Reset();
-
-				SceneManager::GetInstance().LoadScene("MainMenu");
-			}
+			// Reset This Level
+			m_pLevel->Reset();
 		}
 	}
-		
 
 	for(auto burgerPiece : m_pBurgerPieces)
 	{
@@ -104,4 +83,11 @@ void LevelCompleter::Reset()
 {
 	m_HasReset = false;
 	m_pBurgerPieces.clear();
+}
+
+void LevelCompleter::ResetLevelNextFrame()
+{
+	m_ShouldReset = true;
+
+	
 }

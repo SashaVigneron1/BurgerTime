@@ -27,6 +27,8 @@ public:
 	void SetLives(int i) { m_Lives = i; UpdateUI(); }
 	void UpdateUI();
 
+	void Reset() { SetLives(m_MaxLives); }
+
 	void SetActiveSceneScoreToMine();
 
 

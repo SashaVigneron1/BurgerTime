@@ -35,8 +35,23 @@ void ScoreCounter::Notify(Component* /*pComponent*/, Event event)
 		case Event::OnBurgerFell:
 			m_Score += 50;
 			break;
-		case Event::OnEnemyDied:
-			m_Score += 100;
+		case Event::OnBurgerFellOneEnemy:
+			m_Score += 500;
+			break;
+		case Event::OnBurgerFellTwoEnemies:
+			m_Score += 1000;
+			break;
+		case Event::OnBurgerFellThreeEnemies:
+			m_Score += 2000;
+			break;
+		case Event::OnBurgerFellFourEnemies:
+			m_Score += 4000;
+			break;
+		case Event::OnBurgerFellFiveEnemies:
+			m_Score += 8000;
+			break;
+		case Event::OnBurgerFellSixEnemies:
+			m_Score += 16000;
 			break;
 		case Event::OnPlayerDied:
 			m_Score = 0;

@@ -19,6 +19,7 @@ BurgerPiece::BurgerPiece(BurgerPieceType type, float tileSize, PhysicsComponent*
 	, m_FallingSpeed{ 80.0f }
 	, m_MinFallingTime{0.2f}
 	, m_AccFallingTime{}
+	, m_CollectedEnemiesCount{0}
 {
 	// Spawn 4 BurgerPieceParts
 
@@ -188,7 +189,14 @@ void BurgerPiece::Update()
 					return;
 
 				if (otherBurger)
+				{
 					otherBurger->SetFalling();
+					// Shift Points To That Burger
+					for (int i{}; i < m_CollectedEnemiesCount; ++i)
+						otherBurger->AddCollectedEnemy();
+
+					m_CollectedEnemiesCount = 0;
+				}
 
 				// If Catcher: Notify Score
 

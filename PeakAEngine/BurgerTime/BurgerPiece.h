@@ -35,10 +35,14 @@ public:
 
 	void SetFalling();
 	void StopFalling();
+	bool IsFalling() const { return m_IsFalling; }
 
 	void Notify(Component* pComponent, Event event) override;
 	void SetCollected() { m_IsCollected = true;	}
 	bool IsCollected() const { return m_IsCollected; }
+
+	void AddCollectedEnemy() { ++m_CollectedEnemiesCount; }
+	int GetCollectedEnemyCount() const { return m_CollectedEnemiesCount; }
 
 private:
 	bool m_IsFalling;
@@ -53,5 +57,7 @@ private:
 	float m_MinFallingTime;
 	float m_AccFallingTime;
 	float m_FallingSpeed;
+
+	int m_CollectedEnemiesCount;
 };
 

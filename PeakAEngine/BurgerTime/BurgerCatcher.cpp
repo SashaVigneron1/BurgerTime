@@ -36,10 +36,34 @@ void BurgerCatcher::OnTriggerEnter(PhysicsComponent* pOther)
 			burgerPiece->GetGameObject()->Translate(0, yOffset + -m_HeightPerIngredient * (float)m_StackCount, 0);
 
 			++m_StackCount;
-		}
 
-		// Notify Score System
-		Notify(this, Event::OnBurgerFell);
+			// Notify Score System
+			int collectedEnemies = burgerPiece->GetCollectedEnemyCount();
+			switch (collectedEnemies)
+			{
+			case 0:
+				Notify(this, Event::OnBurgerFell);
+				break;
+			case 1:
+				Notify(this, Event::OnBurgerFellOneEnemy);
+				break;
+			case 2:
+				Notify(this, Event::OnBurgerFellTwoEnemies);
+				break;
+			case 3:
+				Notify(this, Event::OnBurgerFellThreeEnemies);
+				break;
+			case 4:
+				Notify(this, Event::OnBurgerFellFourEnemies);
+				break;
+			case 5:
+				Notify(this, Event::OnBurgerFellFiveEnemies);
+				break;
+			case 6:
+				Notify(this, Event::OnBurgerFellSixEnemies);
+				break;
+			}
+		}
 	}
 
 }

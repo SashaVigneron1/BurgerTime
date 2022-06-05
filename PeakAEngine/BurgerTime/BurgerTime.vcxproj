@@ -196,6 +196,8 @@
     <ClCompile Include="BurgerPiecePart.cpp" />
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="Commands.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="HighScoreCounter.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -224,6 +226,8 @@
     <ClInclude Include="BurgerPiecePart.h" />
     <ClInclude Include="BurgerTime.h" />
     <ClInclude Include="Commands.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="HighScoreCounter.h" />
     <ClInclude Include="Ladder.h" />

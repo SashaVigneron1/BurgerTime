@@ -31,6 +31,8 @@ void PrintSDLVersion()
 
 void PeakAEngine::Initialize()
 {
+	srand((unsigned int)time(nullptr));
+
 	PrintSDLVersion();
 	
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) 
@@ -99,6 +101,7 @@ void PeakAEngine::Run()
 
 	LoadGame();
 	{
+
 		const auto& renderer = RENDERER;
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();

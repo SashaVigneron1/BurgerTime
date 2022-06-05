@@ -15,6 +15,8 @@
 
 #include "PeterPepper.h"
 #include "Commands.h"
+#include "Enemy.h"
+#include "EnemySpawner.h"
 #include "HighScoreCounter.h"
 #include "Ladder.h"
 #include "LevelCounter.h"
@@ -33,7 +35,6 @@
 void CreatePeterPepper(Scene* pScene, const glm::vec2& position, int controllerId)
 {
 	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y, 0 }));
-	//// PETER PEPPER
 	// Info
 	const float size = 35;
 	const float frameSec = 0.05f;
@@ -57,7 +58,7 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position, int controllerI
 	// Physics
 	auto physics = go->AddComponent(new PhysicsComponent(go));
 	physics->AddBoxCollider(size, size / 4, true, { 0,size / 2 - size / 8 });
-	physics->SetDebugColor({ 1,1,0,0.3f });
+	physics->SetDebugColor({ 1,1,1,0.3f });
 
 	auto pepperCounter = pScene->FindObjectOfType<PepperCounter>();
 
@@ -66,8 +67,11 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position, int controllerI
 	physics->OnTriggerExit = std::bind(&PeterPepper::OnTriggerExit, pPeterPepper, std::placeholders::_1);
 
 	// Observers
+	auto livesCounter = pScene->FindObjectOfType<LivesCounter>();
+
 	pPeterPepper->AddObserver(&AchievementSystem::GetInstance());
 	pPeterPepper->AddObserver(pepperCounter);
+	pPeterPepper->AddObserver(livesCounter);
 
 	// Commands
 	if (controllerId == -1)
@@ -84,6 +88,11 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position, int controllerI
 		// Right
 		auto pMoveRightCommand = new PeterPepper_MoveRight(pPeterPepper);
 		go->AddCommand('d', pMoveRightCommand);
+
+		// Pepper
+		auto pSprayPepperCommand = new PeterPepper_SprayPepper(pPeterPepper);
+		pSprayPepperCommand->SetButtonAction(ButtonActionType::IsPressed);
+		go->AddCommand('e', pSprayPepperCommand);
 	}
 	else
 	{
@@ -99,15 +108,73 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position, int controllerI
 		// Right
 		auto pMoveRightCommand = new PeterPepper_MoveRight(pPeterPepper);
 		go->AddCommand(ControllerButton::DPadRight, pMoveRightCommand, controllerId);
+
+		// Pepper
+		auto pSprayPepperCommand = new PeterPepper_SprayPepper(pPeterPepper);
+		pSprayPepperCommand->SetButtonAction(ButtonActionType::IsPressed);
+		go->AddCommand(ControllerButton::ButtonB, pSprayPepperCommand, controllerId);
 	}
 	
-
-
-
-	//go->AddCommand('d', pPeterPepperKillEnemyCommand); 
-
 	go->AddTag("PeterPepper");
 }
+
+void CreateEnemy(Scene* pScene, const glm::vec2& position)
+{
+	// Get Random Sprite
+	std::string name = "";
+	int random = rand() % 3;
+	switch(random)
+	{
+	case 0:
+		name = "MrEgg";
+		break;
+	case 1:
+		name = "MrHotDog";
+		break;
+	case 2:
+		name = "MrPickle";
+		break;
+	}
+
+
+	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y, 0 }));
+	// Info
+	const float size = 35;
+	const float frameSec = 0.2f;
+
+	// Sprite
+	SpriteRenderer* pSpriteRenderer = go->AddComponent(new SpriteRenderer(go));
+	pSpriteRenderer->AddSprite("Walking", new  Sprite("Enemies/" + name + "/Walking.png",
+		{
+				SpriteRow{Direction::FacingCamera, 0},
+				SpriteRow{Direction::FacingLeft, 1},
+				SpriteRow{Direction::FacingRight, 1, true},
+				SpriteRow{Direction::FacingAwayFromCamera, 2},
+		},
+		2, frameSec, size, go, (int)Layer::Player));
+	pSpriteRenderer->AddSprite("Stunned", new  Sprite("Enemies/" + name + "/Stunned.png",
+		{
+				SpriteRow{Direction::FacingCamera, 0}
+		},
+		2, frameSec, size, go, (int)Layer::Player));
+	pSpriteRenderer->AddSprite("Death", new  Sprite("Enemies/" + name + "/Death.png",
+		{
+				SpriteRow{Direction::FacingCamera, 0}
+		},
+		3, frameSec, size, go, (int)Layer::Player));
+
+	// Physics
+	auto physics = go->AddComponent(new PhysicsComponent(go));
+	physics->AddBoxCollider(size /3 , size / 2, true, { 0,size / 2 - size / 8 });
+	physics->SetDebugColor({ 1,0,0,0.3f });
+
+	auto pEnemy = go->AddComponent(new Enemy(pSpriteRenderer, physics, go));
+	physics->OnTriggerEnter = std::bind(&Enemy::OnTriggerEnter, pEnemy, std::placeholders::_1);
+	physics->OnTriggerExit = std::bind(&Enemy::OnTriggerExit, pEnemy, std::placeholders::_1);
+
+	go->AddTag("Enemy");
+}
+
 Ladder* CreateLadder(Scene* pScene, float tileSize, const glm::vec2& position)
 {
 	// GameObject
@@ -344,4 +411,10 @@ void CreateUI(Scene* pScene, int indexCount)
 	go = pScene->Add(new GameObject(pScene, { BurgerTime::WindowWidth() - iconSize + 5,BurgerTime::WindowHeight() - iconSize, 0 }));
 	auto levelCounter = go->AddComponent(new LevelCounter(iconSize, 3, go));
 	levelCounter->SetLevel(indexCount);
+}
+
+void CreateEnemySpawner(Scene* pScene, Level* pLevel, const glm::vec2 position)
+{
+	auto go = pScene->Add(new GameObject(pScene, { position.x,position.y, 0 }));
+	go->AddComponent(new EnemySpawner(pLevel, go));
 }

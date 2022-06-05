@@ -19,6 +19,7 @@ public:
 	void Initialize(Scene* scene);
 
 	void Reset();
+	glm::vec3 GetRandomPlatformPosition();
 
 private:
 	std::vector<TileType> m_TileLayout;

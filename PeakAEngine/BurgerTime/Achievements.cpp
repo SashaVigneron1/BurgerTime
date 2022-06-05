@@ -55,8 +55,6 @@ void AchievementSystem::Notify(Component* /*pComponent*/, Event event)
 	{
 	case Event::OnBurgerFell:
 		break;
-	case Event::OnEnemyDied:
-		break;
 	case Event::OnPlayerDied:
 		UnlockAchievement(Achievement::FiveHundredPoints);
 		break;
