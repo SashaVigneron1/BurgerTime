@@ -21,6 +21,19 @@ public:
 		}
 		return nullptr;
 	}
+	template<typename T>
+	inline std::vector<T*> FindObjectsOfType() const
+	{
+		std::vector<T*> objects;
+
+		for (auto obj : m_Objects)
+		{
+			auto objOfType = obj->GetComponent<T>();
+			if (objOfType)
+				objects.push_back(objOfType);
+		}
+		return objects;
+	}
 
 	void RemoveMarkedObjects();
 	void Update();

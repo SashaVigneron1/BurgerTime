@@ -213,11 +213,15 @@ void Level::Reset()
 	m_pLevelObjs.clear();
 
 	// Move Player to Start
-	auto player = m_pScene->FindObjectOfType<PeterPepper>()->GetGameObject();
-	glm::vec3 startPos = player->GetWorldPosition();
-	glm::vec3 endPos{ BurgerTime::WindowWidth() / 2, BurgerTime::WindowHeight() / 2, 0 };
-	glm::vec3 newPos = endPos - startPos;
-	player->Translate(newPos.x, newPos.y, newPos.z);
+	auto players = m_pScene->FindObjectsOfType<PeterPepper>();
+	for(auto playerComponent : players)
+	{
+		auto player = playerComponent->GetGameObject();
+		glm::vec3 startPos = player->GetWorldPosition();
+		glm::vec3 endPos{ BurgerTime::WindowWidth() / 2, BurgerTime::WindowHeight() / 2, 0 };
+		glm::vec3 newPos = endPos - startPos;
+		player->Translate(newPos.x, newPos.y, newPos.z);
+	}
 
 	// Spawn Level
 	m_pLevelCompleter->Reset();

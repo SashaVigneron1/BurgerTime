@@ -30,7 +30,7 @@
 #include "PeakAEngine/Text.h"
 
 
-void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
+void CreatePeterPepper(Scene* pScene, const glm::vec2& position, int controllerId)
 {
 	auto go = pScene->Add(new GameObject(pScene, { position.x, position.y, 0 }));
 	//// PETER PEPPER
@@ -70,11 +70,41 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position)
 	pPeterPepper->AddObserver(pepperCounter);
 
 	// Commands
-	//ToDo: Fix Deletion
-	/*auto pPeterPepperDieCommand = new PeterPepper_Die(pPeterPepper);
-	auto* pPeterPepperKillEnemyCommand = new PeterPepper_KillEnemy(pPeterPepper);*/
-	/*go->AddCommand('z', pPeterPepperDieCommand);
-	go->AddCommand('d', pPeterPepperKillEnemyCommand);*/
+	if (controllerId == -1)
+	{
+		// Up
+		auto pMoveUpCommand = new PeterPepper_MoveUp(pPeterPepper);
+		go->AddCommand('w', pMoveUpCommand);
+		// Down
+		auto pMoveDownCommand = new PeterPepper_MoveDown(pPeterPepper);
+		go->AddCommand('s', pMoveDownCommand);
+		// Left
+		auto pMoveLeftCommand = new PeterPepper_MoveLeft(pPeterPepper);
+		go->AddCommand('a', pMoveLeftCommand);
+		// Right
+		auto pMoveRightCommand = new PeterPepper_MoveRight(pPeterPepper);
+		go->AddCommand('d', pMoveRightCommand);
+	}
+	else
+	{
+		// Up
+		auto pMoveUpCommand = new PeterPepper_MoveUp(pPeterPepper);
+		go->AddCommand(ControllerButton::DPadUp, pMoveUpCommand, controllerId);
+		// Down
+		auto pMoveDownCommand = new PeterPepper_MoveDown(pPeterPepper);
+		go->AddCommand(ControllerButton::DPadDown, pMoveDownCommand, controllerId);
+		// Left
+		auto pMoveLeftCommand = new PeterPepper_MoveLeft(pPeterPepper);
+		go->AddCommand(ControllerButton::DPadLeft, pMoveLeftCommand, controllerId);
+		// Right
+		auto pMoveRightCommand = new PeterPepper_MoveRight(pPeterPepper);
+		go->AddCommand(ControllerButton::DPadRight, pMoveRightCommand, controllerId);
+	}
+	
+
+
+
+	//go->AddCommand('d', pPeterPepperKillEnemyCommand); 
 
 	go->AddTag("PeterPepper");
 }

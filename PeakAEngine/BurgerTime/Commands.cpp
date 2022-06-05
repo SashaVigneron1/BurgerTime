@@ -3,21 +3,41 @@
 
 #include "PeterPepper.h"
 
-PeterPepper_Die::PeterPepper_Die(PeterPepper* pPeterPepper)
+PeterPepper_MoveUp::PeterPepper_MoveUp(PeterPepper* pPeterPepper)
 	: m_pPeterPepperComponent{ pPeterPepper }
 {
 }
-PeterPepper_KillEnemy::PeterPepper_KillEnemy(PeterPepper* pPeterPepper)
+void PeterPepper_MoveUp::Execute()
+{
+	m_pPeterPepperComponent->MoveUp();
+}
+
+PeterPepper_MoveDown::PeterPepper_MoveDown(PeterPepper* pPeterPepper)
 	: m_pPeterPepperComponent{ pPeterPepper }
 {
 }
-
-void PeterPepper_Die::Execute()
+void PeterPepper_MoveDown::Execute()
 {
-	m_pPeterPepperComponent->Die();
+	m_pPeterPepperComponent->MoveDown();
 }
 
-void PeterPepper_KillEnemy::Execute()
+
+PeterPepper_MoveLeft::PeterPepper_MoveLeft(PeterPepper* pPeterPepper)
+	: m_pPeterPepperComponent{ pPeterPepper }
 {
-	m_pPeterPepperComponent->KillEnemy();
 }
+void PeterPepper_MoveLeft::Execute()
+{
+	m_pPeterPepperComponent->MoveLeft();
+}
+
+
+PeterPepper_MoveRight::PeterPepper_MoveRight(PeterPepper* pPeterPepper)
+	: m_pPeterPepperComponent{ pPeterPepper }
+{
+}
+void PeterPepper_MoveRight::Execute()
+{
+	m_pPeterPepperComponent->MoveRight();
+}
+

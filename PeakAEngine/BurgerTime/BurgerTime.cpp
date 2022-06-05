@@ -102,7 +102,8 @@ void BurgerTime::LoadGame()
 
 	// Players
 	CreatePeterPepper(&level1Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
-	#pragma endregion
+	CreatePeterPepper(&level1Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 }, 0);
+#pragma endregion
 
 	#pragma region Level2Coop
 	auto& level2Coop = SceneManager::GetInstance().CreateScene("Level2_Coop");
@@ -119,6 +120,7 @@ void BurgerTime::LoadGame()
 
 	// Players
 	CreatePeterPepper(&level2Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
+	CreatePeterPepper(&level2Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 }, 0);
 	#pragma endregion
 
 	#pragma region Level3Coop
@@ -133,10 +135,10 @@ void BurgerTime::LoadGame()
 
 	// Enemies
 
-
 	// Players
 	CreatePeterPepper(&level3Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 });
-	#pragma endregion
+	CreatePeterPepper(&level3Coop, { BurgerTime::WindowWidth() / 2,BurgerTime::WindowHeight() / 2 }, 0);
+#pragma endregion
 
 	// Sound Test
 	auto& serviceLocator = ServiceLocator::GetInstance();

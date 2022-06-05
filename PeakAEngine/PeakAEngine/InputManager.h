@@ -11,8 +11,13 @@ enum class ControllerButton
 	ButtonA = 0x1000,
 	ButtonB = 0x2000,
 	ButtonX = 0x4000,
-	ButtonY = 0x8000
+	ButtonY = 0x8000,
+	DPadUp = 0x0001,
+	DPadDown = 0x0002,
+	DPadRight = 0x0003,
+	DPadLeft = 0x0004,
 };
+
 enum class MouseButton
 {
 	LMB = 0,

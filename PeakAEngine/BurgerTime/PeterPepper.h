@@ -17,9 +17,6 @@ public:
 	PeterPepper& operator=(const PeterPepper& other) = delete;
 	PeterPepper& operator=(PeterPepper&& other) = delete;
 
-	int GetLives() const { return m_Lives; }
-	int GetScore() const { return m_Score; }
-
 	void Update() override;
 	void FixedUpdate() override;
 	void OnGUI() override;
@@ -30,14 +27,16 @@ public:
 
 private:
 	// Functions & friends
-	friend class PeterPepper_Die;
-	void Die();
-	friend class PeterPepper_KillEnemy;
-	void KillEnemy();
+	friend class PeterPepper_MoveUp;
+	void MoveUp() { m_InputUp = true; }
+	friend class PeterPepper_MoveDown;
+	void MoveDown() { m_InputDown = true; }
+	friend class PeterPepper_MoveLeft;
+	void MoveLeft() { m_InputLeft = true; }
+	friend class PeterPepper_MoveRight;
+	void MoveRight() { m_InputRight = true; }
 
 	//// Variables
-	int m_Lives;
-	int m_Score;
 	PepperCounter* m_pPepperCounter;
 	SpriteRenderer* m_pSpriteRenderer;
 	PhysicsComponent* m_pPhysics;
@@ -47,6 +46,11 @@ private:
 
 	// Movement
 	float m_MovementSpeed;
+
+	bool m_InputLeft;
+	bool m_InputRight;
+	bool m_InputUp;
+	bool m_InputDown;
 
 	bool m_IsMovingLeft;
 	bool m_IsMovingRight;

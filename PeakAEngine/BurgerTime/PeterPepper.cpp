@@ -23,10 +23,12 @@ PeterPepper::PeterPepper(PepperCounter* pPepperCounter, SpriteRenderer* pSpriteR
 	, m_pPepperCounter{ pPepperCounter }
 	, m_pSpriteRenderer{ pSpriteRenderer }
 	, m_pPhysics{ pPhysics }
-	, m_Lives{ 3 }
-	, m_Score{ 0 }
 	, m_LadderCount{ 0 }
 	, m_CanMoveVertically{ false }
+	, m_InputLeft{ false }
+	, m_InputRight{ false }
+	, m_InputUp{ false }
+	, m_InputDown{ false }
 	, m_IsMovingLeft{ false }
 	, m_IsMovingRight{ false }
 	, m_IsMovingUp{ false }
@@ -75,13 +77,13 @@ void PeterPepper::Update()
 	if (upCallback.m_pOther && upCallback.ContainsObjectWithTag("Ladder"))
 		canMoveUp = true;
 
-	if ((m_CanMoveVertically || canMoveUp) && InputManager::GetInstance().IsDown('z'))
+	if ((m_CanMoveVertically || canMoveUp) && m_InputUp)
 		m_IsMovingUp = true;
-	else if ((m_CanMoveVertically || canMoveDown) && InputManager::GetInstance().IsDown('s'))
+	else if ((m_CanMoveVertically || canMoveDown) && m_InputDown)
 		m_IsMovingDown = true;
-	else if (canMoveRight && InputManager::GetInstance().IsDown('d'))
+	else if (canMoveRight && m_InputRight)
 		m_IsMovingRight = true;
-	else if (canMoveLeft && InputManager::GetInstance().IsDown('q'))
+	else if (canMoveLeft && m_InputLeft)
 		m_IsMovingLeft = true;
 
 	if (InputManager::GetInstance().IsPressed('e'))
@@ -91,7 +93,12 @@ void PeterPepper::Update()
 			//ToDo: Use Pepper
 			Notify(this, Event::OnUsePepper);
 		}
-	}	
+	}
+
+	m_InputUp = false;
+	m_InputDown = false;
+	m_InputLeft = false;
+	m_InputRight = false;
 
 }
 void PeterPepper::FixedUpdate()
@@ -160,21 +167,5 @@ void PeterPepper::OnTriggerExit(PhysicsComponent * other)
 		if (m_LadderCount <= 0)
 			m_CanMoveVertically = false;
 	}
-}
-
-void PeterPepper::Die()
-{
-	--m_Lives;
-	Notify(this, Event::OnPlayerDied);
-}
-
-void PeterPepper::KillEnemy()
-{
-
-	//ToDo: Cleanup this code
-
-	// This magic number is just for testing purposes
-	m_Score += 250;
-	Notify(this, Event::OnEnemyDied);
 }
 

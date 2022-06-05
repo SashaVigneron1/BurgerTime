@@ -30,6 +30,11 @@ void SceneManager::OnGUI()
 		m_pActiveScene->OnGUI();
 }
 
+void SceneManager::DestroyAllScenes()
+{
+	m_Scenes.clear();
+}
+
 Scene& SceneManager::CreateScene(const std::string& name)
 {
 	const auto& scene = std::shared_ptr<Scene>(new Scene(name));

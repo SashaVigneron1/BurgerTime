@@ -16,11 +16,14 @@ public:
 	void Render();
 	void OnGUI();
 
+	void DestroyAllScenes();
+
 	Scene* GetActiveScene() const { return m_pActiveScene; }
 
 private:
 	friend class Singleton<SceneManager>;
 	SceneManager() = default;
+
 	std::vector<std::shared_ptr<Scene>> m_Scenes;
 
 	Scene* m_pActiveScene;

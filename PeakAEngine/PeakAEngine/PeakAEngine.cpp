@@ -151,6 +151,7 @@ void PeakAEngine::Run()
 			//std::this_thread::sleep_until(std::chrono::high_resolution_clock::now() + std::chrono::milliseconds((int)round(nrMillis)));
 		}
 
+		sceneManager.DestroyAllScenes();
 	}
 
 	Cleanup();

@@ -9,7 +9,7 @@ enum class LadderType;
 class GameObject;
 class Scene;
 
-void CreatePeterPepper(Scene* pScene, const glm::vec2& position = {});
+void CreatePeterPepper(Scene* pScene, const glm::vec2& position = {}, int controllerId = -1);
 Ladder* CreateLadder(Scene* pScene, float tileSize, const glm::vec2& position = {});
 GameObject* CreatePlatform(Scene* pScene, PlatformType type, float tileSize, const glm::vec2& position = {});
 BurgerPiece* CreateBurgerIngredient(Scene* pScene, BurgerPieceType type, float tileSize, const glm::vec2& position = {});

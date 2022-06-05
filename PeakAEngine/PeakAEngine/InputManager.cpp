@@ -10,6 +10,7 @@
 #include "Command.h"
 #pragma comment(lib, "XInput.lib")
 
+
 #pragma region Impl
 class InputManager::InputManagerImpl
 {
@@ -164,9 +165,27 @@ void InputManager::HandleInput()
 		{*/
 			for (Command* pCommand : commands)
 			{
-				if (IsPressed(button, pCommand->GetControllerIndex()))
+
+				switch(pCommand->GetButtonAction())
 				{
-					pCommand->Execute();
+				case ButtonActionType::IsPressed:
+						if (IsPressed(button, pCommand->GetControllerIndex()))
+						{
+							pCommand->Execute();
+						}
+						break;
+				case ButtonActionType::IsDown:
+					if (IsDown(button, pCommand->GetControllerIndex()))
+					{
+						pCommand->Execute();
+					}
+					break;
+				case ButtonActionType::IsReleased:
+					if (IsUp(button, pCommand->GetControllerIndex()))
+					{
+						pCommand->Execute();
+					}
+					break;
 				}
 			}
 		//}
@@ -177,9 +196,27 @@ void InputManager::HandleInput()
 	{
 		for (Command* pCommand : commands)
 		{
-			if (IsPressed(button))
+
+			switch (pCommand->GetButtonAction())
 			{
-				pCommand->Execute();
+			case ButtonActionType::IsPressed:
+				if (IsPressed(button))
+				{
+					pCommand->Execute();
+				}
+				break;
+			case ButtonActionType::IsDown:
+				if (IsDown(button))
+				{
+					pCommand->Execute();
+				}
+				break;
+			case ButtonActionType::IsReleased:
+				if (IsUp(button))
+				{
+					pCommand->Execute();
+				}
+				break;
 			}
 		}
 	}
