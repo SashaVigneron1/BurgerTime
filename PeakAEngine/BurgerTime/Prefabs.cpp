@@ -54,6 +54,11 @@ void CreatePeterPepper(Scene* pScene, const glm::vec2& position, int controllerI
 				SpriteRow{Direction::FacingCamera, 0}
 		},
 		1, frameSec, size, go, (int)Layer::Player));
+	pSpriteRenderer->AddSprite("Death", new  Sprite("Character/PeterPepper_Death.png",
+		{
+				SpriteRow{Direction::FacingCamera, 0}
+		},
+		6, 1/6.0f, size, go, (int)Layer::Player));
 
 	// Physics
 	auto physics = go->AddComponent(new PhysicsComponent(go));

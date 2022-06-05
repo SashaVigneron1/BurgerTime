@@ -26,6 +26,9 @@ PeterPepper::PeterPepper(PepperCounter* pPepperCounter, SpriteRenderer* pSpriteR
 	, m_pPhysics{ pPhysics }
 	, m_CanMoveVertically{ false }
 	, m_LadderCount{ 0 }
+	, m_IsDying{ false }
+	, m_DeathTimer{ 1.0f }
+	, m_AccDeathTimer{ 0.0f }
 	, m_InputLeft{ false }
 	, m_InputRight{ false }
 	, m_InputUp{ false }
@@ -48,6 +51,23 @@ void PeterPepper::Update()
 	m_IsMovingRight = false;
 	m_IsMovingUp = false;
 	m_IsMovingDown = false;
+
+
+	if (m_IsDying)
+	{
+		m_AccDeathTimer += Time::DeltaTime();
+		if (m_AccDeathTimer > m_DeathTimer)
+		{
+			m_IsDying = false;
+			m_AccDeathTimer = 0.0f;
+
+			glm::vec3 startPos = m_pGameObject->GetWorldPosition();
+			glm::vec3 newPos = m_SpawnPosition - startPos;
+			m_pGameObject->Translate(newPos.x, newPos.y, newPos.z);
+			m_pSpriteRenderer->SetActiveSprite("Idle");
+		}
+		return;
+	}
 
 	// Ground Checks
 	const float halfWidth{ 20 };
@@ -96,6 +116,9 @@ void PeterPepper::Update()
 }
 void PeterPepper::FixedUpdate()
 {
+	if (m_IsDying)
+		return;
+
 	// Movement
 	bool moving{ false };
 	if (m_IsMovingLeft)
@@ -158,15 +181,20 @@ void PeterPepper::OnTriggerExit(PhysicsComponent * other)
 
 void PeterPepper::Die()
 {
-	glm::vec3 startPos = m_pGameObject->GetWorldPosition();
-	glm::vec3 newPos = m_SpawnPosition - startPos;
-	m_pGameObject->Translate(newPos.x, newPos.y, newPos.z);
+	if (!m_IsDying)
+	{
+		m_IsDying = true;
+		Notify(this, Event::OnPlayerDied);
+		m_pSpriteRenderer->SetActiveSprite("Death");
+	}
 
-	Notify(this, Event::OnPlayerDied);
 }
 
 void PeterPepper::SprayPepper()
 {
+	if (m_IsDying)
+		return;
+
 	if (m_pPepperCounter->GetPepperCount())
 	{
 		auto thisPos = m_pGameObject->GetWorldPosition();
