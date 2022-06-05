@@ -1,6 +1,5 @@
 #pragma once
 #include "FileIO.h"
-#include "SingleInstance.h"
 #include "Time.h"
 
 class Logger final

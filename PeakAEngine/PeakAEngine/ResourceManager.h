@@ -13,7 +13,7 @@ class ResourceManager final : public Singleton<ResourceManager>
 public:
 	void Init(const std::string& data);
 	std::shared_ptr<Texture2D> LoadTexture(const std::string& file);
-	std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size) const;
+	std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size);
 
 	RenderLayer* CreateRenderLayer(int width, int height);
 private:
@@ -22,4 +22,5 @@ private:
 	std::string m_DataPath;
 
 	std::map<std::string, std::shared_ptr<Texture2D>> m_Textures;
+	std::map<std::string, std::shared_ptr<Font>> m_Fonts;
 };

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 enum class Event;
 class Component;
 class BaseObserver;

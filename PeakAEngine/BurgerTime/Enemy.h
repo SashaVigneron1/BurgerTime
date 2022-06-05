@@ -1,6 +1,4 @@
 #pragma once
-#include <vector>
-
 #include "PeakAEngine/BaseComponent.h"
 class BurgerPiece;
 class SpriteRenderer;

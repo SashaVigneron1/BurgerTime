@@ -7,6 +7,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
 #include "glm/glm.hpp"
 
 #define WIN32_LEAN_AND_MEAN

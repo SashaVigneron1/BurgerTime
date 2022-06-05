@@ -2,7 +2,6 @@
 #include "FPSCounter.h"
 
 #include "GameObject.h"
-#include "imgui.h"
 #include "Text.h"
 #include "Time.h"
 

@@ -51,11 +51,19 @@ std::shared_ptr<Texture2D> ResourceManager::LoadTexture(const std::string& file)
 	return texture;
 }
 
-std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigned int size) const
+std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigned int size)
 {
-	Logger::LogInfo("[ResourceManager] Loading Font: " + file);
 
-	return std::make_shared<Font>(m_DataPath + file, size);
+	if (!m_Fonts.contains(file))
+	{
+		Logger::LogInfo("[ResourceManager] Loading Font: " + file);
+
+		m_Fonts[file] = std::make_shared<Font>(m_DataPath + file, size);
+	}
+
+
+	std::shared_ptr<Font> font = m_Fonts[file];
+	return font;
 }
 
 RenderLayer* ResourceManager::CreateRenderLayer(int width, int height)
